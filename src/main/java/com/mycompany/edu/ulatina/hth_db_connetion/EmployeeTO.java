@@ -16,7 +16,7 @@ public class EmployeeTO implements Serializable {
     private String password;
     private String lastName;
     private String identification;
-    private String mail;
+    private String email;
     private String phone;
     private int status;
     private int type;
@@ -24,13 +24,13 @@ public class EmployeeTO implements Serializable {
     public EmployeeTO() {
     }
 
-    public EmployeeTO(int id, String firstName, String lastName, String identification, String mail, String phone, int type, int status, String password) {
+    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password) {
         this.id = id;
         this.firstName = firstName;
         this.password = password;
         this.lastName = lastName;
         this.identification = identification;
-        this.mail = mail;
+        this.email = email;
         this.phone = phone;
         this.status = status;
         this.type = type;
@@ -94,12 +94,12 @@ public class EmployeeTO implements Serializable {
         this.identification = identification;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setMail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
