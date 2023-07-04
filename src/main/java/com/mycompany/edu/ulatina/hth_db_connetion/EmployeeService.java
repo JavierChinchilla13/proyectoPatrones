@@ -29,7 +29,7 @@ public class EmployeeService extends Service
         ps.setString(2, emp.getFirstName());
         ps.setString(3, emp.getLastName());
         ps.setString(4, emp.getIdentification());
-        ps.setString(5, emp.getMail());
+        ps.setString(5, emp.getEmail());
         ps.setString(6, emp.getPhone());
         ps.setInt(7,emp.getType());
         ps.setInt(8,emp.getStatus());
