@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.edu.ulatina.hth_db_connetion;
 
 import java.io.Serializable;
+import java.sql.Date;
 
-/**
- *
- * @author javi
- */
 public class EmployeeTO implements Serializable {
     private int id;
     private String firstName;
@@ -20,11 +13,13 @@ public class EmployeeTO implements Serializable {
     private String phone;
     private int status;
     private int type;
+    private Date layoffDate;
+    private Date employmentDate;
 
     public EmployeeTO() {
     }
 
-    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password) {
+    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date employmentDate) {
         this.id = id;
         this.firstName = firstName;
         this.password = password;
@@ -34,6 +29,7 @@ public class EmployeeTO implements Serializable {
         this.phone = phone;
         this.status = status;
         this.type = type;
+        this.employmentDate = employmentDate;
     }
 
     public int getStatus() {
@@ -51,8 +47,6 @@ public class EmployeeTO implements Serializable {
     public void setType(int type) {
         this.type = type;
     }
-
-    
 
     public int getId() {
         return id;
@@ -110,8 +104,20 @@ public class EmployeeTO implements Serializable {
         this.phone = phone;
     }
 
-    
+    public Date getLayoffDate() {
+        return layoffDate;
+    }
 
-    
+    public void setLayOffDate(Date layOffDate) {
+        this.layoffDate = layOffDate;
+    }
+
+    public Date getEmploymentDate() {
+        return employmentDate;
+    }
+
+    public void setEmploymentDate(Date employmentDate) {
+        this.employmentDate = employmentDate;
+    }
     
 }
