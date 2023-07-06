@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.edu.ulatina.hth_db_connetion;
 
 import java.io.Serializable;
@@ -9,10 +5,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author javi
- */
 public class ProjectTO implements Serializable{
     private int id;
     private String name;

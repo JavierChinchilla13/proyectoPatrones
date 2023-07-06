@@ -1,18 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.edu.ulatina.hth_db_connetion;
 
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- *
- * @author javi
- */
 public class MeetingTO implements Serializable {
     private int id;
     private int status;
@@ -21,20 +12,6 @@ public class MeetingTO implements Serializable {
     private int idManager;
     private List<EmployeeTO> Employees = new ArrayList<>();
     private List<ObjectiveTO> Objectives = new ArrayList<>();
-    
-    
-    private void addEmployee(EmployeeTO emp){
-        
-        Employees.add(emp);
-        
-    }
-    private void addObjective(ObjectiveTO obj){
-        
-        Objectives.add(obj);
-        
-    }
-
-    
     
     public MeetingTO() {
     }
@@ -46,7 +23,6 @@ public class MeetingTO implements Serializable {
         this.objectiveDate = objectiveDate;
         this.idManager = idManager;
     }
-    
 
     public MeetingTO(int id, int status, Date meetingDate, Date objectiveDate, int idManager, List<EmployeeTO> Employees, List<ObjectiveTO> Objectives) {
         this.id = id;
@@ -114,8 +90,11 @@ public class MeetingTO implements Serializable {
         this.Objectives = Objectives;
     }
 
-    
-    
-
+    private void addEmployee(EmployeeTO emp){
+        Employees.add(emp);
+    }
+    private void addObjective(ObjectiveTO obj){
+        Objectives.add(obj);
+    }
     
 }

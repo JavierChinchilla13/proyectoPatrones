@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.edu.ulatina.hth_db_connetion;
 
 import java.sql.Connection;
@@ -10,14 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- *
- * @author javi
- */
 abstract public class Service {
     protected Connection conn = null;
-    //private static PreparedStatement ps = null;
-    //private static ResultSet rs = null;
 
     public Service() {
     }
@@ -29,9 +19,6 @@ abstract public class Service {
     public void setConn(Connection conn) {
         this.conn = conn;
     }
-    
-    
-
     protected Connection getConnection() throws Exception {
         //Paso 1
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -55,9 +42,8 @@ abstract public class Service {
             rs.close();
             rs = null;
         }
-
     }
-
+    
     protected void close(PreparedStatement ps) throws SQLException {
         if (ps != null && !ps.isClosed()) {
 
@@ -65,5 +51,4 @@ abstract public class Service {
             ps = null;
         }
     }
-
 }

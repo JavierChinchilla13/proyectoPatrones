@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.edu.ulatina.hth_db_connetion;
 
 import java.sql.Connection;
@@ -10,11 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
-
-/**
- *
- * @author javi
- */
 public class MeetingService extends Service
         implements ICrud<MeetingTO>{
 
@@ -158,7 +149,4 @@ public class MeetingService extends Service
         close(conn);
         return meetingTO;
     }
-    
-    
-    
 }
