@@ -23,7 +23,7 @@ abstract public class Service {
         //Paso 1
         Class.forName("com.mysql.cj.jdbc.Driver");
         //Paso 2
-        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto2?serverTimezone=UTC", "root", "root");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hth?serverTimezone=UTC", "root", "root");
         System.out.println("CONEXION: " + conn);
         return conn;
     }
