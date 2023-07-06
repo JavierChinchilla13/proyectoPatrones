@@ -1,21 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.edu.ulatina.hth_db_connetion;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author javi
- */
-public class EmployeeService extends Service
-        implements ICrud<EmployeeTO>{
+public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
     public EmployeeService() {
     }
@@ -23,7 +16,7 @@ public class EmployeeService extends Service
     @Override
     public void insert(EmployeeTO emp) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.EMPLOYEE (ID, first_name, last_name, IDENTIFICATION, EMAIL, PHONE, id_type_detail, id_status_detail, PASSWORD)VALUES(?,?,?,?,?,?,?,?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.EMPLOYEE (ID, first_name, last_name, IDENTIFICATION, EMAIL, PHONE, id_type_detail, id_status_detail, PASSWORD, employment_date)VALUES(?,?,?,?,?,?,?,?,?,?)");
         int id = 0;
         ps.setInt(1, id);
         ps.setString(2, emp.getFirstName());
@@ -34,18 +27,19 @@ public class EmployeeService extends Service
         ps.setInt(7,emp.getType());
         ps.setInt(8,emp.getStatus());
         ps.setString(9, emp.getPassword());
+        ps.setDate(10, emp.getEmploymentDate());
         ps.executeUpdate();
         close(ps);
         close(conn);
     }
     
-    public void insert(String firstname, String lastName, String identification, String email, String phone, int type, int status, String password) throws Exception {
+    public void insert(String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date employmentDate) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.EMPLOYEE (ID, first_name, last_name, IDENTIFICATION, EMAIL, PHONE, id_type_detail, id_status_detail, PASSWORD)VALUES(?,?,?,?,?,?,?,?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.EMPLOYEE (ID, first_name, last_name, IDENTIFICATION, EMAIL, PHONE, id_type_detail, id_status_detail, PASSWORD, employment_date)VALUES(?,?,?,?,?,?,?,?,?,?)");
         
         int id = 0;
         ps.setInt(1, id);
-        ps.setString(2, firstname);
+        ps.setString(2, firstName);
         ps.setString(3,lastName);
         ps.setString(4, identification);
         ps.setString(5, email);
@@ -53,6 +47,7 @@ public class EmployeeService extends Service
         ps.setInt(7,type);
         ps.setInt(8,status);
         ps.setString(9, password);
+        ps.setDate(10, employmentDate);
         ps.executeUpdate();
         close(ps);
     }
@@ -98,10 +93,10 @@ public class EmployeeService extends Service
 
     }
 
-   public void update(EmployeeTO emp, String firstname, String lastName, String identification, String email, String phone,  int type, int status, String password) throws Exception {
+   public void update(EmployeeTO emp, String firstName, String lastName, String identification, String email, String phone,  int type, int status, String password, Date employmentDate, Date layoffDate) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.EMPLOYEE SET first_name = ?, last_name = ?, IDENTIFICATION = ?, EMAIL = ? , PHONE = ? , id_type_detail = ? , id_status_detail = ? ,  PASSWORD = ? WHERE ID = ?");
-        ps.setString(1, firstname);
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.EMPLOYEE SET first_name = ?, last_name = ?, IDENTIFICATION = ?, EMAIL = ? , PHONE = ? , id_type_detail = ? , id_status_detail = ? ,  PASSWORD = ?, employment_date = ?, layoff_date = ? WHERE ID = ?");
+        ps.setString(1, firstName);
         ps.setString(2, lastName);
         ps.setString(3, identification);
         ps.setString(4, email);
@@ -109,27 +104,12 @@ public class EmployeeService extends Service
         ps.setInt(6,type);
         ps.setInt(7,status);
         ps.setString(8, password);
-        ps.setInt(9, emp.getId());
+        ps.setDate(9, employmentDate);
+        ps.setDate(10, layoffDate);
+        ps.setInt(11, emp.getId());
         ps.executeUpdate();
         close(ps);
         close(conn);
-        close(conn);
-    }
-   
-   public void update(String firstname, String lastName, String identification, String email, String phone,  int type, int status, String password) throws Exception {
-        Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.EMPLOYEE SET first_name = ?, last_name = ?, IDENTIFICATION = ?, EMAIL = ? , PHONE = ? , id_type_detail = ? , id_status_detail = ? ,  PASSWORD = ? WHERE EMAIL = ?");
-        ps.setString(1, firstname);
-        ps.setString(2, lastName);
-        ps.setString(3, identification);
-        ps.setString(4, email);
-        ps.setString(5, phone);
-        ps.setInt(6,type);
-        ps.setInt(7,status);
-        ps.setString(8, password);
-        ps.setString(9, email);
-        ps.executeUpdate();
-        close(ps);
         close(conn);
     }
 
@@ -142,7 +122,7 @@ public class EmployeeService extends Service
 
         if (rs.next()) {
             int id = rs.getInt("id");
-            String firstname = rs.getString("firstname");
+            String firstName = rs.getString("firstname");
             String lastName = rs.getString("lastName");
             String identification = rs.getString("identification");
             String email = rs.getString("email");
@@ -150,7 +130,13 @@ public class EmployeeService extends Service
             int type = rs.getInt("id_type_detail");
             int status = rs.getInt("id_status_detail");
             String password = rs.getString("password");
-            employee = new EmployeeTO(id, firstname, lastName, identification, email, phone,type, status, password);
+            Date employmentDate = rs.getDate("employment_Date");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
+            }else{
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
+            }
         }
         close(rs);
         close(ps);
@@ -167,7 +153,7 @@ public class EmployeeService extends Service
 
         if (rs.next()) {
             int id = rs.getInt("id");
-            String firstname = rs.getString("firstname");
+            String firstName = rs.getString("firstname");
             String lastName = rs.getString("lastName");
             String identification = rs.getString("identification");
             String email = rs.getString("email");
@@ -175,7 +161,13 @@ public class EmployeeService extends Service
             int type = rs.getInt("id_type_detail");
             int status = rs.getInt("id_status_detail");
             String password = rs.getString("password");
-            employee = new EmployeeTO(id, firstname, lastName, identification, email, phone,type, status, password);
+            Date employmentDate = rs.getDate("employment_Date");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
+            }else{
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
+            }
         }
         close(rs);
         close(ps);
@@ -192,7 +184,7 @@ public class EmployeeService extends Service
 
         if (rs.next()) {
             int id = rs.getInt("id");
-            String firstname = rs.getString("firstname");
+            String firstName = rs.getString("firstname");
             String lastName = rs.getString("lastName");
             String identification = rs.getString("identification");
             String email = rs.getString("email");
@@ -200,7 +192,14 @@ public class EmployeeService extends Service
             int type = rs.getInt("id_type_detail");
             int status = rs.getInt("id_status_detail");
             String password = rs.getString("password");
-            employee = new EmployeeTO(id, firstname, lastName, identification, email, phone,type, status, password);
+            Date employmentDate = rs.getDate("employment_Date");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
+            }else{
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
+            }
+            
         }
         close(rs);
         close(ps);
@@ -217,17 +216,23 @@ public class EmployeeService extends Service
         ps = getConn().prepareStatement("SELECT * FROM HTH.EMPLOYEE");
         rs = ps.executeQuery();
         while (rs.next()) {
+            EmployeeTO employeeTO;
             int id = rs.getInt("id");
             String firstName = rs.getString("first_name");
             String lastName = rs.getString("last_name");
             String identification = rs.getString("identification");
-            String mail = rs.getString("email");
+            String email = rs.getString("email");
             String phone = rs.getString("phone");
             int type = rs.getInt("id_type_detail");
             int status = rs.getInt("id_status_detail");
             String password = rs.getString("password");
-
-            EmployeeTO employeeTO = new EmployeeTO(id, firstName, lastName, identification, mail, phone,type, status, password);
+            Date employmentDate = rs.getDate("employment_Date");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
+            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
+            }
             retorno.add(employeeTO);
 
         }
@@ -247,18 +252,22 @@ public class EmployeeService extends Service
         ps.setString(2, passwordToLogin);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
-
             int id = rs.getInt("id");
             String firstName = rs.getString("first_name");
             String lastName = rs.getString("last_name");
             String identification = rs.getString("identification");
-            String mail = rs.getString("email");
+            String email = rs.getString("email");
             String phone = rs.getString("phone");
             int type = rs.getInt("id_type_detail");
             int status = rs.getInt("id_status_detail");
             String password = rs.getString("password");
-
-            employeeTO = new EmployeeTO(id, firstName, lastName, identification, mail, phone,type, status, password);
+            Date employmentDate = rs.getDate("employment_Date");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
+            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
+            }
             super.close(rs);
             super.close(ps);
             super.close(conn);
@@ -274,29 +283,32 @@ public class EmployeeService extends Service
         ResultSet rs = null;
         Connection conn = getConnection();
         List<EmployeeTO> retorno = new ArrayList<EmployeeTO>();
-
         ps = getConn().prepareStatement("SELECT * FROM HTH.EMPLOYEE WHERE id_status_detail = 5");
         rs = ps.executeQuery();
         while (rs.next()) {
+            EmployeeTO employeeTO;
             int id = rs.getInt("id");
             String firstName = rs.getString("first_name");
             String lastName = rs.getString("last_name");
             String identification = rs.getString("identification");
-            String mail = rs.getString("email");
+            String email = rs.getString("email");
             String phone = rs.getString("phone");
             int type = rs.getInt("id_type_detail");
             int status = rs.getInt("id_status_detail");
             String password = rs.getString("password");
-
-            EmployeeTO employeeTO = new EmployeeTO(id, firstName, lastName, identification, mail, phone,type, status, password);
+            Date employmentDate = rs.getDate("employment_Date");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
+            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
+            }
             retorno.add(employeeTO);
 
         }
-
         super.close(rs);
         super.close(ps);
         super.close(conn);
-
         return retorno;
     }
 

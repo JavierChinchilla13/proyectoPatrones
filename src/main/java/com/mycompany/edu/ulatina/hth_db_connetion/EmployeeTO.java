@@ -2,50 +2,65 @@ package com.mycompany.edu.ulatina.hth_db_connetion;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class EmployeeTO implements Serializable {
     private int id;
     private String firstName;
-    private String password;
     private String lastName;
     private String identification;
     private String email;
     private String phone;
-    private int status;
     private int type;
+    private int status;
+    private String password;
     private Date layoffDate;
     private Date employmentDate;
 
     public EmployeeTO() {
     }
 
-    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date employmentDate) {
+    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password) {
         this.id = id;
         this.firstName = firstName;
-        this.password = password;
         this.lastName = lastName;
         this.identification = identification;
         this.email = email;
         this.phone = phone;
-        this.status = status;
         this.type = type;
+        this.status = status;
+        this.password = password;
+        long millis=System.currentTimeMillis();  
+        java.sql.Date date = new java.sql.Date(millis); 
+        this.employmentDate = date;
+    }
+
+    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date employmentDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.identification = identification;
+        this.email = email;
+        this.phone = phone;
+        this.type = type;
+        this.status = status;
+        this.password = password;
         this.employmentDate = employmentDate;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
+    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date layoffDate, Date employmentDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.identification = identification;
+        this.email = email;
+        this.phone = phone;
         this.type = type;
+        this.status = status;
+        this.password = password;
+        this.layoffDate = layoffDate;
+        this.employmentDate = employmentDate;
     }
 
     public int getId() {
@@ -62,14 +77,6 @@ public class EmployeeTO implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getLastName() {
@@ -92,7 +99,7 @@ public class EmployeeTO implements Serializable {
         return email;
     }
 
-    public void setMail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -104,12 +111,36 @@ public class EmployeeTO implements Serializable {
         this.phone = phone;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Date getLayoffDate() {
         return layoffDate;
     }
 
-    public void setLayOffDate(Date layOffDate) {
-        this.layoffDate = layOffDate;
+    public void setLayoffDate(Date layoffDate) {
+        this.layoffDate = layoffDate;
     }
 
     public Date getEmploymentDate() {
@@ -119,5 +150,5 @@ public class EmployeeTO implements Serializable {
     public void setEmploymentDate(Date employmentDate) {
         this.employmentDate = employmentDate;
     }
-    
+
 }
