@@ -31,6 +31,50 @@ public class PermitService extends Service
         close(ps);
         close(conn);
     }
+    
+    public void insert(int idEmployee, Date date, String description, int status) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.WORK_PERMIT  (ID, id_employee, date, description, id_status_detail)VALUES(?,?,?,?,?)");
+        
+        int id = 0;
+        ps.setInt(1, id);
+        ps.setInt(2, idEmployee);
+        ps.setDate(3,date);
+        ps.setString(4, description);
+        ps.setInt(5, status);
+       
+        ps.executeUpdate();
+        close(ps);
+    }
+    public void insert(int idEmployee, Date date, String description) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.WORK_PERMIT  (ID, id_employee, date, description)VALUES(?,?,?,?)");
+        
+        int id = 0;
+        ps.setInt(1, id);
+        ps.setInt(2, idEmployee);
+        ps.setDate(3,date);
+        ps.setString(4, description);
+        
+       
+        ps.executeUpdate();
+        close(ps);
+    }
+     public void insert(int idEmployee, Date date) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.WORK_PERMIT  (ID, id_employee, date)VALUES(?,?,?)");
+        
+        int id = 0;
+        ps.setInt(1, id);
+        ps.setInt(2, idEmployee);
+        ps.setDate(3,date);
+        
+        
+       
+        ps.executeUpdate();
+        close(ps);
+    }
+
 
     @Override
     public void delete(PermitTO permit) throws Exception {

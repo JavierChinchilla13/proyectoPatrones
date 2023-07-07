@@ -1,6 +1,7 @@
 
 package com.mycompany.edu.ulatina.hth_db_connetion;
 
+import java.sql.Date;
 import java.sql.SQLException;
 public class Tester {
     
@@ -24,7 +25,8 @@ public class Tester {
             au.login("master@gmail.com","1234");
             System.out.println(au.login("master@gmail.com","1234"));*/
             EmployeeService au = new EmployeeService();
-            
+            PermitService a = new PermitService();
+            a.insert(1,Date.valueOf("2023-07-14"));
             //au.update(19, "Javier", "Chinchilla", "118980560", "javidilugo@gmail.com", "85058928", 2, 6, "1234");
             //hola
             for(EmployeeTO u : au.getEmployees()){
