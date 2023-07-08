@@ -120,6 +120,20 @@ public class PermitService extends Service
         close(conn);
     }
     
+     public void update(PermitTO per, int idEmployee, Date date, String description, int status) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.WORK_PERMIT SET ID_EMPLOYEE = ?, DATE = ?, DESCRIPTION = ?, ID_STATUS_DETAIL = ? WHERE ID = ?");
+        ps.setInt(1, idEmployee);
+        ps.setDate(2, date);
+        ps.setString(3, description);
+        ps.setInt(4, status);
+        ps.setInt(5, per.getId());
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+        close(conn);
+    }
+    
     public List<PermitTO> getPermits() throws Exception {
         Connection conn = getConnection();
         List<PermitTO> listaRetorno = new ArrayList<>();
