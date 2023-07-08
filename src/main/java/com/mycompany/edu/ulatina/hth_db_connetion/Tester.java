@@ -26,13 +26,26 @@ public class Tester {
             System.out.println(au.login("master@gmail.com","1234"));*/
             EmployeeService au = new EmployeeService();
             PermitService a = new PermitService();
-            a.insert(1,Date.valueOf("2023-07-14"));
+            //a.searchByPK(1);
+            for(PermitTO u : a.searchByEmployee(1)){
+                System.out.println("id: " + u.getId() );
+
+            }
+            
+            
+             
+             
+            /*System.out.println(a.searchByEmployee(1));
+            for(EmployeeTO u : au.getEmployees()){
+                System.out.println("id: " + u.getId() );
+
+            }
             //au.update(19, "Javier", "Chinchilla", "118980560", "javidilugo@gmail.com", "85058928", 2, 6, "1234");
             //hola
             for(EmployeeTO u : au.getEmployees()){
                 System.out.println("id: " + u.getId() );
 
-            }
+            }*/
             
         }catch(Exception e){
             e.printStackTrace();
