@@ -19,7 +19,8 @@ public class VacationService extends Service implements ICrud<VacationTO> {
     @Override
     public void insert(VacationTO vacationTO) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO THT.VACATION VALUES(?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO THT.VACATION VALUES(?,?,?)");
+        ps.setInt(1, 0);
         ps.setInt(1, vacationTO.getIdEmployee());
         ps.setInt(2, vacationTO.getVacationDays());
         ps.executeUpdate();
@@ -29,7 +30,8 @@ public class VacationService extends Service implements ICrud<VacationTO> {
 
     public void insert(int idEmployee, int vacationDays) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO THT.VACATION VALUES(?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO THT.VACATION VALUES(?,?,?)");
+        ps.setInt(1, 0);
         ps.setInt(1, idEmployee);
         ps.setInt(2, vacationDays);
         ps.executeUpdate();

@@ -39,10 +39,11 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
     @Override
     public void insert(ScheduleVacationTO schedueleVacationTO) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.SCHEDULE_VACATION VALUES(?,?,?)");
-        ps.setInt(1, schedueleVacationTO.getIdVacation());
-        ps.setDate(2, schedueleVacationTO.getStartDate());
-        ps.setDate(3, schedueleVacationTO.getEndDate());
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.SCHEDULE_VACATION VALUES(?,?,?,?)");
+        ps.setInt(1, 0);
+        ps.setInt(2, schedueleVacationTO.getIdVacation());
+        ps.setDate(4, schedueleVacationTO.getStartDate());
+        ps.setDate(4, schedueleVacationTO.getEndDate());
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -50,10 +51,11 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
 
     public void insert(int idVacation, Date startDate, Date endDate) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.SCHEDULE_VACATION VALUES(?,?,?)");
-        ps.setInt(1, idVacation);
-        ps.setDate(2, startDate);
-        ps.setDate(3, endDate);
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.SCHEDULE_VACATION VALUES(?,?,?,?)");
+        ps.setInt(1, 0);
+        ps.setInt(2, idVacation);
+        ps.setDate(3, startDate);
+        ps.setDate(4, endDate);
         ps.executeUpdate();
         close(ps);
         close(conn);

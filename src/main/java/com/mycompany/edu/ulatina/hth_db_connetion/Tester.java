@@ -24,7 +24,7 @@ public class Tester {
             EmployeeService au = new EmployeeService();
             au.login("master@gmail.com","1234");
             System.out.println(au.login("master@gmail.com","1234"));*/
-            EmployeeService au = new EmployeeService();
+            /*EmployeeService au = new EmployeeService();
             PermitService a = new PermitService();
             //a.searchByPK(1);
             for(PermitTO u : a.searchByEmployee(1)){
@@ -46,6 +46,11 @@ public class Tester {
                 System.out.println("id: " + u.getId() );
 
             }*/
+            
+            
+            ScheduleVacationService s = new ScheduleVacationService();
+            s.insert(0, null, null);
+            
             
         }catch(Exception e){
             e.printStackTrace();
