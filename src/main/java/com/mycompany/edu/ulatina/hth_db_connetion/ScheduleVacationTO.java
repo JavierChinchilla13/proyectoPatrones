@@ -17,15 +17,17 @@ public class ScheduleVacationTO implements Serializable {
     private int idVacation;
     private Date startDate;
     private Date endDate;
+    private int idStatus;
 
     public ScheduleVacationTO() {
     }
 
-    public ScheduleVacationTO(int id, int idVacation, Date startDate, Date endDate) {
+    public ScheduleVacationTO(int id, int idVacation, Date startDate, Date endDate, int idStatus) {
         this.id = id;
         this.idVacation = idVacation;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.idStatus = idStatus;
     }
 
     public int getId() {
@@ -58,5 +60,13 @@ public class ScheduleVacationTO implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public int getIdStatus() {
+        return idStatus;
+    }
+
+    public void setIdStatus(int idStatus) {
+        this.idStatus = idStatus;
     }
 }

@@ -50,13 +50,12 @@ public class Tester {
             ScheduleVacationService s = new ScheduleVacationService();
             java.util.Date currentDate = new java.util.Date();
             Date sqlDate = new Date(currentDate.getTime());
-            ScheduleVacationTO svt = new ScheduleVacationTO(1, 7, sqlDate, sqlDate);
-            s.insert(1, sqlDate, sqlDate);
-            s.update(svt, 7, sqlDate, sqlDate);
+            ScheduleVacationTO svt = new ScheduleVacationTO(1, 10, sqlDate, sqlDate, 15);
+            s.insert(90, sqlDate, sqlDate,16);
+            s.update(svt, 7, sqlDate, sqlDate, 16);
             for(ScheduleVacationTO x : s.getScheduleVacation()){
-                System.out.println("id: " + x.getId() + "\nid_vacation: " + x.getIdVacation() + "\nstart_date: " + x.getStartDate() + "\nend_date: " + x.getEndDate());
+                System.out.println("id: " + x.getId() + "\nid_vacation: " + x.getIdVacation() + "\nstart_date: " + x.getStartDate() + "\nend_date: " + x.getEndDate() + "\nId Status: " + x.getIdStatus());
             }
-            s.searchByPK(1);
             System.out.println(s.getVacationIdByEmployeeId(900));*/
         
             /*Bloque de VacationService
