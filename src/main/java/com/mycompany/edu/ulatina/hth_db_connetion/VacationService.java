@@ -19,10 +19,10 @@ public class VacationService extends Service implements ICrud<VacationTO> {
     @Override
     public void insert(VacationTO vacationTO) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO THT.VACATION VALUES(?,?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.VACATION VALUES(?,?,?)");
         ps.setInt(1, 0);
-        ps.setInt(1, vacationTO.getIdEmployee());
-        ps.setInt(2, vacationTO.getVacationDays());
+        ps.setInt(2, vacationTO.getIdEmployee());
+        ps.setInt(3, vacationTO.getVacationDays());
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -30,10 +30,10 @@ public class VacationService extends Service implements ICrud<VacationTO> {
 
     public void insert(int idEmployee, int vacationDays) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO THT.VACATION VALUES(?,?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.VACATION VALUES(?,?,?)");
         ps.setInt(1, 0);
-        ps.setInt(1, idEmployee);
-        ps.setInt(2, vacationDays);
+        ps.setInt(2, idEmployee);
+        ps.setInt(3, vacationDays);
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -60,7 +60,7 @@ public class VacationService extends Service implements ICrud<VacationTO> {
     
     public void update(VacationTO vacationTO) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.VACATION SET ID_EMPLOYEE = ?, VACATION_DAYS = ?, WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.VACATION SET ID_EMPLOYEE = ?, VACATIONS_DAYS = ? WHERE ID = ?");
         ps.setInt(1, vacationTO.getIdEmployee());
         ps.setInt(2, vacationTO.getVacationDays());
         ps.setInt(3, vacationTO.getId());
@@ -71,7 +71,7 @@ public class VacationService extends Service implements ICrud<VacationTO> {
 
     public void update(VacationTO vacationTO, int newIdEmployee, int newVacationDays) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.VACATION SET ID_EMPLOYEE = ?, VACATION_DAYS = ?, WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.VACATION SET ID_EMPLOYEE = ?, VACATIONS_DAYS = ? WHERE ID = ?");
         ps.setInt(1, newIdEmployee);
         ps.setInt(2, newVacationDays);
         ps.setInt(3, vacationTO.getId());
@@ -83,12 +83,12 @@ public class VacationService extends Service implements ICrud<VacationTO> {
     public List<VacationTO> getVacations() throws Exception {
         Connection conn = getConnection();
         List<VacationTO> vacationTOList = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_EMPLOYEE,VACATION_DAYS FROM HTH.VACATION");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_EMPLOYEE,VACATIONS_DAYS FROM HTH.VACATION");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("id");
             int idEmployee = rs.getInt("id_employee");
-            int VacationDays = rs.getInt("vacation_days");
+            int VacationDays = rs.getInt("vacations_days");
             VacationTO vacationTO = new VacationTO(id, idEmployee, VacationDays);
             vacationTOList.add(vacationTO);
         }
@@ -101,14 +101,14 @@ public class VacationService extends Service implements ICrud<VacationTO> {
     public VacationTO searchByPK(int pK) throws Exception {
         Connection conn = getConnection();
         VacationTO vacationTO = null;
-        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_EMPLOYEE,VACATION_DAYS FROM HTH.VACATION WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_EMPLOYEE,VACATIONS_DAYS FROM HTH.VACATION WHERE ID = ?");
         ps.setInt(1, pK);
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
             int id = rs.getInt("id");
             int idEmployee = rs.getInt("id_employee");
-            int vacationDays = rs.getInt("vacation_days");
+            int vacationDays = rs.getInt("vacations_days");
             vacationTO = new VacationTO(id, idEmployee, vacationDays);
         }
         close(rs);
