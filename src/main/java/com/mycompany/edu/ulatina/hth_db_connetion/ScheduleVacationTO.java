@@ -18,16 +18,26 @@ public class ScheduleVacationTO implements Serializable {
     private Date startDate;
     private Date endDate;
     private int idStatus;
+    private String description;
 
     public ScheduleVacationTO() {
     }
 
-    public ScheduleVacationTO(int id, int idVacation, Date startDate, Date endDate, int idStatus) {
+    public ScheduleVacationTO(int id, int idVacation, Date startDate, Date endDate, int idStatus, String description) {
         this.id = id;
         this.idVacation = idVacation;
         this.startDate = startDate;
         this.endDate = endDate;
         this.idStatus = idStatus;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getId() {

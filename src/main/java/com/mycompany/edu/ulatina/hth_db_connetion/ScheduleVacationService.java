@@ -39,25 +39,27 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
     @Override
     public void insert(ScheduleVacationTO scheduleVacationTO) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.SCHEDULE_VACATION VALUES(?,?,?,?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.SCHEDULE_VACATION VALUES(?,?,?,?,?,?)");
         ps.setInt(1, 0);
         ps.setInt(2, scheduleVacationTO.getIdVacation());
         ps.setDate(3, scheduleVacationTO.getStartDate());
         ps.setDate(4, scheduleVacationTO.getEndDate());
         ps.setInt(5, scheduleVacationTO.getIdStatus());
+        ps.setString(6, scheduleVacationTO.getDescription());
         ps.executeUpdate();
         close(ps);
         close(conn);
     }
 
-    public void insert(int idVacation, Date startDate, Date endDate, int idStatus) throws Exception {
+    public void insert(int idVacation, Date startDate, Date endDate, int idStatus, String description) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.SCHEDULE_VACATION VALUES(?,?,?,?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.SCHEDULE_VACATION VALUES(?,?,?,?,?,?)");
         ps.setInt(1, 0);
         ps.setInt(2, idVacation);
         ps.setDate(3, startDate);
         ps.setDate(4, endDate);
         ps.setInt(5, idStatus);
+        ps.setString(6, description);
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -84,25 +86,27 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
 
     public void update(ScheduleVacationTO scheduleVacationTO) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.SCHEDULE_VACATION SET ID_VACATION = ?, START_DATE = ?, END_DATE = ?, ID_STATUS_DETAIL = ? WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.SCHEDULE_VACATION SET ID_VACATION = ?, START_DATE = ?, END_DATE = ?, ID_STATUS_DETAIL = ?, DESCRIPTION = ? WHERE ID = ?");
         ps.setInt(1, scheduleVacationTO.getIdVacation());
         ps.setDate(2, scheduleVacationTO.getStartDate());
         ps.setDate(3, scheduleVacationTO.getEndDate());
         ps.setInt(4,scheduleVacationTO.getIdStatus());
-        ps.setInt(5, scheduleVacationTO.getId());
+        ps.setString(5, scheduleVacationTO.getDescription());
+        ps.setInt(6, scheduleVacationTO.getId());
         ps.executeUpdate();
         close(ps);
         close(conn);
     }
 
-    public void update(ScheduleVacationTO scheduleVacationTO, int newIdVacation, Date newStarDate, Date newEndDate, int newIdStatus) throws Exception {
+    public void update(ScheduleVacationTO scheduleVacationTO, int newIdVacation, Date newStarDate, Date newEndDate, int newIdStatus, String newDescription) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.SCHEDULE_VACATION SET ID_VACATION = ?, START_DATE = ?, END_DATE = ?, ID_STATUS_DETAIL = ? WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.SCHEDULE_VACATION SET ID_VACATION = ?, START_DATE = ?, END_DATE = ?, ID_STATUS_DETAIL = ?, DESCRIPTION = ? WHERE ID = ?");
         ps.setInt(1, newIdVacation);
         ps.setDate(2, newStarDate);
         ps.setDate(3, newEndDate);
         ps.setInt(4,newIdStatus);
-        ps.setInt(5, scheduleVacationTO.getId());
+        ps.setString(5, newDescription);
+        ps.setInt(6, scheduleVacationTO.getId());
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -111,7 +115,7 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
     public List<ScheduleVacationTO> getScheduleVacation() throws Exception {
         Connection conn = getConnection();
         List<ScheduleVacationTO> scheduleVacationList = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_VACATION,START_DATE,END_DATE,ID_STATUS_DETAIL FROM HTH.SCHEDULE_VACATION");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_VACATION,START_DATE,END_DATE,ID_STATUS_DETAIL,DESCRIPTION FROM HTH.SCHEDULE_VACATION");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("id");
@@ -119,7 +123,8 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
             Date startDate = rs.getDate("start_date");
             Date endDate = rs.getDate("end_date");
             int idStatus = rs.getInt("id_status_detail");
-            ScheduleVacationTO scheduleVacationTO = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus);
+            String description = rs.getString("description");
+            ScheduleVacationTO scheduleVacationTO = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
             scheduleVacationList.add(scheduleVacationTO);
         }
         close(rs);
@@ -144,7 +149,8 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
         Date startDate = rs.getDate("START_DATE");
         Date endDate = rs.getDate("END_DATE");
         int idStatus = rs.getInt("ID_STATUS_DETAIL");
-        ScheduleVacationTO scheduleVacationTO = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus);
+        String description = rs.getString("DESCRIPTION");
+        ScheduleVacationTO scheduleVacationTO = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
         scheduleVacationList.add(scheduleVacationTO);
     }
     
