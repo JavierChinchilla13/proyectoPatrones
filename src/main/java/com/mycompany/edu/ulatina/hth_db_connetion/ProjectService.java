@@ -82,7 +82,7 @@ public class ProjectService extends Service
     public ProjectTO searchByPK(int pK) throws Exception {
         Connection conn = getConnection();
         ProjectTO projectTO = null;
-        PreparedStatement ps = conn.prepareStatement("SELECT ID,NAME,ID_STATUS_DETAIL,STARTING_DATE,ENDING_DATE FROM HTH.PROJECT WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, ID_STATUS_DETAIL, STARTING_DATE, ENDING_DATE FROM HTH.PROJECT WHERE ID = ?");
         ps.setInt(1, pK);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {

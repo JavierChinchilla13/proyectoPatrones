@@ -8,10 +8,10 @@ public class Tester {
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
-            DocumentTO doc = new DocumentTO(1123, 1, "test","test path");
-            DocumentService ds = new DocumentService();
+            EmployeeService empServ = new EmployeeService();
+            EmployeeTO test = empServ.searchByPK(3);
             
-            ds.insert(doc);
+            System.out.println(test.getFirstName());
             
         } catch (Exception e) {
             e.printStackTrace();

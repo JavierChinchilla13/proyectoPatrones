@@ -122,17 +122,17 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
         if (rs.next()) {
             int id = rs.getInt("id");
-            String firstName = rs.getString("firstname");
-            String lastName = rs.getString("lastName");
-            String identification = rs.getString("identification");
-            String email = rs.getString("email");
-            String phone = rs.getString("phone");
-            int type = rs.getInt("id_type_detail");
-            int status = rs.getInt("id_status_detail");
-            String password = rs.getString("password");
-            Date employmentDate = rs.getDate("employment_Date");
-            if(rs.getDate("layoff_date") != null){
-                Date layoffDate = rs.getDate("layoff_Date");
+            String firstName = rs.getString("FIRST_NAME");
+            String lastName = rs.getString("LAST_NAME");
+            String identification = rs.getString("IDENTIFICATION");
+            String email = rs.getString("EMAIL");
+            String phone = rs.getString("PHONE");
+            int type = rs.getInt("ID_TYPE_DETAIL");
+            int status = rs.getInt("ID_STATUS_DETAIL");
+            String password = rs.getString("PASSWORD");
+            Date employmentDate = rs.getDate("eMPLOYMENT_DATE");
+            if(rs.getDate("LAYOFF_DATE") != null){
+                Date layoffDate = rs.getDate("LAYOFF_DATE");
                 employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
             }else{
                 employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
@@ -153,17 +153,17 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
         if (rs.next()) {
             int id = rs.getInt("id");
-            String firstName = rs.getString("firstname");
-            String lastName = rs.getString("lastName");
-            String identification = rs.getString("identification");
-            String email = rs.getString("email");
-            String phone = rs.getString("phone");
-            int type = rs.getInt("id_type_detail");
-            int status = rs.getInt("id_status_detail");
-            String password = rs.getString("password");
-            Date employmentDate = rs.getDate("employment_Date");
-            if(rs.getDate("layoff_date") != null){
-                Date layoffDate = rs.getDate("layoff_Date");
+            String firstName = rs.getString("FIRST_NAME");
+            String lastName = rs.getString("LAST_NAME");
+            String identification = rs.getString("IDENTIFICATION");
+            String email = rs.getString("EMAIL");
+            String phone = rs.getString("PHONE");
+            int type = rs.getInt("ID_TYPE_DETAIL");
+            int status = rs.getInt("ID_STATUS_DETAIL");
+            String password = rs.getString("PASSWORD");
+            Date employmentDate = rs.getDate("eMPLOYMENT_DATE");
+            if(rs.getDate("LAYOFF_DATE") != null){
+                Date layoffDate = rs.getDate("LAYOFF_DATE");
                 employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
             }else{
                 employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
@@ -184,17 +184,17 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
         if (rs.next()) {
             int id = rs.getInt("id");
-            String firstName = rs.getString("firstname");
-            String lastName = rs.getString("lastName");
-            String identification = rs.getString("identification");
-            String email = rs.getString("email");
-            String phone = rs.getString("phone");
-            int type = rs.getInt("id_type_detail");
-            int status = rs.getInt("id_status_detail");
-            String password = rs.getString("password");
-            Date employmentDate = rs.getDate("employment_Date");
-            if(rs.getDate("layoff_date") != null){
-                Date layoffDate = rs.getDate("layoff_Date");
+            String firstName = rs.getString("FIRST_NAME");
+            String lastName = rs.getString("LAST_NAME");
+            String identification = rs.getString("IDENTIFICATION");
+            String email = rs.getString("EMAIL");
+            String phone = rs.getString("PHONE");
+            int type = rs.getInt("ID_TYPE_DETAIL");
+            int status = rs.getInt("ID_STATUS_DETAIL");
+            String password = rs.getString("PASSWORD");
+            Date employmentDate = rs.getDate("eMPLOYMENT_DATE");
+            if(rs.getDate("LAYOFF_DATE") != null){
+                Date layoffDate = rs.getDate("LAYOFF_DATE");
                 employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
             }else{
                 employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
