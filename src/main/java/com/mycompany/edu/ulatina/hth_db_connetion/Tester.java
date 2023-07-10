@@ -8,7 +8,7 @@ public class Tester {
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
-            DocumentTO doc = new DocumentTO(1, 1, "test path");
+            DocumentTO doc = new DocumentTO(1123, 1, "test","test path");
             DocumentService ds = new DocumentService();
             
             ds.insert(doc);
