@@ -129,24 +129,29 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
     }
 
     public List<ScheduleVacationTO> getScheduleVacationOf(int pK) throws Exception {
-        Connection conn = getConnection();
-        List<ScheduleVacationTO> scheduleVacationList = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_VACATION, START_DATE, END_DATE, ID_STATUS_DETAIL FROM HTH.SCHEDULE_VACATION WHERE ID = ?");
-        ps.setInt(1, pK);
-        ResultSet rs = ps.executeQuery();
+    Connection conn = getConnection();
+    List<ScheduleVacationTO> scheduleVacationList = new ArrayList<>();
+    PreparedStatement ps = conn.prepareStatement("SELECT sv.ID, sv.ID_VACATION, sv.START_DATE, sv.END_DATE, sv.ID_STATUS_DETAIL " +
+                                                   "FROM HTH.SCHEDULE_VACATION sv " +
+                                                   "INNER JOIN HTH.VACATION v ON sv.ID_VACATION = v.ID " +
+                                                   "WHERE v.ID_EMPLOYEE = ?");
+    ps.setInt(1, pK);
+    ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
-            int id = rs.getInt("id");
-            int idVacation = rs.getInt("id_vacation");
-            Date startDate = rs.getDate("start_date");
-            Date endDate = rs.getDate("end_date");
-            int idStatus = rs.getInt("id_status_detail");
-            ScheduleVacationTO scheduleVacationTO = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus);
-            scheduleVacationList.add(scheduleVacationTO);
-        }
-        close(rs);
-        close(ps);
-        close(conn);
-        return scheduleVacationList;
+    while (rs.next()) {
+        int id = rs.getInt("ID");
+        int idVacation = rs.getInt("ID_VACATION");
+        Date startDate = rs.getDate("START_DATE");
+        Date endDate = rs.getDate("END_DATE");
+        int idStatus = rs.getInt("ID_STATUS_DETAIL");
+        ScheduleVacationTO scheduleVacationTO = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus);
+        scheduleVacationList.add(scheduleVacationTO);
     }
+    
+    close(rs);
+    close(ps);
+    close(conn);
+    
+    return scheduleVacationList;
+}
 }
