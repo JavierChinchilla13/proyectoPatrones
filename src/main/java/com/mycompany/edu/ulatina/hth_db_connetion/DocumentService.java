@@ -90,7 +90,7 @@ public class DocumentService extends Service implements ICrud < DocumentTO > {
     
     public DocumentTO searchByPK(int PK) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, NAME, PATH FROM HTH.DOCUMET WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, NAME, PATH FROM HTH.DOCUMENT WHERE ID = ?");
         ps.setInt(1, PK);
         ResultSet rs = ps.executeQuery();
         DocumentTO doc = null;
