@@ -105,13 +105,14 @@ public class PermitService extends Service
     }
     public void update(PermitTO permit) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.WORK_PERMIT SET ID_EMPLOYEE = ?, DATE = ?, DESCRIPTION = ?, ID_STATUS_DETAIL = ? WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.WORK_PERMIT SET ID_EMPLOYEE = ?, DATE = ?, DESCRIPTION = ?, ID_STATUS_DETAIL = ?, RESPONSE = ? WHERE ID = ?");
         
         ps.setInt(1, permit.getIdEmployee());
         ps.setDate(2, (java.sql.Date) (java.sql.Date)permit.getDate());
         
         ps.setString(3, permit.getDescription());
         ps.setInt(4,permit.getStatus());
+        ps.setString(5, permit.getResponse());
         ps.setInt(5, permit.getId());
         
         ps.executeUpdate();
@@ -120,14 +121,15 @@ public class PermitService extends Service
         close(conn);
     }
     
-     public void update(PermitTO per, int idEmployee, Date date, String description, int status) throws Exception {
+     public void update(PermitTO per, int idEmployee, Date date, String description, int status, String response) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.WORK_PERMIT SET ID_EMPLOYEE = ?, DATE = ?, DESCRIPTION = ?, ID_STATUS_DETAIL = ? WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.WORK_PERMIT SET ID_EMPLOYEE = ?, DATE = ?, DESCRIPTION = ?, ID_STATUS_DETAIL = ?, RESPONSE = ? WHERE ID = ?");
         ps.setInt(1, idEmployee);
         ps.setDate(2, date);
         ps.setString(3, description);
         ps.setInt(4, status);
-        ps.setInt(5, per.getId());
+        ps.setString(5, response);
+        ps.setInt(6, per.getId());
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -137,7 +139,7 @@ public class PermitService extends Service
     public List<PermitTO> getPermits() throws Exception {
         Connection conn = getConnection();
         List<PermitTO> listaRetorno = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL FROM HTH.WORK_PERMIT");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("id");
@@ -145,7 +147,8 @@ public class PermitService extends Service
             Date date = rs.getDate("DATE");
             String description = rs.getString("DESCRIPTION");
             int status = rs.getInt("id_status_detail");
-            PermitTO permit = new PermitTO(id, employee, date, description, status);
+            String response = rs.getString("response");
+            PermitTO permit = new PermitTO(id, employee, date, description, status, response);
             listaRetorno.add(permit);
         }
         close(rs);
@@ -156,7 +159,7 @@ public class PermitService extends Service
     public PermitTO searchByPK(int pK) throws Exception {
         Connection conn = getConnection();
         PermitTO permit = null;
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL FROM HTH.WORK_PERMIT WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT WHERE ID = ?");
         ps.setInt(1, pK);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
@@ -165,7 +168,8 @@ public class PermitService extends Service
             Date date = rs.getDate("DATE");
             String description = rs.getString("DESCRIPTION");
             int status = rs.getInt("id_status_detail");
-            permit  = new PermitTO(id, employee, date, description, status);
+            String response = rs.getString("response");
+            permit  = new PermitTO(id, employee, date, description, status, response);
         }
         close(rs);
         close(ps);
@@ -176,7 +180,7 @@ public class PermitService extends Service
         Connection conn = getConnection();
         //PermitTO permit = null;
         List<PermitTO> listaRetorno = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL FROM HTH.WORK_PERMIT WHERE ID_EMPLOYEE = ?");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT WHERE ID_EMPLOYEE = ?");
         ps.setInt(1, employeeId);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -185,7 +189,8 @@ public class PermitService extends Service
             Date date = rs.getDate("DATE");
             String description = rs.getString("DESCRIPTION");
             int status = rs.getInt("id_status_detail");
-            PermitTO permit  = new PermitTO(id, employee, date, description, status);
+            String response = rs.getString("response");
+            PermitTO permit  = new PermitTO(id, employee, date, description, status, response);
             listaRetorno.add(permit);
         }
         close(rs);

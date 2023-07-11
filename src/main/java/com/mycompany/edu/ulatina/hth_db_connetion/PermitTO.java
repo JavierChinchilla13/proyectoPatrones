@@ -18,16 +18,18 @@ public class PermitTO implements Serializable{
     private Date date;
     private String description;
     private int status;
+    private String response;
 
     public PermitTO() {
     }
 
-    public PermitTO(int id, int idEmployee, Date date, String description, int status) {
+    public PermitTO(int id, int idEmployee, Date date, String description, int status, String response) {
         this.id = id;
         this.idEmployee = idEmployee;
         this.date = date;
         this.description = description;
         this.status = status;
+        this.response = response;
     }
 
     public int getId() {
@@ -69,5 +71,16 @@ public class PermitTO implements Serializable{
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+    
+
+    
     
 }
