@@ -136,7 +136,7 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
     public List<ScheduleVacationTO> getScheduleVacationOf(int pK) throws Exception {
     Connection conn = getConnection();
     List<ScheduleVacationTO> scheduleVacationList = new ArrayList<>();
-    PreparedStatement ps = conn.prepareStatement("SELECT sv.ID, sv.ID_VACATION, sv.START_DATE, sv.END_DATE, sv.ID_STATUS_DETAIL " +
+    PreparedStatement ps = conn.prepareStatement("SELECT sv.ID, sv.ID_VACATION, sv.START_DATE, sv.END_DATE, sv.ID_STATUS_DETAIL, sv.DESCRIPTION " +
                                                    "FROM HTH.SCHEDULE_VACATION sv " +
                                                    "INNER JOIN HTH.VACATION v ON sv.ID_VACATION = v.ID " +
                                                    "WHERE v.ID_EMPLOYEE = ?");
