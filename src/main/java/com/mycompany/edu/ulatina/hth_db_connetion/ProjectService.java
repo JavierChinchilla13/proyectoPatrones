@@ -103,7 +103,7 @@ public class ProjectService extends Service
     public List<ProjectTO> getProjects() throws Exception {
         Connection conn = getConnection();
         List<ProjectTO> listaRetorno = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, ID_STATUS_DETAIL, MEETING_DATE, STARTING_DATE, ENDING_DATE FROM HTH.PROJECTS");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, ID_STATUS_DETAIL, MEETING_DATE, STARTING_DATE, ENDING_DATE FROM HTH.PROJECT");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("id");
