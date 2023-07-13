@@ -103,13 +103,13 @@ public class ProjectService extends Service
     public List<ProjectTO> getProjects() throws Exception {
         Connection conn = getConnection();
         List<ProjectTO> listaRetorno = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, ID_STATUS_DETAIL, MEETING_DATE, STARTING_DATE, ENDING_DATE FROM HTH.PROJECT");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, ID_STATUS_DETAIL, STARTING_DATE, ENDING_DATE FROM HTH.PROJECT");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int id = rs.getInt("id");
             String name = rs.getString("name");
             int status = rs.getInt("id_status_detail");
-            Date startingDate = rs.getDate("MEETING_DATE");
+            Date startingDate = rs.getDate("STARTING_DATE");
             Date endingDate = rs.getDate("ENDING_DATE");
            
             ProjectTO project = new ProjectTO(id, name, status, startingDate, endingDate);
