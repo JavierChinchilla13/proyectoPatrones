@@ -48,7 +48,7 @@ public class VacationService extends Service implements ICrud<VacationTO> {
         close(ps);
         close(conn);
     }
-    
+
     public void delete(int pK) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("DELETE FROM HTH.VACATION WHERE ID = ?");
@@ -57,7 +57,7 @@ public class VacationService extends Service implements ICrud<VacationTO> {
         close(ps);
         close(conn);
     }
-    
+
     public void update(VacationTO vacationTO) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE HTH.VACATION SET ID_EMPLOYEE = ?, VACATIONS_DAYS = ? WHERE ID = ?");
@@ -75,6 +75,16 @@ public class VacationService extends Service implements ICrud<VacationTO> {
         ps.setInt(1, newIdEmployee);
         ps.setInt(2, newVacationDays);
         ps.setInt(3, vacationTO.getId());
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+    }
+
+    public void updateVacationDays(int idEmployee, int newVacationDays) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("UPDATE Vacation SET vacations_Days = ? WHERE id_employee = ?");
+        ps.setInt(1, newVacationDays);
+        ps.setInt(2, idEmployee);
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -116,24 +126,23 @@ public class VacationService extends Service implements ICrud<VacationTO> {
         close(conn);
         return vacationTO;
     }
-    
+
     public int getVacationDaysOf(int pK) throws Exception {
-    Connection conn = getConnection();
-    int vacationDays = 0;
-    PreparedStatement ps = conn.prepareStatement("SELECT VACATIONS_DAYS FROM HTH.VACATION WHERE ID_EMPLOYEE = ?");
-    ps.setInt(1, pK);
-    ResultSet rs = ps.executeQuery();
+        Connection conn = getConnection();
+        int vacationDays = 0;
+        PreparedStatement ps = conn.prepareStatement("SELECT VACATIONS_DAYS FROM HTH.VACATION WHERE ID_EMPLOYEE = ?");
+        ps.setInt(1, pK);
+        ResultSet rs = ps.executeQuery();
 
-    if (rs.next()) {
-        vacationDays = rs.getInt("VACATIONS_DAYS");
+        if (rs.next()) {
+            vacationDays = rs.getInt("VACATIONS_DAYS");
+        }
+
+        close(rs);
+        close(ps);
+        close(conn);
+
+        return vacationDays;
     }
-    
-    close(rs);
-    close(ps);
-    close(conn);
-    
-    return vacationDays;
-}
-
 
 }
