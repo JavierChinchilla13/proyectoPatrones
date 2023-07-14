@@ -14,6 +14,10 @@ public class Tester {
             
             System.out.println(test.getName());
             
+            VacationService serv2 = new VacationService();
+            
+            System.out.println(serv2.getVacationDaysOf(2));
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
