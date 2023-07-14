@@ -117,9 +117,9 @@ public class VacationService extends Service implements ICrud<VacationTO> {
         return vacationTO;
     }
     
-    public VacationTO getVacationsDaysOf(int pK) throws Exception {
+    public List<VacationTO> getVacationsDaysOf(int pK) throws Exception {
         Connection conn = getConnection();
-        VacationTO vacationTO = null;
+        List<VacationTO> vacationTO = null;
         PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_EMPLOYEE,VACATIONS_DAYS FROM HTH.VACATION WHERE ID_EMPLOYEE = ?");
         ps.setInt(1, pK);
         ResultSet rs = ps.executeQuery();
@@ -128,7 +128,8 @@ public class VacationService extends Service implements ICrud<VacationTO> {
             int id = rs.getInt("id");
             int idEmployee = rs.getInt("id_employee");
             int vacationDays = rs.getInt("vacations_days");
-            vacationTO = new VacationTO(id, idEmployee, vacationDays);
+            VacationTO vacationTO2 = new VacationTO(id, idEmployee, vacationDays);
+            vacationTO.add(vacationTO2);
         }
         close(rs);
         close(ps);
