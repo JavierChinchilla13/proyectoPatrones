@@ -116,5 +116,24 @@ public class VacationService extends Service implements ICrud<VacationTO> {
         close(conn);
         return vacationTO;
     }
+    
+    public VacationTO getVacationsDaysOf(int pK) throws Exception {
+        Connection conn = getConnection();
+        VacationTO vacationTO = null;
+        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_EMPLOYEE,VACATIONS_DAYS FROM HTH.VACATION WHERE ID_EMPLOYEE = ?");
+        ps.setInt(1, pK);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int id = rs.getInt("id");
+            int idEmployee = rs.getInt("id_employee");
+            int vacationDays = rs.getInt("vacations_days");
+            vacationTO = new VacationTO(id, idEmployee, vacationDays);
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return vacationTO;
+    }
 
 }
