@@ -143,6 +143,26 @@ public class ProjectXEmployeeService extends Service implements ICrud<ProjectXEm
         close(ps);
         close(conn);
     }
+    
+    public ProjectXEmployeeTO searchPXEByPk(int pK) throws Exception {
+        Connection conn = getConnection();
+        ProjectXEmployeeTO projectXEmployeeTO = null;
+        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_PROJECT,ID_EMPLOYEE,HOURS_INVESTED,FEEDBACK FROM HTH.PROJECT_X_EMPLOYEE WHERE ID = ?");
+        ps.setInt(1, pK);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int id = rs.getInt("id");
+            int projectId = rs.getInt("id_project");
+            int idEmployee = rs.getInt("id_employee");
+            int hoursInvested = rs.getInt("hours_invested");
+            String feedback = rs.getString("feedback");
+            projectXEmployeeTO  = new ProjectXEmployeeTO(id, projectId, idEmployee, hoursInvested, feedback);
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return projectXEmployeeTO;
+    }
 
     public List<ProjectXEmployeeTO> getProjectEmployeeById(int employeeId) throws Exception {
         Connection conn = getConnection();
