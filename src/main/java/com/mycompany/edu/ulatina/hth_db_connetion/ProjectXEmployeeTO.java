@@ -47,8 +47,6 @@ public class ProjectXEmployeeTO implements Serializable {
         this.projectName = projectName;
         this.employeeName = employeeName;
     }
-    
-    
 
     public String getEmployeeName() {
         return employeeName;
@@ -57,8 +55,6 @@ public class ProjectXEmployeeTO implements Serializable {
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
     }
-    
-    
 
     public String getProjectName() {
         return projectName;
