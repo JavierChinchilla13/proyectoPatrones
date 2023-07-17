@@ -112,6 +112,27 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
         close(conn);
     }
 
+    public ScheduleVacationTO searchByPK(int pK) throws Exception {
+        Connection conn = getConnection();
+        ScheduleVacationTO scheduleVacationTO = null;
+        PreparedStatement ps = conn.prepareStatement("SELECT ID,ID_VACATION,START_DATE,END_DATE,ID_STATUS_DETAIL,DESCRIPTION FROM HTH.SCHEDULE_VACATION WHERE ID = ?");
+        ps.setInt(1, pK);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int id = rs.getInt("id");
+            int idVacation = rs.getInt("id_vacation");
+            Date startDate = rs.getDate("start_date");
+            Date endDate = rs.getDate("end_date");
+            int idStatus = rs.getInt("id_status_detail");
+            String description = rs.getString("description");
+            scheduleVacationTO  = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return scheduleVacationTO;
+    }
+    
     public List<ScheduleVacationTO> getScheduleVacation() throws Exception {
         Connection conn = getConnection();
         List<ScheduleVacationTO> scheduleVacationList = new ArrayList<>();
