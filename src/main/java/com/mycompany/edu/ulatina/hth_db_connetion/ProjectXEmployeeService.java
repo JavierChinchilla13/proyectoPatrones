@@ -143,7 +143,7 @@ public class ProjectXEmployeeService extends Service implements ICrud<ProjectXEm
         close(ps);
         close(conn);
     }
-    
+
     public ProjectXEmployeeTO searchPXEByPk(int pK) throws Exception {
         Connection conn = getConnection();
         ProjectXEmployeeTO projectXEmployeeTO = null;
@@ -156,7 +156,7 @@ public class ProjectXEmployeeService extends Service implements ICrud<ProjectXEm
             int idEmployee = rs.getInt("id_employee");
             int hoursInvested = rs.getInt("hours_invested");
             String feedback = rs.getString("feedback");
-            projectXEmployeeTO  = new ProjectXEmployeeTO(id, projectId, idEmployee, hoursInvested, feedback);
+            projectXEmployeeTO = new ProjectXEmployeeTO(id, projectId, idEmployee, hoursInvested, feedback);
         }
         close(rs);
         close(ps);
@@ -168,9 +168,9 @@ public class ProjectXEmployeeService extends Service implements ICrud<ProjectXEm
         Connection conn = getConnection();
         List<ProjectXEmployeeTO> projectXEmployeeList = new ArrayList<>();
         PreparedStatement ps = conn.prepareStatement("SELECT pxe.ID, pxe.ID_PROJECT, p.name AS project_name, pxe.id_employee, pxe.hours_invested, pxe.feedback "
-                                                    + "FROM project_x_employee pxe "
-                                                    + "INNER JOIN project p ON pxe.id_project = p.id "
-                                                    + "WHERE pxe.id_employee = ?");
+                + "FROM project_x_employee pxe "
+                + "INNER JOIN project p ON pxe.id_project = p.id "
+                + "WHERE pxe.id_employee = ?");
         ps.setInt(1, employeeId);
         ResultSet rs = ps.executeQuery();
 
@@ -191,6 +191,33 @@ public class ProjectXEmployeeService extends Service implements ICrud<ProjectXEm
         close(conn);
 
         return projectXEmployeeList;
+    }
+
+    public List<ProjectXEmployeeTO> getAllProjectsXEmployeesWithNames() throws Exception {
+        Connection conn = getConnection();
+        List<ProjectXEmployeeTO> projectEmployeeList = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("SELECT pxe.ID, p.name AS project_name, e.first_name AS employee_name, pxe.HOURS_INVESTED, pxe.FEEDBACK "
+                + "FROM HTH.PROJECT_X_EMPLOYEE pxe "
+                + "INNER JOIN HTH.PROJECT p ON pxe.ID_PROJECT = p.ID "
+                + "INNER JOIN HTH.EMPLOYEE e ON pxe.ID_EMPLOYEE = e.ID");
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("ID");
+            String projectName = rs.getString("project_name");
+            String employeeName = rs.getString("employee_name");
+            int hoursInvested = rs.getInt("HOURS_INVESTED");
+            String feedback = rs.getString("FEEDBACK");
+
+            ProjectXEmployeeTO projectEmployeeTO = new ProjectXEmployeeTO(id, hoursInvested, feedback, projectName, employeeName);
+            projectEmployeeList.add(projectEmployeeTO);
+        }
+
+        close(rs);
+        close(ps);
+        close(conn);
+
+        return projectEmployeeList;
     }
 
 }
