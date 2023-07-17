@@ -17,6 +17,7 @@ public class ProjectXEmployeeTO implements Serializable {
     private int idEmployee;
     private int hoursInvested;
     private String feedBack;
+    private String projectName;
 
     public ProjectXEmployeeTO() {
     }
@@ -27,6 +28,23 @@ public class ProjectXEmployeeTO implements Serializable {
         this.idEmployee = idEmployee;
         this.hoursInvested = hoursInvested;
         this.feedBack = feedBack;
+    }
+
+    public ProjectXEmployeeTO(int id, int idProject, int idEmployee, int hoursInvested, String feedBack, String projectName) {
+        this.id = id;
+        this.idProject = idProject;
+        this.idEmployee = idEmployee;
+        this.hoursInvested = hoursInvested;
+        this.feedBack = feedBack;
+        this.projectName = projectName;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public int getId() {

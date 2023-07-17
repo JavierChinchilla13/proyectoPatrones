@@ -144,4 +144,33 @@ public class ProjectXEmployeeService extends Service implements ICrud<ProjectXEm
         close(conn);
     }
 
+    public List<ProjectXEmployeeTO> getProjectEmployeeById(int employeeId) throws Exception {
+        Connection conn = getConnection();
+        List<ProjectXEmployeeTO> projectXEmployeeList = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("SELECT pxe.ID, pxe.ID_PROJECT, p.name AS project_name, pxe.id_employee, pxe.hours_invested, pxe.feedback "
+                                                    + "FROM project_x_employee pxe "
+                                                    + "INNER JOIN project p ON pxe.id_project = p.id "
+                                                    + "WHERE pxe.id_employee = ?");
+        ps.setInt(1, employeeId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            int projectId = rs.getInt("id_project");
+            String projectName = rs.getString("project_name");
+            int idEmployee = rs.getInt("id_employee");
+            int hoursInvested = rs.getInt("hours_invested");
+            String feedback = rs.getString("feedback");
+
+            ProjectXEmployeeTO projectXEmployeeTO = new ProjectXEmployeeTO(id, projectId, idEmployee, hoursInvested, feedback, projectName);
+            projectXEmployeeList.add(projectXEmployeeTO);
+        }
+
+        close(rs);
+        close(ps);
+        close(conn);
+
+        return projectXEmployeeList;
+    }
+
 }
