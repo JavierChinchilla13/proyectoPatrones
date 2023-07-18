@@ -5,8 +5,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
 
 public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
@@ -17,6 +21,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
     public void insert(EmployeeTO emp) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.EMPLOYEE (ID, first_name, last_name, IDENTIFICATION, EMAIL, PHONE, id_type_detail, id_status_detail, PASSWORD, employment_date)VALUES(?,?,?,?,?,?,?,?,?,?)");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
         int id = 0;
         ps.setInt(1, id);
         ps.setString(2, emp.getFirstName());
@@ -27,7 +35,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ps.setInt(7,emp.getType());
         ps.setInt(8,emp.getStatus());
         ps.setString(9, emp.getPassword());
-        ps.setDate(10, emp.getEmploymentDate());
+        ps.setDate(10, date);
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -85,6 +93,40 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
         ps = getConn().prepareStatement("DELETE FROM HTH.EMPLOYEE WHERE id=?");
         ps.setInt(1, id);
+
+        ps.executeUpdate();
+
+        super.close(ps);
+        super.close(conn);
+
+    }
+
+    public void update1() throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+
+        ps = getConn().prepareStatement("UPDATE HTH.VACATION \n"
+                + "INNER JOIN HTH.EMPLOYEE\n"
+                + "ON HTH.VACATION.id_employee= HTH.EMPLOYEE.id\n"
+                + "SET HTH.VACATION.vacations_days =  DATEDIFF(current_date(), HTH.EMPLOYEE.employment_date)/(30.416/0.8)\n"
+                + "WHERE HTH.VACATION.id_employee= HTH.EMPLOYEE.id AND DATEDIFF(current_date(), HTH.EMPLOYEE.employment_date)< 365");
+
+        ps.executeUpdate();
+
+        super.close(ps);
+        super.close(conn);
+
+    }
+
+    public void update365() throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+
+        ps = getConn().prepareStatement("UPDATE HTH.VACATION \n"
+                + "INNER JOIN HTH.EMPLOYEE\n"
+                + "ON HTH.VACATION.id_employee= HTH.EMPLOYEE.id\n"
+                + "SET HTH.VACATION.vacations_days =  (DATEDIFF(current_date(), HTH.EMPLOYEE.employment_date)-365)/(30.416/1)+12\n"
+                + "WHERE HTH.VACATION.id_employee= HTH.EMPLOYEE.id AND DATEDIFF(current_date(), HTH.EMPLOYEE.employment_date)> 365");
 
         ps.executeUpdate();
 
@@ -252,6 +294,8 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ps.setString(2, passwordToLogin);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
+            update1();
+            update365();
             int id = rs.getInt("id");
             String firstName = rs.getString("first_name");
             String lastName = rs.getString("last_name");

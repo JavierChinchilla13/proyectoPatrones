@@ -22,6 +22,16 @@ public class Tester {
                 System.out.println("Feedback: " + projectEmployee.getFeedBack());
                 System.out.println("--------------------------");
             }
+            
+            
+            
+            EmployeeService j = new EmployeeService();
+            
+            EmployeeTO i = new EmployeeTO(0,"Ja","Chin","12333","ju@mal","",3,5,"1234");
+            
+            j.insert(i);
+            
+            j.login("master@gmail.com", "1234");
 
         } catch (Exception e) {
             e.printStackTrace();
