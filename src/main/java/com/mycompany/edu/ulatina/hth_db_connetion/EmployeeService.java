@@ -57,8 +57,12 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ps.setString(9, password);
         ps.setDate(10, employmentDate);
         ps.executeUpdate();
+        VacationService v = new VacationService();
+        v.insert(id, 0);
         close(ps);
     }
+
+    
 
     @Override
     public void delete(EmployeeTO employeeTO) throws Exception {
@@ -93,6 +97,21 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
         ps = getConn().prepareStatement("DELETE FROM HTH.EMPLOYEE WHERE id=?");
         ps.setInt(1, id);
+
+        ps.executeUpdate();
+
+        super.close(ps);
+        super.close(conn);
+
+    }
+    
+    public void insertVac() throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+
+        ps = getConn().prepareStatement("INSERT INTO HTH.VACATION (id_employee, vacations_days)\n"
+                + "SELECT HTH.EMPLOYEE.id, 0\n"
+                + "FROM HTH.EMPLOYEE where HTH.EMPLOYEE.id NOT IN (SELECT id_employee FROM hth.vacation)");
 
         ps.executeUpdate();
 
@@ -294,8 +313,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ps.setString(2, passwordToLogin);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
+            insertVac();
             update1();
             update365();
+            
             int id = rs.getInt("id");
             String firstName = rs.getString("first_name");
             String lastName = rs.getString("last_name");

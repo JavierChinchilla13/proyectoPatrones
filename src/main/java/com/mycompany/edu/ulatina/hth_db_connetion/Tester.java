@@ -26,12 +26,15 @@ public class Tester {
             
             
             EmployeeService j = new EmployeeService();
+            VacationService v = new VacationService();
             
-            EmployeeTO i = new EmployeeTO(0,"Ja","Chin","12333","ju@mal","",3,5,"1234");
+            EmployeeTO i = new EmployeeTO(0,"y","Chin","18","y@mal","",3,5,"1234");
             
             j.insert(i);
             
-            j.login("master@gmail.com", "1234");
+           
+            
+            
 
         } catch (Exception e) {
             e.printStackTrace();
