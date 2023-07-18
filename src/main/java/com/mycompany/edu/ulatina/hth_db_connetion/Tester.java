@@ -11,7 +11,7 @@ public class Tester {
         try {
             ProjectXEmployeeService p = new ProjectXEmployeeService();
 
-            List<ProjectXEmployeeTO> projectEmployeeList = p.getProjectEmployeeById(1);
+            /*List<ProjectXEmployeeTO> projectEmployeeList = p.getProjectEmployeeById(1);
 
             for (ProjectXEmployeeTO projectEmployee : projectEmployeeList) {
                 System.out.println("ID: " + projectEmployee.getId());
@@ -21,16 +21,21 @@ public class Tester {
                 System.out.println("Hours Invested: " + projectEmployee.getHoursInvested());
                 System.out.println("Feedback: " + projectEmployee.getFeedBack());
                 System.out.println("--------------------------");
-            }
+            }*/
             
             
             
             EmployeeService j = new EmployeeService();
             VacationService v = new VacationService();
+            ScheduleVacationService s = new ScheduleVacationService();
             
-            EmployeeTO i = new EmployeeTO(0,"y","Chin","18","y@mal","",3,5,"1234");
+            /*EmployeeTO i = new EmployeeTO(0,"y","Chin","18","y@mal","",3,5,"1234");
             
-            j.insert(i);
+            j.insert(i);*/
+            
+            
+            System.out.println(s.getVacationDaysOff(19));
+            System.out.println(v.getVacationDaysOf(1));
             
            
             
