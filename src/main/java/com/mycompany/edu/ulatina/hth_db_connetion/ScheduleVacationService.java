@@ -136,7 +136,7 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
     public int getVacationDaysOff(int pK) throws Exception {
         Connection conn = getConnection();
         int vacationDays = 0;
-        PreparedStatement ps = conn.prepareStatement("SELECT DATEDIFF(START_DATE, END_DATE)\n"
+        PreparedStatement ps = conn.prepareStatement("SELECT SUM(DATEDIFF(START_DATE, END_DATE))\n"
                 + "FROM HTH.SCHEDULE_VACATION,  HTH.VACATION\n"
                 + "WHERE HTH.VACATION.id_employee = ?\n"
                 + "AND HTH.VACATION.id = HTH.SCHEDULE_VACATION.id_vacation AND id_status_detail = 15");
@@ -144,7 +144,7 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
         ResultSet rs = ps.executeQuery();
         
          if (rs.next()) {
-            vacationDays = rs.getInt("DATEDIFF(START_DATE, END_DATE)");
+            vacationDays = rs.getInt("SUM(DATEDIFF(START_DATE, END_DATE))");
         }
 
         close(rs);
