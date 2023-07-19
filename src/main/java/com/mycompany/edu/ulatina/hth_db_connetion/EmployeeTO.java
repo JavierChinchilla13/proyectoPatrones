@@ -148,5 +148,8 @@ public class EmployeeTO implements Serializable {
     public void setEmploymentDate(Date employmentDate) {
         this.employmentDate = employmentDate;
     }
-
+    
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
 }

@@ -21,20 +21,33 @@ public class ProjectService extends Service
         ps.setDate(5, (java.sql.Date) (Date) project.getEndingDate());
         if (!project.getEmployees().isEmpty()) {
             for (EmployeeTO emp : project.getEmployees()) {
-                agregarColaborador(project, emp);
+                addCollaborator(project, emp);
             }
         }
         ps.executeUpdate();
         close(ps);
         close(conn);
     }
-    public void agregarColaborador(ProjectTO project, EmployeeTO emp) throws Exception{
+    public void addCollaborator(ProjectTO project, EmployeeTO emp) throws Exception{
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.PROJECT_X_EMPLOYEE (ID, ID_PROJECT, ID_EMPLOYEE, HOUERS_INVESTED) VALUES(?,?,?,?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.PROJECT_X_EMPLOYEE (ID, ID_PROJECT, ID_EMPLOYEE, HOURS_INVESTED) VALUES(?,?,?,?)");
         int id = 0;
         ps.setInt(1, id);
         ps.setInt(2, project.getId());
         ps.setInt(3, emp.getId());
+        ps.setInt(3, 0);
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+    }
+    
+    public void addCollaborator(int idProject, int idEmployee) throws Exception{
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.PROJECT_X_EMPLOYEE (ID, ID_PROJECT, ID_EMPLOYEE, HOURS_INVESTED) VALUES(?,?,?,?)");
+        int id = 0;
+        ps.setInt(1, id);
+        ps.setInt(2, idProject);
+        ps.setInt(3, idEmployee);
         ps.setInt(3, 0);
         ps.executeUpdate();
         close(ps);
@@ -106,9 +119,9 @@ public class ProjectService extends Service
         PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, ID_STATUS_DETAIL, STARTING_DATE, ENDING_DATE FROM HTH.PROJECT");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            int status = rs.getInt("id_status_detail");
+            int id = rs.getInt("ID");
+            String name = rs.getString("NAME");
+            int status = rs.getInt("ID_STATUS_DETAIL");
             Date startingDate = rs.getDate("STARTING_DATE");
             Date endingDate = rs.getDate("ENDING_DATE");
            
