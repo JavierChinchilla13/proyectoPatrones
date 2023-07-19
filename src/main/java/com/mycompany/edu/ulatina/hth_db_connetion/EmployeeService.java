@@ -376,6 +376,76 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         super.close(conn);
         return retorno;
     }
+    
+    public List<EmployeeTO> getEmployeesFromProyect(int idProject) throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = getConnection();
+        List<EmployeeTO> retorno = new ArrayList<EmployeeTO>();
+        ps = getConn().prepareStatement("SELECT DISTINCT hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date FROM HTH.PROJECT_X_EMPLOYEE INNER JOIN HTH.EMPLOYEE ON HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE = HTH.EMPLOYEE.ID WHERE ID_PROJECT = ?");
+        ps.setInt(1, idProject);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            EmployeeTO employeeTO;
+            int id = rs.getInt("id");
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
+            String identification = rs.getString("identification");
+            String email = rs.getString("email");
+            String phone = rs.getString("phone");
+            int type = rs.getInt("id_type_detail");
+            int status = rs.getInt("id_status_detail");
+            String password = rs.getString("password");
+            Date employmentDate = rs.getDate("employment_Date");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
+            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
+            }
+            retorno.add(employeeTO);
+
+        }
+        super.close(rs);
+        super.close(ps);
+        super.close(conn);
+        return retorno;
+    }
+    
+    public List<EmployeeTO> getEmployeesNotOnProyect(int idProject) throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = getConnection();
+        List<EmployeeTO> retorno = new ArrayList<EmployeeTO>();
+        ps = getConn().prepareStatement("SELECT  hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date FROM HTH.EMPLOYEE LEFT JOIN HTH.PROJECT_X_EMPLOYEE ON HTH.EMPLOYEE.id = HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE WHERE HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE IS NULL UNION SELECT hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date FROM HTH.PROJECT_X_EMPLOYEE INNER JOIN HTH.EMPLOYEE ON HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE = HTH.EMPLOYEE.ID WHERE ID_PROJECT != ?");
+        ps.setInt(1, idProject);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            EmployeeTO employeeTO;
+            int id = rs.getInt("id");
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
+            String identification = rs.getString("identification");
+            String email = rs.getString("email");
+            String phone = rs.getString("phone");
+            int type = rs.getInt("id_type_detail");
+            int status = rs.getInt("id_status_detail");
+            String password = rs.getString("password");
+            Date employmentDate = rs.getDate("employment_Date");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate);
+            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate);
+            }
+            retorno.add(employeeTO);
+
+        }
+        super.close(rs);
+        super.close(ps);
+        super.close(conn);
+        return retorno;
+    }
 
 }
 
