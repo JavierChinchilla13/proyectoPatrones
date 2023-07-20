@@ -416,7 +416,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnection();
-        List<EmployeeTO> retorno = new ArrayList<EmployeeTO>();
+        List<EmployeeTO> retorno = new ArrayList<>();
         ps = getConn().prepareStatement("SELECT  hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date FROM HTH.EMPLOYEE LEFT JOIN HTH.PROJECT_X_EMPLOYEE ON HTH.EMPLOYEE.id = HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE WHERE HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE IS NULL UNION SELECT hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date FROM HTH.PROJECT_X_EMPLOYEE INNER JOIN HTH.EMPLOYEE ON HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE = HTH.EMPLOYEE.ID WHERE ID_PROJECT != ?");
         ps.setInt(1, idProject);
         rs = ps.executeQuery();

@@ -9,37 +9,27 @@ public class Tester {
     public static void main(String[] args) throws SQLException, Exception {
 
         try {
-            ProjectXEmployeeService p = new ProjectXEmployeeService();
-
-            /*List<ProjectXEmployeeTO> projectEmployeeList = p.getProjectEmployeeById(1);
-
-            for (ProjectXEmployeeTO projectEmployee : projectEmployeeList) {
-                System.out.println("ID: " + projectEmployee.getId());
-                System.out.println("Project ID: " + projectEmployee.getIdProject());
-                System.out.println("Project Name: " + projectEmployee.getProjectName());
-                System.out.println("Employee ID: " + projectEmployee.getIdEmployee());
-                System.out.println("Hours Invested: " + projectEmployee.getHoursInvested());
-                System.out.println("Feedback: " + projectEmployee.getFeedBack());
-                System.out.println("--------------------------");
-            }*/
+            ProjectService pServ = new ProjectService();
+            EmployeeService eServ = new EmployeeService();
+            List<EmployeeTO> list = eServ.getEmployeesFromProyect(3);
+            List<EmployeeTO> list2 = eServ.getEmployeesNotOnProyect(3);
             
-            
-            
-            EmployeeService j = new EmployeeService();
-            VacationService v = new VacationService();
-            ScheduleVacationService s = new ScheduleVacationService();
-            
-            /*EmployeeTO i = new EmployeeTO(0,"y","Chin","18","y@mal","",3,5,"1234");
-            
-            j.insert(i);*/
-            
-            
-            System.out.println(s.getVacationDaysOff(19));
-            System.out.println(v.getVacationDaysOf(1));
-            
-           
-            
-            
+            for(EmployeeTO e : list){
+                System.out.println(" -> NOM: " + e.getFullName());
+                System.out.println(" -> ID: " + e.getId());
+            }
+            System.out.println(" \n\n\n ");
+            for(EmployeeTO e : list2){
+                System.out.println(" -> NOM: " + e.getFullName());
+                System.out.println(" -> ID: " + e.getId());
+            }
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            pServ.addCollaborator(3, 5);
+            list = eServ.getEmployeesFromProyect(3);
+            for(EmployeeTO e : list){
+                System.out.println(" -> NOM: " + e.getFullName());
+                System.out.println(" -> ID: " + e.getId());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
