@@ -14,6 +14,8 @@ public class Tester {
             List<EmployeeTO> list = eServ.getEmployeesFromProyect(3);
             List<EmployeeTO> list2 = eServ.getEmployeesNotOnProyect(3);
             
+            eServ.rehire(4);
+            
             for(EmployeeTO e : list){
                 System.out.println(" -> NOM: " + e.getFullName());
                 System.out.println(" -> ID: " + e.getId());
