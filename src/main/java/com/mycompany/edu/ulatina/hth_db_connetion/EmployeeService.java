@@ -322,7 +322,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
     public EmployeeTO login(String emailToLogin, String passwordToLogin) throws Exception {
         Connection conn = getConnection();
         EmployeeTO employeeTO = null;
-        PreparedStatement ps = getConn().prepareStatement("SELECT * FROM HTH.EMPLOYEE where email= ? AND password= ?");
+        PreparedStatement ps = getConn().prepareStatement("SELECT * FROM HTH.EMPLOYEE where email= ? AND password= ? AND id_status_detail = 4 OR id_status_detail = 5");
         ps.setString(1, emailToLogin);
         ps.setString(2, passwordToLogin);
         ResultSet rs = ps.executeQuery();
