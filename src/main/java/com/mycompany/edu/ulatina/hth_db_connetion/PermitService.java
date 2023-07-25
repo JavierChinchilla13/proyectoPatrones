@@ -239,6 +239,51 @@ public class PermitService extends Service
         return listaRetorno;
     }
     
+    public List<PermitTO> getNew() throws Exception {
+        Connection conn = getConnection();
+        //PermitTO permit = null;
+        List<PermitTO> listaRetorno = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT WHERE ID_STATUS_DETAIL = 14 OR current_date()< Date");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            int employee = rs.getInt("ID_EMPLOYEE");
+            Date date = rs.getDate("DATE");
+            String description = rs.getString("DESCRIPTION");
+            int status = rs.getInt("id_status_detail");
+            String response = rs.getString("response");
+            PermitTO permit  = new PermitTO(id, employee, date, description, status, response);
+            listaRetorno.add(permit);
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return listaRetorno;
+    }
+    
+    public List<PermitTO> getOld() throws Exception {
+        Connection conn = getConnection();
+        //PermitTO permit = null;
+        List<PermitTO> listaRetorno = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT WHERE ID_STATUS_DETAIL != 14 AND current_date()> Date");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            int employee = rs.getInt("ID_EMPLOYEE");
+            Date date = rs.getDate("DATE");
+            String description = rs.getString("DESCRIPTION");
+            int status = rs.getInt("id_status_detail");
+            String response = rs.getString("response");
+            PermitTO permit  = new PermitTO(id, employee, date, description, status, response);
+            listaRetorno.add(permit);
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return listaRetorno;
+    }
+    
+    
     
     
 }
