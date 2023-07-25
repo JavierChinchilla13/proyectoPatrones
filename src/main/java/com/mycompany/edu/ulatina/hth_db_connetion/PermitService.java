@@ -176,6 +176,23 @@ public class PermitService extends Service
         close(conn);
         return permit;
     }
+    public int searchByPKStatus(int pK) throws Exception {
+        Connection conn = getConnection();
+        PermitTO permit = null;
+        int status = 14;
+        PreparedStatement ps = conn.prepareStatement("SELECT ID_STATUS_DETAIL FROM HTH.WORK_PERMIT WHERE ID = ?");
+        ps.setInt(1, pK);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+
+            status = rs.getInt("id_status_detail");
+            return status;
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return status;
+    }
     public List<PermitTO> searchByEmployee(int employeeId) throws Exception {
         Connection conn = getConnection();
         //PermitTO permit = null;

@@ -11,11 +11,13 @@ public class Tester {
         try {
             ProjectService pServ = new ProjectService();
             EmployeeService eServ = new EmployeeService();
+            PermitService per= new PermitService();
             List<EmployeeTO> list = eServ.getEmployeesFromProyect(3);
             List<EmployeeTO> list2 = eServ.getEmployeesNotOnProyect(3);
             
-            eServ.rehire(4);
+            System.out.println(per.searchByPKStatus(19));
             
+            /*
             for(EmployeeTO e : list){
                 System.out.println(" -> NOM: " + e.getFullName());
                 System.out.println(" -> ID: " + e.getId());
@@ -31,7 +33,7 @@ public class Tester {
             for(EmployeeTO e : list){
                 System.out.println(" -> NOM: " + e.getFullName());
                 System.out.println(" -> ID: " + e.getId());
-            }
+            }*/
 
         } catch (Exception e) {
             e.printStackTrace();
