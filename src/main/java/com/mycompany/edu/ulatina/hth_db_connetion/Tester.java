@@ -15,7 +15,12 @@ public class Tester {
             List<EmployeeTO> list = eServ.getEmployeesFromProyect(3);
             List<EmployeeTO> list2 = eServ.getEmployeesNotOnProyect(3);
             
-            System.out.println(per.searchByPKStatus(19));
+            for(PermitTO u : per.getOld(1)){
+                System.out.println("id: " + u.getId() );
+
+            }
+            
+            //System.out.println(per.getNew(1));
             
             /*
             for(EmployeeTO e : list){

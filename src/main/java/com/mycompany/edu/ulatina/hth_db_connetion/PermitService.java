@@ -239,14 +239,16 @@ public class PermitService extends Service
         return listaRetorno;
     }
     
-    public List<PermitTO> getNew() throws Exception {
+    public List<PermitTO> getNew(int pk) throws Exception {
         Connection conn = getConnection();
         //PermitTO permit = null;
         List<PermitTO> listaRetorno = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT WHERE ID_STATUS_DETAIL = 14 OR current_date()< Date");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT WHERE ID_STATUS_DETAIL = 14 OR current_date()< Date AND ID_EMPLOYEE = ?");
+        ps.setInt(1, pk);
         ResultSet rs = ps.executeQuery();
+        
         while (rs.next()) {
-            int id = rs.getInt("id");
+            int id = rs.getInt("ID");
             int employee = rs.getInt("ID_EMPLOYEE");
             Date date = rs.getDate("DATE");
             String description = rs.getString("DESCRIPTION");
@@ -261,14 +263,16 @@ public class PermitService extends Service
         return listaRetorno;
     }
     
-    public List<PermitTO> getOld() throws Exception {
+    public List<PermitTO> getOld(int pk) throws Exception {
         Connection conn = getConnection();
         //PermitTO permit = null;
         List<PermitTO> listaRetorno = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT WHERE ID_STATUS_DETAIL != 14 AND current_date()> Date");
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, ID_EMPLOYEE, DATE, DESCRIPTION, ID_STATUS_DETAIL, RESPONSE FROM HTH.WORK_PERMIT WHERE ID_STATUS_DETAIL != 14 AND current_date()> Date AND ID_EMPLOYEE = ?");
+        ps.setInt(1, pk);
         ResultSet rs = ps.executeQuery();
+        
         while (rs.next()) {
-            int id = rs.getInt("id");
+            int id = rs.getInt("ID");
             int employee = rs.getInt("ID_EMPLOYEE");
             Date date = rs.getDate("DATE");
             String description = rs.getString("DESCRIPTION");
