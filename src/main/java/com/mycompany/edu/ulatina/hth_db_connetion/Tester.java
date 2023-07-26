@@ -34,7 +34,7 @@ public class Tester {
             j.insert(i);*/
             
             
-            System.out.println(s.getVacationDaysOff(19));
+            System.out.println(s.getVacationDaysOff(1));
             System.out.println(v.getVacationDaysOf(1));
             
            
