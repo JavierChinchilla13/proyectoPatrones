@@ -5,8 +5,7 @@
 package Clases;
 
 
-import com.mycompany.edu.ulatina.hth_db_connetion.EmployeeTO;
-import com.mycompany.edu.ulatina.hth_db_connetion.Service;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -48,13 +47,13 @@ public class LibroService extends Connector{
 
     }
     
-    public void update(EmployeeTO emp, String titulo, int anio, String editorial) throws Exception {
+    public void update(LibroTO lib, String titulo, int anio, String editorial) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.LIBRO SET TITULO = ?, EDITORIAL = ?; ANIO = ? WHERE ID_LIBRO = ?");
         ps.setString(1, titulo);
         ps.setInt(6,anio);
         ps.setString(8, editorial);
-        ps.setInt(4, emp.getId());
+        ps.setInt(4, lib.getId());
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -67,7 +66,7 @@ public class LibroService extends Connector{
         Connection conn = getConnection();
         List<LibroTO> retorno = new ArrayList<LibroTO>();
 
-        ps = getConn().prepareStatement("SELECT * BIBLIOTECA.LIBRO");
+        ps = getConn().prepareStatement("SELECT * FROM BIBLIOTECA.LIBRO");
         rs = ps.executeQuery();
         while (rs.next()) {
             LibroTO libroTO;

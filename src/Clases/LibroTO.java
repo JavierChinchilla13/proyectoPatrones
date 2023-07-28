@@ -4,11 +4,13 @@
  */
 package Clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author javi
  */
-public class LibroTO {
+public class LibroTO implements Serializable{
     
     private int id;
     private String titulo;
