@@ -1,5 +1,7 @@
 package PrimerParcial;
 
+import Clases.LibroService;
+import Clases.LibroTO;
 import Clases.consultas;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -7,7 +9,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 
 public class ProyectoBiblioteca extends javax.swing.JFrame {
-
+    LibroService lib = new LibroService();
+    LibroTO selectedLibro = new LibroTO();
+    
     //Variable global
     consultas con = new consultas();
     public ProyectoBiblioteca() {
@@ -17,41 +21,33 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         con.leerLectores("usuario", jTable_lectores);
         con.leerPrestamos(jTable_prestamos);
         con.leerSalidas("salida", jTable_pres);
-        
-        
-        jTable_libros.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent Mouse_evt)
-                {
-                    JTable table = (JTable) Mouse_evt.getSource();
-                    Point point = Mouse_evt.getPoint();
-                    int row = table.rowAtPoint(point);
-                    if(Mouse_evt.getClickCount() == 1)
-               
-                {
+
+        jTable_libros.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent Mouse_evt) {
+                JTable table = (JTable) Mouse_evt.getSource();
+                Point point = Mouse_evt.getPoint();
+                int row = table.rowAtPoint(point);
+                if (Mouse_evt.getClickCount() == 1) {
                     jTxtTitulo.setText(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 1).toString());
                     jTxtEditorial.setText(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 2).toString());
                     jTxtAnio.setText(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 3).toString());
                 }
-                }
+            }
         });
-        
-        
-        jTable_lectores.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent Mouse_evt)
-                {
-                    JTable table = (JTable) Mouse_evt.getSource();
-                    Point point = Mouse_evt.getPoint();
-                    int row = table.rowAtPoint(point);
-                    if(Mouse_evt.getClickCount() == 1)
-               
-                {
+
+        jTable_lectores.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent Mouse_evt) {
+                JTable table = (JTable) Mouse_evt.getSource();
+                Point point = Mouse_evt.getPoint();
+                int row = table.rowAtPoint(point);
+                if (Mouse_evt.getClickCount() == 1) {
                     jTxtNombre.setText(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 1).toString());
                     jTxtDireccion.setText(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 2).toString());
                     jTxtTelefono.setText(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 3).toString());
                     jTxtCiudad.setText(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 4).toString());
                     jTxtCorreo.setText(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 5).toString());
                 }
-                }
+            }
         });
     }
 
@@ -635,50 +631,80 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_jFrtLiteralAActionPerformed
 
     private void Jbtn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_guardarActionPerformed
+        try {
+            int indexSelect = jTabbedPane.getSelectedIndex();
+            switch (indexSelect) {
+                case 0:
 
-        int indexSelect = jTabbedPane.getSelectedIndex();
-        switch(indexSelect){
-            case 0:
-                con.InsertarLibro(jTxtTitulo, jTxtEditorial, jTxtAnio);
-                con.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-            case 1:
-                con.InsertarUsuario(jTxtNombre, jTxtDireccion, jTxtTelefono, jTxtCiudad, jTxtCorreo);
-                con.leerLectores("usuario", jTable_lectores);
+                    LibroTO l = new LibroTO(0, jTxtTitulo.getText(), Integer.parseInt(jTxtEditorial.getText()), jTxtAnio.getText());
+                    lib.insert(l);
+                    lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+                case 1:
+                    //con.InsertarUsuario(jTxtNombre, jTxtDireccion, jTxtTelefono, jTxtCiudad, jTxtCorreo);
+                    con.leerLectores("usuario", jTable_lectores);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }//GEN-LAST:event_Jbtn_guardarActionPerformed
 
     private void Jbtn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_actualizarActionPerformed
         // TODO add your handling code here:
-        
-        
-        int indexSelect = jTabbedPane.getSelectedIndex();
-        switch(indexSelect){
-            case 0:
-                String id = jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString();
-                con.ActualizarLibro(jTxtTitulo, jTxtEditorial, jTxtAnio, id);
-                con.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-            case 1:
-                String idUsuario = jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString();
-                con.ActualizarUsuario(jTxtNombre, jTxtDireccion, jTxtTelefono, jTxtCiudad, jTxtCorreo, idUsuario);
-                con.leerLectores("usuario", jTable_lectores);
+        try {
+            int indexSelect = jTabbedPane.getSelectedIndex();
+            switch (indexSelect) {
+                case 0:
+                    int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
+                    
+                    //LibroTO l = new LibroTO(0, jTxtTitulo.getText(), Integer.parseInt(jTxtEditorial.getText()), jTxtAnio.getText());
+
+                    lib.update(id, jTxtTitulo.getText(), Integer.parseInt(jTxtAnio.getText()), jTxtEditorial.getText());
+                    //con.ActualizarLibro(jTxtTitulo, jTxtEditorial, jTxtAnio, id);
+                    lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+
+                case 1:
+                    String idUsuario = jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString();
+                    con.ActualizarUsuario(jTxtNombre, jTxtDireccion, jTxtTelefono, jTxtCiudad, jTxtCorreo, idUsuario);
+                    con.leerLectores("usuario", jTable_lectores);
+            }
+
+            jTxtTitulo.setText("");
+            jTxtEditorial.setText("");
+            jTxtAnio.setText("");
+            jTxtNombre.setText("");
+            jTxtDireccion.setText("");
+            jTxtTelefono.setText("");
+            jTxtCiudad.setText("");
+            jTxtCorreo.setText("");
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
     }//GEN-LAST:event_Jbtn_actualizarActionPerformed
 
     private void Jbtn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_eliminarActionPerformed
         // TODO add your handling code here:
-        
-        int indexSelect = jTabbedPane.getSelectedIndex();
-        switch(indexSelect){
-            case 0:
-                String id = jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString();
-                con.EliminaRegistro("id_libro", "libro", id);
-                con.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-            case 1:
-                String idUsuario = jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString();
-                con.EliminaRegistro("id_usuario", "usuario", idUsuario);
-                con.leerLectores("usuario", jTable_lectores);
+        try {
+            int indexSelect = jTabbedPane.getSelectedIndex();
+            switch (indexSelect) {
+                case 0:
+                    int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
+
+                    lib.delete(id);
+                    // con.EliminaRegistro("id_libro", "libro", id);
+                    lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+                case 1:
+                    String idUsuario = jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString();
+                    con.EliminaRegistro("id_usuario", "usuario", idUsuario);
+                    con.leerLectores("usuario", jTable_lectores);
+            }
+        } catch (Exception e) {
+
         }
+
     }//GEN-LAST:event_Jbtn_eliminarActionPerformed
 
     private void Jbtn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_nuevoActionPerformed

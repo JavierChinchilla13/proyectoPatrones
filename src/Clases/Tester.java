@@ -18,11 +18,15 @@ public class Tester {
         try {
             
             LibroService lib = new LibroService();
+            LibroTO l = new LibroTO(0,"Jav", 2020, "4093032");
             
-            for(LibroTO u : lib.getLibros()){
+            lib.update(19, "ODISEA", 2020, "JAVI");
+            //lib.insert(l);
+            
+            /*for(LibroTO u : lib.getLibros()){
                 System.out.println("Name: " + u.getTitulo() );
 
-            }
+            }*/
             
             
 
