@@ -209,7 +209,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             int status = rs.getInt("ID_STATUS_DETAIL");
             String password = rs.getString("PASSWORD");
             Date employmentDate = rs.getDate("eMPLOYMENT_DATE");
-            int idSupervisor = rs.getInt("ID_SUPERVISOR");
+            int idSupervisor = rs.getInt("id_supervisor");
             if(rs.getDate("LAYOFF_DATE") != null){
                 Date layoffDate = rs.getDate("LAYOFF_DATE");
                 employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
@@ -221,6 +221,28 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         close(ps);
         close(conn);
         return employee;
+    }
+    public String searchByPKName(int idToSearch) throws Exception {
+        Connection conn = getConnection();
+        String supervisor = "";
+        EmployeeTO employee = null;
+        PreparedStatement ps = conn.prepareStatement("SELECT first_name, last_name FROM HTH.EMPLOYEE WHERE ID = ?");
+        ps.setInt(1, idToSearch);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            
+            String firstName = rs.getString("FIRST_NAME");
+            String lastName = rs.getString("LAST_NAME");
+            
+            supervisor = firstName +" "+ lastName;
+            
+            
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return supervisor;
     }
     
     public EmployeeTO searchByEmail(String emailToSearch) throws Exception {
@@ -476,7 +498,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ResultSet rs = null;
         Connection conn = getConnection();
         List<EmployeeTO> retorno = new ArrayList<EmployeeTO>();
-        ps = getConn().prepareStatement("SELECT DISTINCT hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date FROM HTH.PROJECT_X_EMPLOYEE INNER JOIN HTH.EMPLOYEE ON HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE = HTH.EMPLOYEE.ID WHERE ID_PROJECT = ?");
+        ps = getConn().prepareStatement("SELECT DISTINCT hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date, id_supervisor FROM HTH.PROJECT_X_EMPLOYEE INNER JOIN HTH.EMPLOYEE ON HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE = HTH.EMPLOYEE.ID WHERE ID_PROJECT = ?");
         ps.setInt(1, idProject);
         rs = ps.executeQuery();
         while (rs.next()) {
@@ -491,7 +513,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             int status = rs.getInt("id_status_detail");
             String password = rs.getString("password");
             Date employmentDate = rs.getDate("employment_Date");
-            int idSupervisor = rs.getInt("ID_SUPERVISOR");
+            int idSupervisor = rs.getInt("id_supervisor");
             if(rs.getDate("layoff_date") != null){
                 Date layoffDate = rs.getDate("layoff_Date");
                 employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
@@ -512,7 +534,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ResultSet rs = null;
         Connection conn = getConnection();
         List<EmployeeTO> retorno = new ArrayList<>();
-        ps = getConn().prepareStatement("SELECT  hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date FROM HTH.EMPLOYEE LEFT JOIN HTH.PROJECT_X_EMPLOYEE ON HTH.EMPLOYEE.id = HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE WHERE HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE IS NULL UNION SELECT hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date FROM HTH.PROJECT_X_EMPLOYEE INNER JOIN HTH.EMPLOYEE ON HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE = HTH.EMPLOYEE.ID WHERE ID_PROJECT != ?");
+        ps = getConn().prepareStatement("SELECT  hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date, id_supervisor FROM HTH.EMPLOYEE LEFT JOIN HTH.PROJECT_X_EMPLOYEE ON HTH.EMPLOYEE.id = HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE WHERE HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE IS NULL UNION SELECT hth.employee.id, first_name, last_name, identification, email, phone, id_type_detail, id_status_detail, hth.employee.password, layoff_date, employment_date, id_supervisor FROM HTH.PROJECT_X_EMPLOYEE INNER JOIN HTH.EMPLOYEE ON HTH.PROJECT_X_EMPLOYEE.ID_EMPLOYEE = HTH.EMPLOYEE.ID WHERE ID_PROJECT != ?");
         ps.setInt(1, idProject);
         rs = ps.executeQuery();
         while (rs.next()) {
