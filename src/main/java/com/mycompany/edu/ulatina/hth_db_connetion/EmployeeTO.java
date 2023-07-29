@@ -15,10 +15,40 @@ public class EmployeeTO implements Serializable {
     private String password;
     private Date layoffDate;
     private Date employmentDate;
+    private int idSupervisor;
 
     public EmployeeTO() {
     }
 
+    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date layoffDate, Date employmentDate, int idSupervisor) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.identification = identification;
+        this.email = email;
+        this.phone = phone;
+        this.type = type;
+        this.status = status;
+        this.password = password;
+        this.layoffDate = layoffDate;
+        this.employmentDate = employmentDate;
+        this.idSupervisor = idSupervisor;
+    }
+
+    public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date employmentDate, int idSupervisor) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.identification = identification;
+        this.email = email;
+        this.phone = phone;
+        this.type = type;
+        this.status = status;
+        this.password = password;
+        this.employmentDate = employmentDate;
+        this.idSupervisor = idSupervisor;
+    }
+    
     public EmployeeTO(int id, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password) {
         this.id = id;
         this.firstName = firstName;
@@ -152,4 +182,14 @@ public class EmployeeTO implements Serializable {
     public String getFullName(){
         return firstName + " " + lastName;
     }
+
+    public int getIdSupervisor() {
+        return idSupervisor;
+    }
+
+    public void setIdSupervisor(int idSupervisor) {
+        this.idSupervisor = idSupervisor;
+    }
+    
+    
 }
