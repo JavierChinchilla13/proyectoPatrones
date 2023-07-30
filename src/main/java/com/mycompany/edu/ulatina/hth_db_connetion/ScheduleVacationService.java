@@ -203,6 +203,23 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
         return scheduleVacationList;
     }
 
+    public int searchScheduleVacationStatusPK(int pK) throws Exception {
+        Connection conn = getConnection();
+        int status = 17;
+        PreparedStatement ps = conn.prepareStatement("SELECT ID_STATUS_DETAIL FROM HTH.SCHEDULE_VACATION WHERE ID = ?");
+        ps.setInt(1, pK);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+
+            status = rs.getInt("id_status_detail");
+            return status;
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return status;
+    }
+    
     public List<ScheduleVacationTO> getScheduleVacationsPending() throws Exception {
         Connection conn = getConnection();
         List<ScheduleVacationTO> scheduleVacationList = new ArrayList<>();
