@@ -492,6 +492,43 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO> {
 
         return retorno;
     }
+    public List<EmployeeTO> getSupervisor() throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = getConnection();
+        List<EmployeeTO> retorno = new ArrayList<EmployeeTO>();
+
+        ps = getConn().prepareStatement("SELECT * FROM HTH.EMPLOYEE WHERE id_type_detail = 1 OR id_type_detail = 2");
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            EmployeeTO employeeTO;
+            int id = rs.getInt("id");
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
+            String identification = rs.getString("identification");
+            String email = rs.getString("email");
+            String phone = rs.getString("phone");
+            int type = rs.getInt("id_type_detail");
+            int status = rs.getInt("id_status_detail");
+            String password = rs.getString("password");
+            Date employmentDate = rs.getDate("employment_Date");
+            int idSupervisor = rs.getInt("ID_SUPERVISOR");
+            if(rs.getDate("layoff_date") != null){
+                Date layoffDate = rs.getDate("layoff_Date");
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
+            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
+            }
+            retorno.add(employeeTO);
+
+        }
+
+        super.close(rs);
+        super.close(ps);
+        super.close(conn);
+
+        return retorno;
+    }
 
     public List<EmployeeTO> getEmployeesFromProyect(int idProject) throws Exception {
         PreparedStatement ps = null;
