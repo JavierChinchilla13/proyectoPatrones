@@ -170,7 +170,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO> {
 
     public void update(EmployeeTO emp, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date employmentDate, Date layoffDate, int idSupervisor) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.EMPLOYEE SET first_name = ?, last_name = ?, IDENTIFICATION = ?, EMAIL = ? , PHONE = ? , id_type_detail = ? , id_status_detail = ? ,  PASSWORD = ?, employment_date = ?, layoff_date = ? id_supervisor = ? WHERE ID = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.EMPLOYEE SET first_name = ?, last_name = ?, IDENTIFICATION = ?, EMAIL = ? , PHONE = ? , id_type_detail = ? , id_status_detail = ? ,  PASSWORD = ?, employment_date = ?, layoff_date = ?, id_supervisor = ? WHERE ID = ?");
         ps.setString(1, firstName);
         ps.setString(2, lastName);
         ps.setString(3, identification);
