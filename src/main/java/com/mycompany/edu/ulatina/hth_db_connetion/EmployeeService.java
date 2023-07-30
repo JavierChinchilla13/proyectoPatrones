@@ -221,41 +221,6 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO> {
         return employee;
     }
 
-    public EmployeeTO searchByVacationId(int vacationIdToSearch) throws Exception {
-        Connection conn = getConnection();
-        EmployeeTO employee = null;
-        PreparedStatement ps = conn.prepareStatement("SELECT E.* "
-                + "FROM HTH.EMPLOYEE E "
-                + "INNER JOIN HTH.VACATION V ON E.ID = V.ID_EMPLOYEE "
-                + "WHERE V.ID = ?");
-        ps.setInt(1, vacationIdToSearch);
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            int id = rs.getInt("ID");
-            String firstName = rs.getString("FIRST_NAME");
-            String lastName = rs.getString("LAST_NAME");
-            String identification = rs.getString("IDENTIFICATION");
-            String email = rs.getString("EMAIL");
-            String phone = rs.getString("PHONE");
-            int type = rs.getInt("ID_TYPE_DETAIL");
-            int status = rs.getInt("ID_STATUS_DETAIL");
-            String password = rs.getString("PASSWORD");
-            Date employmentDate = rs.getDate("EMPLOYMENT_DATE");
-            int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if (rs.getDate("LAYOFF_DATE") != null) {
-                Date layoffDate = rs.getDate("LAYOFF_DATE");
-                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
-            } else {
-                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
-            }
-        }
-        close(rs);
-        close(ps);
-        close(conn);
-        return employee;
-    }
-
     public String searchByPKName(int idToSearch) throws Exception {
         Connection conn = getConnection();
         String supervisor = "";
