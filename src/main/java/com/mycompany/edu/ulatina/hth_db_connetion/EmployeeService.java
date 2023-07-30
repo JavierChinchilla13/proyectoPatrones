@@ -1,4 +1,3 @@
-
 package com.mycompany.edu.ulatina.hth_db_connetion;
 
 import java.sql.Connection;
@@ -11,18 +10,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
-public class EmployeeService extends Service implements ICrud<EmployeeTO>{
+public class EmployeeService extends Service implements ICrud<EmployeeTO> {
 
     public EmployeeService() {
     }
-    
+
     @Override
     public void insert(EmployeeTO emp) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.EMPLOYEE (ID, first_name, last_name, IDENTIFICATION, EMAIL, PHONE, id_type_detail, id_status_detail, PASSWORD, employment_date, id_supervisor)VALUES(?,?,?,?,?,?,?,?,?,?,?)");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        
+
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
         int id = 0;
@@ -32,39 +30,37 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ps.setString(4, emp.getIdentification());
         ps.setString(5, emp.getEmail());
         ps.setString(6, emp.getPhone());
-        ps.setInt(7,emp.getType());
-        ps.setInt(8,emp.getStatus());
+        ps.setInt(7, emp.getType());
+        ps.setInt(8, emp.getStatus());
         ps.setString(9, emp.getPassword());
         ps.setDate(10, date);
-        ps.setInt(11,emp.getIdSupervisor());
+        ps.setInt(11, emp.getIdSupervisor());
         ps.executeUpdate();
         close(ps);
         close(conn);
     }
-    
+
     public void insert(String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date employmentDate, int idSupervisor) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.EMPLOYEE (ID, first_name, last_name, IDENTIFICATION, EMAIL, PHONE, id_type_detail, id_status_detail, PASSWORD, employment_date, id_supervisor)VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-        
+
         int id = 0;
         ps.setInt(1, id);
         ps.setString(2, firstName);
-        ps.setString(3,lastName);
+        ps.setString(3, lastName);
         ps.setString(4, identification);
         ps.setString(5, email);
         ps.setString(6, phone);
-        ps.setInt(7,type);
-        ps.setInt(8,status);
+        ps.setInt(7, type);
+        ps.setInt(8, status);
         ps.setString(9, password);
         ps.setDate(10, employmentDate);
-        ps.setInt(11,idSupervisor);
+        ps.setInt(11, idSupervisor);
         ps.executeUpdate();
         VacationService v = new VacationService();
         v.insert(id, 0);
         close(ps);
     }
-
-    
 
     @Override
     public void delete(EmployeeTO employeeTO) throws Exception {
@@ -80,6 +76,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         super.close(conn);
 
     }
+
     public void delete(String identificacion) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = null;
@@ -93,6 +90,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         super.close(conn);
 
     }
+
     public void delete(int id) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = null;
@@ -106,7 +104,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         super.close(conn);
 
     }
-    
+
     public void rehire(int id) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = null;
@@ -120,7 +118,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         super.close(conn);
 
     }
-    
+
     public void insertVac() throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = null;
@@ -170,7 +168,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
     }
 
-   public void update(EmployeeTO emp, String firstName, String lastName, String identification, String email, String phone,  int type, int status, String password, Date employmentDate, Date layoffDate, int idSupervisor) throws Exception {
+    public void update(EmployeeTO emp, String firstName, String lastName, String identification, String email, String phone, int type, int status, String password, Date employmentDate, Date layoffDate, int idSupervisor) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE HTH.EMPLOYEE SET first_name = ?, last_name = ?, IDENTIFICATION = ?, EMAIL = ? , PHONE = ? , id_type_detail = ? , id_status_detail = ? ,  PASSWORD = ?, employment_date = ?, layoff_date = ? id_supervisor = ? WHERE ID = ?");
         ps.setString(1, firstName);
@@ -178,8 +176,8 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ps.setString(3, identification);
         ps.setString(4, email);
         ps.setString(5, phone);
-        ps.setInt(6,type);
-        ps.setInt(7,status);
+        ps.setInt(6, type);
+        ps.setInt(7, status);
         ps.setString(8, password);
         ps.setDate(9, employmentDate);
         ps.setDate(10, layoffDate);
@@ -210,11 +208,11 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("PASSWORD");
             Date employmentDate = rs.getDate("eMPLOYMENT_DATE");
             int idSupervisor = rs.getInt("id_supervisor");
-            if(rs.getDate("LAYOFF_DATE") != null){
+            if (rs.getDate("LAYOFF_DATE") != null) {
                 Date layoffDate = rs.getDate("LAYOFF_DATE");
-                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
-                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate,idSupervisor);
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
         }
         close(rs);
@@ -222,6 +220,42 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         close(conn);
         return employee;
     }
+
+    public EmployeeTO searchByVacationId(int vacationIdToSearch) throws Exception {
+        Connection conn = getConnection();
+        EmployeeTO employee = null;
+        PreparedStatement ps = conn.prepareStatement("SELECT E.* "
+                + "FROM HTH.EMPLOYEE E "
+                + "INNER JOIN HTH.VACATION V ON E.ID = V.ID_EMPLOYEE "
+                + "WHERE V.ID = ?");
+        ps.setInt(1, vacationIdToSearch);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int id = rs.getInt("ID");
+            String firstName = rs.getString("FIRST_NAME");
+            String lastName = rs.getString("LAST_NAME");
+            String identification = rs.getString("IDENTIFICATION");
+            String email = rs.getString("EMAIL");
+            String phone = rs.getString("PHONE");
+            int type = rs.getInt("ID_TYPE_DETAIL");
+            int status = rs.getInt("ID_STATUS_DETAIL");
+            String password = rs.getString("PASSWORD");
+            Date employmentDate = rs.getDate("EMPLOYMENT_DATE");
+            int idSupervisor = rs.getInt("ID_SUPERVISOR");
+            if (rs.getDate("LAYOFF_DATE") != null) {
+                Date layoffDate = rs.getDate("LAYOFF_DATE");
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
+            }
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return employee;
+    }
+
     public String searchByPKName(int idToSearch) throws Exception {
         Connection conn = getConnection();
         String supervisor = "";
@@ -231,20 +265,19 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-            
+
             String firstName = rs.getString("FIRST_NAME");
             String lastName = rs.getString("LAST_NAME");
-            
-            supervisor = firstName +" "+ lastName;
-            
-            
+
+            supervisor = firstName + " " + lastName;
+
         }
         close(rs);
         close(ps);
         close(conn);
         return supervisor;
     }
-    
+
     public EmployeeTO searchByEmail(String emailToSearch) throws Exception {
         Connection conn = getConnection();
         EmployeeTO employee = null;
@@ -264,10 +297,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("PASSWORD");
             Date employmentDate = rs.getDate("eMPLOYMENT_DATE");
             int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if(rs.getDate("LAYOFF_DATE") != null){
+            if (rs.getDate("LAYOFF_DATE") != null) {
                 Date layoffDate = rs.getDate("LAYOFF_DATE");
-                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
                 employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
         }
@@ -276,7 +309,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         close(conn);
         return employee;
     }
-    
+
     public EmployeeTO searchByIdentification(String identificationToSearch) throws Exception {
         Connection conn = getConnection();
         EmployeeTO employee = null;
@@ -296,13 +329,13 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("PASSWORD");
             Date employmentDate = rs.getDate("eMPLOYMENT_DATE");
             int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if(rs.getDate("LAYOFF_DATE") != null){
+            if (rs.getDate("LAYOFF_DATE") != null) {
                 Date layoffDate = rs.getDate("LAYOFF_DATE");
-                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor );
-            }else{
-                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor );
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
+                employee = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
-            
+
         }
         close(rs);
         close(ps);
@@ -331,10 +364,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("password");
             Date employmentDate = rs.getDate("employment_Date");
             int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if(rs.getDate("layoff_date") != null){
+            if (rs.getDate("layoff_date") != null) {
                 Date layoffDate = rs.getDate("layoff_Date");
-                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
                 employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
             retorno.add(employeeTO);
@@ -359,7 +392,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             insertVac();
             update1();
             update365();
-            
+
             int id = rs.getInt("id");
             String firstName = rs.getString("first_name");
             String lastName = rs.getString("last_name");
@@ -371,10 +404,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("password");
             Date employmentDate = rs.getDate("employment_Date");
             int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if(rs.getDate("layoff_date") != null){
+            if (rs.getDate("layoff_date") != null) {
                 Date layoffDate = rs.getDate("layoff_Date");
-                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
                 employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
             super.close(rs);
@@ -386,7 +419,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
         return null;
     }
-    
+
     public List<EmployeeTO> getActiveEmployees() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -407,10 +440,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("password");
             Date employmentDate = rs.getDate("employment_Date");
             int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if(rs.getDate("layoff_date") != null){
+            if (rs.getDate("layoff_date") != null) {
                 Date layoffDate = rs.getDate("layoff_Date");
-                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
                 employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
             retorno.add(employeeTO);
@@ -421,6 +454,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         super.close(conn);
         return retorno;
     }
+
     public List<EmployeeTO> getSuspendedEmployees() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -441,10 +475,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("password");
             Date employmentDate = rs.getDate("employment_Date");
             int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if(rs.getDate("layoff_date") != null){
+            if (rs.getDate("layoff_date") != null) {
                 Date layoffDate = rs.getDate("layoff_Date");
-                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
                 employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
             retorno.add(employeeTO);
@@ -455,6 +489,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         super.close(conn);
         return retorno;
     }
+
     public List<EmployeeTO> getNotSuspended() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -476,10 +511,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("password");
             Date employmentDate = rs.getDate("employment_Date");
             int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if(rs.getDate("layoff_date") != null){
+            if (rs.getDate("layoff_date") != null) {
                 Date layoffDate = rs.getDate("layoff_Date");
-                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
                 employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
             retorno.add(employeeTO);
@@ -492,7 +527,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
 
         return retorno;
     }
-    
+
     public List<EmployeeTO> getEmployeesFromProyect(int idProject) throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -514,10 +549,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("password");
             Date employmentDate = rs.getDate("employment_Date");
             int idSupervisor = rs.getInt("id_supervisor");
-            if(rs.getDate("layoff_date") != null){
+            if (rs.getDate("layoff_date") != null) {
                 Date layoffDate = rs.getDate("layoff_Date");
-                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
                 employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
             retorno.add(employeeTO);
@@ -528,7 +563,7 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
         super.close(conn);
         return retorno;
     }
-    
+
     public List<EmployeeTO> getEmployeesNotOnProyect(int idProject) throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -550,10 +585,10 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
             String password = rs.getString("password");
             Date employmentDate = rs.getDate("employment_Date");
             int idSupervisor = rs.getInt("ID_SUPERVISOR");
-            if(rs.getDate("layoff_date") != null){
+            if (rs.getDate("layoff_date") != null) {
                 Date layoffDate = rs.getDate("layoff_Date");
-                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone,type, status, password, layoffDate, employmentDate, idSupervisor);
-            }else{
+                employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, layoffDate, employmentDate, idSupervisor);
+            } else {
                 employeeTO = new EmployeeTO(id, firstName, lastName, identification, email, phone, type, status, password, employmentDate, idSupervisor);
             }
             retorno.add(employeeTO);
@@ -566,10 +601,3 @@ public class EmployeeService extends Service implements ICrud<EmployeeTO>{
     }
 
 }
-
-    
-     
-
-
-
-
