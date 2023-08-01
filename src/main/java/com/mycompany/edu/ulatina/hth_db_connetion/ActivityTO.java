@@ -13,19 +13,17 @@ import java.io.Serializable;
 public class ActivityTO implements Serializable{
     
     private int id;
-    private int idProject;
-    private String Name;
-    private String Description;
+    private int idEmployee;
+    private int idActivity;
     private double hours;
 
     public ActivityTO() {
     }
 
-    public ActivityTO(int id, int idProject, String Name, String Description, double hours) {
+    public ActivityTO(int id, int idEmployee, int idActivity, double hours) {
         this.id = id;
-        this.idProject = idProject;
-        this.Name = Name;
-        this.Description = Description;
+        this.idEmployee = idEmployee;
+        this.idActivity = idActivity;
         this.hours = hours;
     }
 
@@ -36,29 +34,21 @@ public class ActivityTO implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
-    
-    public int getIdProject() {
-        return idProject;
+
+    public int getIdEmployee() {
+        return idEmployee;
     }
 
-    public void setIdProject(int idProject) {
-        this.idProject = idProject;
+    public void setIdEmployee(int idEmployee) {
+        this.idEmployee = idEmployee;
     }
 
-    public String getName() {
-        return Name;
+    public int getIdActivity() {
+        return idActivity;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String Description) {
-        this.Description = Description;
+    public void setIdActivity(int idActivity) {
+        this.idActivity = idActivity;
     }
 
     public double getHours() {
@@ -68,7 +58,6 @@ public class ActivityTO implements Serializable{
     public void setHours(double hours) {
         this.hours = hours;
     }
-
     
     
 }
