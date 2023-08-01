@@ -14,29 +14,54 @@ import java.util.List;
  *
  * @author javi
  */
-public class ActivityService extends Service implements ICrud < ActivityTO > {
-    
+public class ActivityService extends Service implements ICrud< ActivityTO> {
+
     public void insert(ActivityTO activity) throws Exception {
-        
+
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.ACTIVITY VALUES(?,?,?,?;?,?))");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.CREATE_ACTIVITY VALUES(?,?,?,?,?))");
         ps.setInt(1, 0);
-        ps.setInt(2, activity.getIdEmployee());
-        ps.setInt(3, activity.getIdProject());
-        ps.setString(4, activity.getName());
-        ps.setString(5, activity.getDescription());
-        ps.setDouble(6,activity.getHours());
-        
+        ps.setInt(2, activity.getIdProject());
+        ps.setString(3, activity.getName());
+        ps.setString(4, activity.getDescription());
+        ps.setDouble(5, activity.getHours());
+
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+    }
+
+    public void insertActivyToEmployee(EmployeeTO employeeTO, ActivityTO activityTO) throws Exception {
+
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.ACTIVITY VALUES(?,?,?))");
+        ps.setInt(1, 0);
+        ps.setInt(2, employeeTO.getId());
+        ps.setInt(3, activityTO.getIdProject());
+
         ps.executeUpdate();
         close(ps);
         close(conn);
     }
     
+    public void insertActivyToEmployee(int idEmployee, int idActivity) throws Exception {
+
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.ACTIVITY VALUES(?,?,?))");
+        ps.setInt(1, 0);
+        ps.setInt(2, idEmployee);
+        ps.setInt(3, idActivity);
+
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+    }
+
     public void delete(int id) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = null;
 
-        ps = getConn().prepareStatement("DELETE FROM HTH.ACTIVITY WHERE ID=?");
+        ps = getConn().prepareStatement("DELETE FROM HTH.CREATE_ACTIVITY WHERE ID=?");
         ps.setInt(1, id);
 
         ps.executeUpdate();
@@ -45,22 +70,21 @@ public class ActivityService extends Service implements ICrud < ActivityTO > {
         super.close(conn);
 
     }
-    
-    public void update(ActivityTO act, int idEmployee, int idProject, String name, String description, double hours) throws Exception {
+
+    public void update(ActivityTO act, int idProject, String name, String description, double hours) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.ACTIVITY SET id_employee = ?, id_description=?, name = ?; description = ?, hours = ? WHERE id = ?");
-        ps.setInt(1, idEmployee);
-        ps.setInt(2, idProject);
-        ps.setString(3,name);
-        ps.setString(4,description);
-        ps.setDouble(5, hours);
-        ps.setDouble(6, act.getId());
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.CREATE_ACTIVITY SET id_description=?, name = ?; description = ?, hours = ? WHERE id = ?");
+        ps.setInt(1, idProject);
+        ps.setString(2, name);
+        ps.setString(3, description);
+        ps.setDouble(4, hours);
+        ps.setDouble(5, act.getId());
         ps.executeUpdate();
         close(ps);
         close(conn);
         close(conn);
     }
-    
+
     public List<ActivityTO> getActividad() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -72,15 +96,13 @@ public class ActivityService extends Service implements ICrud < ActivityTO > {
         while (rs.next()) {
             ActivityTO activity;
             int id = rs.getInt("id");
-            int idEmployee = rs.getInt("id_employee");
             int idProject = rs.getInt("id_project");
-            String name= rs.getString("name");
-            String description= rs.getString("description");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
             Double hours = rs.getDouble("hours");
-            
-            activity = new ActivityTO(id, idEmployee, idProject, name, description, hours);
 
-            
+            activity = new ActivityTO(id, idProject, name, description, hours);
+
             retorno.add(activity);
 
         }
@@ -97,7 +119,7 @@ public class ActivityService extends Service implements ICrud < ActivityTO > {
         Connection conn = getConnection();
         PreparedStatement ps = null;
 
-        ps = getConn().prepareStatement("DELETE FROM HTH.ACTIVITY WHERE ID = ?");
+        ps = getConn().prepareStatement("DELETE FROM HTH.CREATE_ACTIVITY WHERE ID = ?");
         ps.setInt(1, activity.getId());
 
         ps.executeUpdate();
@@ -105,5 +127,5 @@ public class ActivityService extends Service implements ICrud < ActivityTO > {
         close(ps);
         close(conn);
     }
-    
+
 }

@@ -13,7 +13,6 @@ import java.io.Serializable;
 public class ActivityTO implements Serializable{
     
     private int id;
-    private int idEmployee;
     private int idProject;
     private String Name;
     private String Description;
@@ -22,9 +21,8 @@ public class ActivityTO implements Serializable{
     public ActivityTO() {
     }
 
-    public ActivityTO(int id, int idEmployee, int idProject, String Name, String Description, double hours) {
+    public ActivityTO(int id, int idProject, String Name, String Description, double hours) {
         this.id = id;
-        this.idEmployee = idEmployee;
         this.idProject = idProject;
         this.Name = Name;
         this.Description = Description;
@@ -38,15 +36,7 @@ public class ActivityTO implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
-
-    public int getIdEmployee() {
-        return idEmployee;
-    }
-
-    public void setIdEmployee(int idEmployee) {
-        this.idEmployee = idEmployee;
-    }
-
+    
     public int getIdProject() {
         return idProject;
     }
