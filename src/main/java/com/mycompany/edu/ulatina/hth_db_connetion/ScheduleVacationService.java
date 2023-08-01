@@ -125,7 +125,7 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
             Date endDate = rs.getDate("end_date");
             int idStatus = rs.getInt("id_status_detail");
             String description = rs.getString("description");
-            scheduleVacationTO  = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
+            scheduleVacationTO = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
         }
         close(rs);
         close(ps);
@@ -142,8 +142,8 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
                 + "AND HTH.VACATION.id = HTH.SCHEDULE_VACATION.id_vacation AND id_status_detail = 15");
         ps.setInt(1, pK);
         ResultSet rs = ps.executeQuery();
-        
-         if (rs.next()) {
+
+        if (rs.next()) {
             vacationDays = rs.getInt("SUM(DATEDIFF(START_DATE, END_DATE))");
         }
 
@@ -153,7 +153,7 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
 
         return vacationDays;
     }
-    
+
     public List<ScheduleVacationTO> getScheduleVacation() throws Exception {
         Connection conn = getConnection();
         List<ScheduleVacationTO> scheduleVacationList = new ArrayList<>();
@@ -219,7 +219,7 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
         close(conn);
         return status;
     }
-    
+
     public List<ScheduleVacationTO> getScheduleVacationsPending() throws Exception {
         Connection conn = getConnection();
         List<ScheduleVacationTO> scheduleVacationList = new ArrayList<>();
@@ -244,58 +244,81 @@ public class ScheduleVacationService extends Service implements ICrud<ScheduleVa
 
         return scheduleVacationList;
     }
-    
+
     public List<ScheduleVacationTO> getNewScheduleVacation(int pk) throws Exception {
-    Connection conn = getConnection();
-    List<ScheduleVacationTO> listScheduleVacation = new ArrayList<>();
-    PreparedStatement ps = conn.prepareStatement("SELECT SV.ID, SV.ID_VACATION, SV.START_DATE, SV.END_DATE, SV.ID_STATUS_DETAIL, SV.DESCRIPTION " +
-                                                  "FROM HTH.SCHEDULE_VACATION SV " +
-                                                  "INNER JOIN HTH.VACATION V ON SV.ID_VACATION = V.ID " +
-                                                  "WHERE (SV.ID_STATUS_DETAIL = 17 OR current_date() < SV.START_DATE) AND V.ID_EMPLOYEE = ?");
-    ps.setInt(1, pk);
-    ResultSet rs = ps.executeQuery();
+        Connection conn = getConnection();
+        List<ScheduleVacationTO> listScheduleVacation = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("SELECT SV.ID, SV.ID_VACATION, SV.START_DATE, SV.END_DATE, SV.ID_STATUS_DETAIL, SV.DESCRIPTION "
+                + "FROM HTH.SCHEDULE_VACATION SV "
+                + "INNER JOIN HTH.VACATION V ON SV.ID_VACATION = V.ID "
+                + "WHERE (SV.ID_STATUS_DETAIL = 17 OR current_date() < SV.START_DATE) AND V.ID_EMPLOYEE = ?");
+        ps.setInt(1, pk);
+        ResultSet rs = ps.executeQuery();
 
-    while (rs.next()) {
-        int id = rs.getInt("ID");
-        int idVacation = rs.getInt("ID_VACATION");
-        Date startDate = rs.getDate("START_DATE");
-        Date endDate = rs.getDate("END_DATE");
-        int idStatus = rs.getInt("ID_STATUS_DETAIL");
-        String description = rs.getString("DESCRIPTION");
-        ScheduleVacationTO scheduleVacation = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
-        listScheduleVacation.add(scheduleVacation);
+        while (rs.next()) {
+            int id = rs.getInt("ID");
+            int idVacation = rs.getInt("ID_VACATION");
+            Date startDate = rs.getDate("START_DATE");
+            Date endDate = rs.getDate("END_DATE");
+            int idStatus = rs.getInt("ID_STATUS_DETAIL");
+            String description = rs.getString("DESCRIPTION");
+            ScheduleVacationTO scheduleVacation = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
+            listScheduleVacation.add(scheduleVacation);
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return listScheduleVacation;
     }
-    close(rs);
-    close(ps);
-    close(conn);
-    return listScheduleVacation;
-}
 
-    
     public List<ScheduleVacationTO> getOldScheduleVacation(int pk) throws Exception {
-    Connection conn = getConnection();
-    List<ScheduleVacationTO> listScheduleVacation = new ArrayList<>();
-    PreparedStatement ps = conn.prepareStatement("SELECT SV.ID, SV.ID_VACATION, SV.START_DATE, SV.END_DATE, SV.ID_STATUS_DETAIL, SV.DESCRIPTION " +
-                                                  "FROM HTH.SCHEDULE_VACATION SV " +
-                                                  "INNER JOIN HTH.VACATION V ON SV.ID_VACATION = V.ID " +
-                                                  "WHERE V.ID_EMPLOYEE = ? AND SV.ID_STATUS_DETAIL != 17 AND current_date() > SV.START_DATE");
-    ps.setInt(1, pk);
-    ResultSet rs = ps.executeQuery();
+        Connection conn = getConnection();
+        List<ScheduleVacationTO> listScheduleVacation = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("SELECT SV.ID, SV.ID_VACATION, SV.START_DATE, SV.END_DATE, SV.ID_STATUS_DETAIL, SV.DESCRIPTION "
+                + "FROM HTH.SCHEDULE_VACATION SV "
+                + "INNER JOIN HTH.VACATION V ON SV.ID_VACATION = V.ID "
+                + "WHERE V.ID_EMPLOYEE = ? AND SV.ID_STATUS_DETAIL != 17 AND current_date() > SV.START_DATE");
+        ps.setInt(1, pk);
+        ResultSet rs = ps.executeQuery();
 
-    while (rs.next()) {
-        int id = rs.getInt("ID");
-        int idVacation = rs.getInt("ID_VACATION");
-        Date startDate = rs.getDate("START_DATE");
-        Date endDate = rs.getDate("END_DATE");
-        int idStatus = rs.getInt("ID_STATUS_DETAIL");
-        String description = rs.getString("DESCRIPTION");
-        ScheduleVacationTO scheduleVacation = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
-        listScheduleVacation.add(scheduleVacation);
+        while (rs.next()) {
+            int id = rs.getInt("ID");
+            int idVacation = rs.getInt("ID_VACATION");
+            Date startDate = rs.getDate("START_DATE");
+            Date endDate = rs.getDate("END_DATE");
+            int idStatus = rs.getInt("ID_STATUS_DETAIL");
+            String description = rs.getString("DESCRIPTION");
+            ScheduleVacationTO scheduleVacation = new ScheduleVacationTO(id, idVacation, startDate, endDate, idStatus, description);
+            listScheduleVacation.add(scheduleVacation);
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return listScheduleVacation;
     }
-    close(rs);
-    close(ps);
-    close(conn);
-    return listScheduleVacation;
-}
+    
+    public String getEmployeeName(int pk) throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = getConnection();
+        String name = " ";
+       
+        ps = getConn().prepareStatement("Select first_name, last_name \n"
+                + "from hth.employee, hth.vacation, hth.schedule_vacation\n"
+                + "WHERE employee.id = vacation.id and vacation.id = schedule_vacation.id_vacation AND schedule_vacation.id = ?");
+        ps.setInt(1, pk);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            String first = rs.getString("first_name");
+            String last = rs.getString("last_name");
+            
+            name = first + " " + last;
+
+        }
+        super.close(rs);
+        super.close(ps);
+        super.close(conn);
+        return name;
+    }
 
 }
