@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author javi
  */
-public class UsariosService extends Connector {
+public class UsuarioService extends Connector {
 
     public void insert(UsuariosTO usuario) throws Exception {
 
