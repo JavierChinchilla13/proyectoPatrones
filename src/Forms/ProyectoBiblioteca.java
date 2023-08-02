@@ -108,9 +108,11 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable_prestamos = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable_pres = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
         label1 = new java.awt.Label();
         jPanel_buttons = new javax.swing.JPanel();
         Jbtn_actualizar = new javax.swing.JButton();
@@ -242,7 +244,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 255));
+        jPanel1.setBackground(new java.awt.Color(102, 153, 255));
 
         jTable_libros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -257,7 +259,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable_libros);
 
-        jPanel_prop.setBackground(new java.awt.Color(255, 255, 102));
+        jPanel_prop.setBackground(new java.awt.Color(153, 204, 255));
 
         jLbl_titulo.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLbl_titulo.setText("Titulo");
@@ -353,24 +355,30 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable_lectores);
 
-        jPanelDatosUsuario.setBackground(new java.awt.Color(255, 255, 102));
+        jPanelDatosUsuario.setBackground(new java.awt.Color(153, 204, 255));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Datos para usuario");
 
         jLblNombre.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLblNombre.setForeground(new java.awt.Color(0, 0, 0));
         jLblNombre.setText("Nombre");
 
         jLblTelefono.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLblTelefono.setForeground(new java.awt.Color(0, 0, 0));
         jLblTelefono.setText("Telefono");
 
         jLblDireccion.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLblDireccion.setForeground(new java.awt.Color(0, 0, 0));
         jLblDireccion.setText("Dirección");
 
         jLblCiudad.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLblCiudad.setForeground(new java.awt.Color(0, 0, 0));
         jLblCiudad.setText("Ciudad");
 
         jLblCorreo.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLblCorreo.setForeground(new java.awt.Color(0, 0, 0));
         jLblCorreo.setText("Correo");
 
         jTxtDireccion.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -473,15 +481,32 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable_prestamos);
 
+        jPanel6.setBackground(new java.awt.Color(153, 204, 255));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 269, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jTabbedPane.addTab("Leyendo", jPanel4);
@@ -499,15 +524,36 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTable_pres);
 
+        jPanel7.setBackground(new java.awt.Color(153, 204, 255));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 269, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane.addTab("Préstamos", jPanel5);
@@ -516,7 +562,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         label1.setForeground(new java.awt.Color(255, 255, 255));
         label1.setText("Panel de administración");
 
-        jPanel_buttons.setBackground(new java.awt.Color(102, 255, 102));
+        jPanel_buttons.setBackground(new java.awt.Color(0, 51, 255));
 
         Jbtn_actualizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         Jbtn_actualizar.setText("Actualizar");
@@ -581,15 +627,15 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel_buttons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jPanel_buttons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -785,6 +831,8 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelDatosUsuario;
     private javax.swing.JPanel jPanel_buttons;
     private javax.swing.JPanel jPanel_prop;
