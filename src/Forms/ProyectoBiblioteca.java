@@ -636,7 +636,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
             switch (indexSelect) {
                 case 0:
 
-                    LibroTO l = new LibroTO(0, jTxtTitulo.getText(), Integer.parseInt(jTxtEditorial.getText()), jTxtAnio.getText());
+                    LibroTO l = new LibroTO(0, jTxtTitulo.getText(), jTxtEditorial.getText(), Integer.parseInt(jTxtAnio.getText()));
                     lib.insert(l);
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
                 case 1:

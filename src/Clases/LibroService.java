@@ -30,8 +30,9 @@ public class LibroService extends Connector {
         PreparedStatement ps = conn.prepareStatement("INSERT INTO BIBLIOTECA.LIBRO VALUES(?,?,?,?)");
         ps.setInt(1, 0);
         ps.setString(2, libro.getTitulo());
-        ps.setInt(3, libro.getAnio());
-        ps.setString(4, libro.getEditorial());
+        ps.setString(3, libro.getEditorial());
+        ps.setInt(4, libro.getAnio());
+        
 
         ps.executeUpdate();
         close(ps);
@@ -55,10 +56,10 @@ public class LibroService extends Connector {
 
     public void update(int id, String titulo, int anio, String editorial) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.LIBRO SET TITULO = ?, ANIO = ?, EDITORIAL = ? WHERE ID_LIBRO = ?");
-        ps.setString(1, titulo);
-        ps.setInt(2, anio);
-        ps.setString(3, editorial);
+        PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.LIBRO SET TITULO = ?, EDITORIAL = ?, ANIO = ? WHERE ID_LIBRO = ?");
+        ps.setString(1, titulo); 
+        ps.setString(2, editorial);
+        ps.setInt(3, anio);
         ps.setInt(4, id);
         ps.executeUpdate();
         close(ps);
@@ -80,10 +81,11 @@ public class LibroService extends Connector {
             LibroTO libroTO;
             int id = rs.getInt("id_libro");
             String titulo = rs.getString("titulo");
-            int anio = rs.getInt("anio");
+            
             String editorial = rs.getString("editorial");
+            int anio = rs.getInt("anio");
 
-            libroTO = new LibroTO(id, titulo, anio, editorial);
+            libroTO = new LibroTO(id, titulo, editorial, anio);
             //String tblData[] = {titulo, anio, editorial};
 
             retorno.add(libroTO);

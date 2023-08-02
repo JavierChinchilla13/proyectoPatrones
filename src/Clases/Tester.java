@@ -18,7 +18,7 @@ public class Tester {
         try {
             
             LibroService lib = new LibroService();
-            LibroTO l = new LibroTO(0,"Jav", 2020, "4093032");
+            //LibroTO l = new LibroTO(0,"Jav", 2020, "4093032");
             
             lib.update(19, "ODISEA", 2020, "JAVI");
             //lib.insert(l);

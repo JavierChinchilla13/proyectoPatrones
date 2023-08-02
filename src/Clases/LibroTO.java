@@ -13,18 +13,18 @@ import java.io.Serializable;
 public class LibroTO implements Serializable{
     
     private int id;
-    private String titulo;
-    private int anio;        
+    private String titulo;     
     private String editorial;
+    private int anio;   
 
     public LibroTO() {
     }
 
-    public LibroTO(int id, String titulo, int anio, String editorial) {
+    public LibroTO(int id, String titulo, String editorial, int anio) {
         this.id = id;
         this.titulo = titulo;
-        this.anio = anio;
         this.editorial = editorial;
+        this.anio = anio;
     }
 
     public int getId() {
@@ -43,14 +43,6 @@ public class LibroTO implements Serializable{
         this.titulo = titulo;
     }
 
-    public int getAnio() {
-        return anio;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
-    }
-
     public String getEditorial() {
         return editorial;
     }
@@ -59,6 +51,15 @@ public class LibroTO implements Serializable{
         this.editorial = editorial;
     }
 
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    
    
     
     
