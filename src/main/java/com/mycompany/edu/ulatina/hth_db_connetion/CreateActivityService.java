@@ -113,6 +113,36 @@ public class CreateActivityService extends Service implements ICrud< CreateActiv
 
         return retorno;
     }
+    public List<CreateActivityTO> getActividad(int pk) throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = getConnection();
+        List<CreateActivityTO> retorno = new ArrayList<CreateActivityTO>();
+
+        ps = getConn().prepareStatement("SELECT * FROM HTH.CREATE_ACTIVITY WHERE id_project = ?");
+        ps.setInt(1, pk);
+        rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            CreateActivityTO activity;
+            int id = rs.getInt("id");
+            int idProject = rs.getInt("id_project");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            
+
+            activity = new CreateActivityTO(id, idProject, name, description);
+
+            retorno.add(activity);
+
+        }
+
+        super.close(rs);
+        super.close(ps);
+        super.close(conn);
+
+        return retorno;
+    }
 
     @Override
     public void delete(CreateActivityTO activity) throws Exception {
