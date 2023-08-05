@@ -75,7 +75,7 @@ public class ActivityService extends Service implements ICrud<ActivityTO>{
         close(conn);
     }
 
-    public List<ActivityTO> getActividad() throws Exception {
+    public List<ActivityTO> getActivity() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnection();

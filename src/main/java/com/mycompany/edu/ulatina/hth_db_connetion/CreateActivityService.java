@@ -19,7 +19,7 @@ public class CreateActivityService extends Service implements ICrud< CreateActiv
     public void insert(CreateActivityTO activity) throws Exception {
 
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.CREATE_ACTIVITY VALUES(?,?,?,?))");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.CREATE_ACTIVITY VALUES(?,?,?,?)");
         ps.setInt(1, 0);
         ps.setInt(2, activity.getIdProject());
         ps.setString(3, activity.getName());
@@ -85,7 +85,7 @@ public class CreateActivityService extends Service implements ICrud< CreateActiv
         close(conn);
     }
 
-    public List<CreateActivityTO> getActividad() throws Exception {
+    public List<CreateActivityTO> getActivity() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = getConnection();
