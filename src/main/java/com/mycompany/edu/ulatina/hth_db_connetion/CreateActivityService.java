@@ -73,7 +73,7 @@ public class CreateActivityService extends Service implements ICrud< CreateActiv
 
     public void update(CreateActivityTO act, int idProject, String name, String description) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.CREATE_ACTIVITY SET id_description=?, name = ?; description = ?WHERE id = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.CREATE_ACTIVITY SET id_project=?, name = ?, description = ? WHERE id = ?");
         ps.setInt(1, idProject);
         ps.setString(2, name);
         ps.setString(3, description);
