@@ -23,32 +23,6 @@ public class Tester {
                 System.out.println("id: " + u.getId() );
 
             }
-            
-            /*
-            for(PermitTO u : per.getOld(1)){
-                System.out.println("id: " + u.getId() );
-
-            }
-            
-            //System.out.println(per.getNew(1));
-            
-            /*
-            for(EmployeeTO e : list){
-                System.out.println(" -> NOM: " + e.getFullName());
-                System.out.println(" -> ID: " + e.getId());
-            }
-            System.out.println(" \n\n\n ");
-            for(EmployeeTO e : list2){
-                System.out.println(" -> NOM: " + e.getFullName());
-                System.out.println(" -> ID: " + e.getId());
-            }
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            pServ.addCollaborator(3, 5);
-            list = eServ.getEmployeesFromProyect(3);
-            for(EmployeeTO e : list){
-                System.out.println(" -> NOM: " + e.getFullName());
-                System.out.println(" -> ID: " + e.getId());
-            }*/
 
         } catch (Exception e) {
             e.printStackTrace();

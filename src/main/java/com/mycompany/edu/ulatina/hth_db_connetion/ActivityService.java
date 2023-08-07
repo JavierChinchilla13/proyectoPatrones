@@ -32,6 +32,19 @@ public class ActivityService extends Service implements ICrud<ActivityTO>{
         close(ps);
         close(conn);
     }
+    
+    public void insert(int idEmployee, int idActivity, double hours) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.ACTIVITY VALUES(?,?,?,?))");
+        ps.setInt(1, 0);
+        ps.setInt(2, idEmployee);
+        ps.setInt(2, idActivity);
+        ps.setDouble(3, hours);
+         
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+    }
 
     @Override
     public void delete(ActivityTO activity) throws Exception {
@@ -51,7 +64,7 @@ public class ActivityService extends Service implements ICrud<ActivityTO>{
         Connection conn = getConnection();
         PreparedStatement ps = null;
 
-        ps = getConn().prepareStatement("DELETE FROM HTH.ACTIVITY WHERE ID=?");
+        ps = getConn().prepareStatement("DELETE FROM HTH.ACTIVITY WHERE ID = ?");
         ps.setInt(1, id);
 
         ps.executeUpdate();
@@ -104,6 +117,8 @@ public class ActivityService extends Service implements ICrud<ActivityTO>{
 
         return retorno;
     }
+    
+    
     
     public List<ActivityTO> getSearchActivity(int pk, int act) throws Exception {
         PreparedStatement ps = null;
@@ -159,6 +174,9 @@ public class ActivityService extends Service implements ICrud<ActivityTO>{
         super.close(conn);
         return name;
     }
+    
+    
+    
     
     
 }
