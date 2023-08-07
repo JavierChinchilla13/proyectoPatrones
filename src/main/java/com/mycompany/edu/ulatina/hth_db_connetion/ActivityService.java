@@ -81,7 +81,7 @@ public class ActivityService extends Service implements ICrud<ActivityTO>{
         Connection conn = getConnection();
         List<ActivityTO> retorno = new ArrayList<ActivityTO>();
 
-        ps = getConn().prepareStatement("SELECT * FROM hth.activity;");
+        ps = getConn().prepareStatement("SELECT * FROM hth.activity");
         rs = ps.executeQuery();
         while (rs.next()) {
             ActivityTO activity;
@@ -103,6 +103,61 @@ public class ActivityService extends Service implements ICrud<ActivityTO>{
         super.close(conn);
 
         return retorno;
+    }
+    
+    public List<ActivityTO> getSearchActivity(int pk, int act) throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = getConnection();
+        List<ActivityTO> retorno = new ArrayList<ActivityTO>();
+
+        ps = getConn().prepareStatement("SELECT * FROM hth.activity, hth.create_activity Where id_employee = ? and id_project = ? and hth.create_activity.id = id_activity");
+        ps.setInt(1, pk);
+        ps.setInt(2, act);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            ActivityTO activity;
+            CreateActivityTO cActivity;
+            int id = rs.getInt("id");
+            int idEmployee = rs.getInt("id_employee");
+            int idActivity = rs.getInt("id_activity");
+            double hours = rs.getDouble("hours");
+            
+            
+            
+
+            activity = new ActivityTO(id, idEmployee, idActivity, hours);
+            //cActivity = new CreateActivityTO(id2, idProject, name, description);
+
+            retorno.add(activity);
+
+        }
+
+        super.close(rs);
+        super.close(ps);
+        super.close(conn);
+
+        return retorno;
+    }
+    
+    public String getActivityName(int pk) throws Exception {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = getConnection();
+        String name = " ";
+
+        ps = getConn().prepareStatement("SELECT name FROM hth.activity, hth.create_activity \n"
+                + "Where id_activity = ? and hth.create_activity.id = id_activity");
+        ps.setInt(1, pk);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            name = rs.getString("name");
+ 
+        }
+        super.close(rs);
+        super.close(ps);
+        super.close(conn);
+        return name;
     }
     
     
