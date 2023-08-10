@@ -194,5 +194,29 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
         close(conn);
         return feedbackList;
     }
+    
+    public List<FeedbackTO> getFeedback(int type) throws Exception {
+        Connection conn = getConnection();
+        List<FeedbackTO> feedbackList = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("SELECT ID, NAME, DESCRIPTION, DATE_OF_FEEDBACK, ID_STATUS, ID_TYPE, ID_CREATOR FROM HTH.FEEDBACK WHERE ID_TYPE = ?");
+        ps.setInt(1, type);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("ID");
+            String name = rs.getString("NAME");
+            String description = rs.getString("DESCRIPTION");
+            Date dateOfFeedback = rs.getDate("DATE_OF_FEEDBACK");
+            int idStatus = rs.getInt("ID_STATUS");
+            int idType = rs.getInt("ID_TYPE");
+            int idCreator = rs.getInt("ID_CREATOR");
+
+            FeedbackTO feedbackTO = new FeedbackTO(id, name, description, dateOfFeedback, idStatus, idType, idCreator);
+            feedbackList.add(feedbackTO);
+        }
+        close(rs);
+        close(ps);
+        close(conn);
+        return feedbackList;
+    }
 
 }
