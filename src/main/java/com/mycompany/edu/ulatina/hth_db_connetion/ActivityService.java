@@ -76,7 +76,7 @@ public class ActivityService extends Service implements ICrud<ActivityTO>{
     
     public void update(ActivityTO act, int idEmployee, int idActivity, Double hours) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.CREATE_ACTIVITY SET id_employee=?, id_activity = ?; hours = ? WHERE id = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE HTH.CREATE_ACTIVITY SET id_employee=?, id_activity = ?, hours = ? WHERE id = ?");
         ps.setInt(1, idEmployee);
         ps.setInt(2, idActivity);
         ps.setDouble(3, hours);
