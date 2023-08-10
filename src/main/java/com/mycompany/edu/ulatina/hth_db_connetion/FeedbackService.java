@@ -94,4 +94,42 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO>{
         close(conn);
         close(conn);
     }
+    
+    
+    public void insertAct(int idEmployee, int idActivity, int idFeedback) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_activity VALUES(?,?,?,?))");
+        ps.setInt(1, 0);
+        ps.setInt(2, idEmployee);
+        ps.setInt(3, idActivity);
+        ps.setInt(4, idFeedback);
+         
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+    }
+    
+    public void insertEmp(int idEmployee, int idFeedback) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_employee VALUES(?,?,?))");
+        ps.setInt(1, 0);
+        ps.setInt(2, idEmployee);
+        ps.setInt(3, idFeedback);
+         
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+    }
+    
+    public void insertPj(int idProject, int idFeedback) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_project VALUES(?,?,?))");
+        ps.setInt(1, 0);
+        ps.setInt(2, idProject);
+        ps.setInt(3, idFeedback);
+         
+        ps.executeUpdate();
+        close(ps);
+        close(conn);
+    }
 }
