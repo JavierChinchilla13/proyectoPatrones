@@ -21,7 +21,7 @@ public class ProjectXEmployeeService extends Service implements ICrud<ProjectXEm
         close(conn);
     }
 
-    public void insert(int idProject, int idEmployee, int hoursInvested, String feedBack) throws Exception {
+    public void insert(int idProject, int idEmployee) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.PROJECT_X_EMPLOYEE VALUES(?,?,?)");
         ps.setInt(1, 0);
@@ -62,7 +62,7 @@ public class ProjectXEmployeeService extends Service implements ICrud<ProjectXEm
         close(conn);
     }
 
-    public void update(ProjectXEmployeeTO projectXEmployeeTO, int newIdProject, int newIdEmployee, int newHoursInvested, String newFeedback) throws Exception {
+    public void update(ProjectXEmployeeTO projectXEmployeeTO, int newIdProject, int newIdEmployee) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE HTH.PROJECT_X_EMPLOYEE SET ID_PROJECT = ?, ID_EMPLOYEE = ? WHERE ID = ?");
         ps.setInt(1, newIdProject);
