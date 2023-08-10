@@ -14,12 +14,13 @@ public class Tester {
             PermitService per= new PermitService();
             ActivityService act= new ActivityService();
             ScheduleVacationService vac = new ScheduleVacationService();
+            FeedbackService fed = new FeedbackService();
             List<EmployeeTO> list = eServ.getEmployeesFromProyect(3);
             List<EmployeeTO> list2 = eServ.getEmployeesNotOnProyect(3);
             
             System.out.println(act.getActivityName(7));
             
-            for(ActivityTO u : act.getSearchActivity(1, 1)){
+            for(FeedbackTO u : fed.getFeedback(1, 1)){
                 System.out.println("id: " + u.getId() );
 
             }
