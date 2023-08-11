@@ -741,7 +741,8 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     LibroTO l = new LibroTO(0, jTxtTitulo.getText(), jTxtEditorial.getText(), Integer.parseInt(jTxtAnio.getText()));
                     lib.insert(l);
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-                    JOptionPane.showMessageDialog(null, evt,"Se a guardado el libro exitosamente", HEIGHT);
+                    
+                    JOptionPane.showMessageDialog(null, "Se ha guardado el libro exitosamente");
                 case 1:
                     
                     UsuariosTO usr = new UsuariosTO(0, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
@@ -749,7 +750,8 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     
                     user.insert(usr);
                     user.leerLectores("usuario", jTable_lectores);
-                    JOptionPane.showMessageDialog(null, evt,"Se a guardado el usuario exitosamente", HEIGHT);
+                    JOptionPane.showMessageDialog(null, "Se ha guardado el usuario exitosamente");
+                    
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -771,8 +773,8 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
                     
-                    JOptionPane.showMessageDialog(null, evt,"Se a actualizado exitosamente", HEIGHT);
-                
+                    JOptionPane.showMessageDialog(null, "Se ha actualizado el libro exitosamente");
+                    
                 //Usuarios
                 case 1:
                     int ide =Integer.parseInt( jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
@@ -780,7 +782,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     user.update(ide, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
                     
                     user.leerLectores("usuario", jTable_lectores);
-                    JOptionPane.showMessageDialog(null, evt,"Se a actualizado exitosamente", HEIGHT);
+                    JOptionPane.showMessageDialog(null, "Se ha actualizado el usuario exitosamente");
             }
 
             jTxtTitulo.setText("");
@@ -810,7 +812,8 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
 
                     lib.delete(id);
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-                    //JOptionPane.showMessageDialog(null, evt,"Se a eliminado el libro exitosamente", HEIGHT);
+                    
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el libro exitosamente");
                     
                 //Usuarios
                 case 1:
@@ -819,7 +822,9 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
  
                     user.delete(ide);
                     user.leerLectores("usaurio", jTable_lectores);
-                    //JOptionPane.showMessageDialog(null, evt,"Se a eliminado el usuario exitosamente", HEIGHT);
+                    
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el usuario exitosamente");
+                    
             }
         } catch (Exception e) {
 
