@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author javi
  */
-public class UsuarioService extends Connector {
+public class UsuarioService extends Connector implements Crud<UsuariosTO>{
 
     public void insert(UsuariosTO usuario) throws Exception {
 
@@ -47,6 +47,20 @@ public class UsuarioService extends Connector {
         super.close(ps);
         super.close(conn);
 
+    }
+    
+     @Override
+    public void delete(UsuariosTO usuarios) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+
+        ps = getConn().prepareStatement("DELETE FROM BIBLIOTECA.USUARIO WHERE ID_USUARIO=?");
+        ps.setInt(1, usuarios.getId());
+
+        ps.executeUpdate();
+
+        super.close(ps);
+        super.close(conn);
     }
 
     public void update(int id, String nombre, String direccion, int telefono, String ciudad, String correo) throws Exception {
@@ -133,4 +147,6 @@ public class UsuarioService extends Connector {
         }
 
     }
+
+   
 }

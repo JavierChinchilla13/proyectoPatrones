@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author javi
  */
-public class LibroService extends Connector {
+public class LibroService extends Connector implements Crud<LibroTO> {
 
     public void insert(LibroTO libro) throws Exception {
 
@@ -52,6 +52,22 @@ public class LibroService extends Connector {
         super.close(ps);
         super.close(conn);
 
+    }
+    
+    @Override
+    public void delete(LibroTO libro) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+
+        ps = getConn().prepareStatement("DELETE FROM BIBLIOTECA.LIBRO WHERE ID_LIBRO=?");
+        ps.setInt(1, libro.getId());
+
+        ps.executeUpdate();
+
+        super.close(ps);
+        super.close(conn);
+        
+        
     }
 
     public void update(int id, String titulo, int anio, String editorial) throws Exception {
@@ -131,6 +147,8 @@ public class LibroService extends Connector {
         }
 
     }
+
+    
 
 
     

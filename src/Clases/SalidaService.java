@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author javi
  */
-public class SalidaService extends Connector {
+public class SalidaService extends Connector implements Crud<SalidaTO> {
 
     public void insert(SalidaTO salida) throws Exception {
 
@@ -53,6 +53,21 @@ public class SalidaService extends Connector {
         super.close(ps);
         super.close(conn);
 
+    }
+    
+    @Override
+    public void delete(SalidaTO salida) throws Exception {
+        
+        Connection conn = getConnection();
+        PreparedStatement ps = null;
+
+        ps = getConn().prepareStatement("DELETE FROM BIBLIOTECA.SALIDA WHERE ID_SALIDA=?");
+        ps.setInt(1, salida.getId());
+
+        ps.executeUpdate();
+
+        super.close(ps);
+        super.close(conn);
     }
 
     public void update(int id, Date fechaSal,Date fechaEnt, String observacion) throws Exception {
@@ -136,6 +151,8 @@ public class SalidaService extends Connector {
         }
 
     }
+
+    
 
 
     
