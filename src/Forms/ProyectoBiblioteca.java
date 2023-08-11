@@ -735,23 +735,70 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
     private void Jbtn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_guardarActionPerformed
         try {
             int indexSelect = jTabbedPane.getSelectedIndex();
+            boolean flag = true;
             switch (indexSelect) {
                 case 0:
 
-                    LibroTO l = new LibroTO(0, jTxtTitulo.getText(), jTxtEditorial.getText(), Integer.parseInt(jTxtAnio.getText()));
-                    lib.insert(l);
-                    lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+                    if (jTxtTitulo.getText() == null || jTxtTitulo.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un titulo correcto");
+                        flag= false;
+                    }
+                    if (jTxtEditorial.getText() == null || jTxtEditorial.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar editorial");
+                        flag= false;
+                    }
+                    if ( Integer.parseInt(jTxtAnio.getText()) == 0){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar año");
+                        flag= false;
+                        
+                    }
                     
-                    JOptionPane.showMessageDialog(null, "Se ha guardado el libro exitosamente");
+                    if (flag){
+                        LibroTO l = new LibroTO(0, jTxtTitulo.getText(), jTxtEditorial.getText(), Integer.parseInt(jTxtAnio.getText()));
+                        lib.insert(l);
+                        lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+
+                        JOptionPane.showMessageDialog(null, "Se ha guardado el libro exitosamente");
+                    }
+                       
+
+                    
                 case 1:
                     
-                    UsuariosTO usr = new UsuariosTO(0, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
-                             //jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
                     
-                    user.insert(usr);
-                    user.leerLectores("usuario", jTable_lectores);
-                    JOptionPane.showMessageDialog(null, "Se ha guardado el usuario exitosamente");
                     
+                    if(jTxtNombre.getText()== null || jTxtNombre.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un nombre correcto");
+                        flag= false;
+                    }
+                    if(jTxtDireccion.getText() == null  || jTxtDireccion.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar una dirreccion correcta");
+                        flag = false;
+                    }
+                    
+                    if (jTxtCiudad.getText() == null || jTxtCiudad.getText().equals("")) {
+                        
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar una ciudad correctamente");
+                        flag = false;
+                    }
+                    if (jTxtCorreo.getText() == null || jTxtCorreo.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un correo correcto");
+                        flag = false;
+                    }
+                    if ( Integer.parseInt(jTxtTelefono.getText()) == 0){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar telefono");
+                        flag= false;
+                        
+                    }
+                    if (flag) {
+                        UsuariosTO usr = new UsuariosTO(0, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
+                        //jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
+
+                        user.insert(usr);
+                        user.leerLectores("usuario", jTable_lectores);
+                        JOptionPane.showMessageDialog(null, "Se ha guardado el usuario exitosamente");
+                    }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -763,26 +810,70 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             int indexSelect = jTabbedPane.getSelectedIndex();
+            boolean flag = true;
             switch (indexSelect) {
                 //Libros
                 case 0:
-                    int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
                     
-                    
-                    lib.update(id, jTxtTitulo.getText(), Integer.parseInt(jTxtAnio.getText()), jTxtEditorial.getText());
-                    
-                    lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-                    
-                    JOptionPane.showMessageDialog(null, "Se ha actualizado el libro exitosamente");
+                    if (jTxtTitulo.getText() == null || jTxtTitulo.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un titulo correcto");
+                        flag= false;
+                    }
+                    if (jTxtEditorial.getText() == null || jTxtEditorial.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar editorial");
+                        flag= false;
+                    }
+                    if ( Integer.parseInt(jTxtAnio.getText()) == 0){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar año");
+                        flag= false;
+                        
+                    }
+                    if (flag){
+                        int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
+
+                        lib.update(id, jTxtTitulo.getText(), Integer.parseInt(jTxtAnio.getText()), jTxtEditorial.getText());
+
+                        lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+
+                        JOptionPane.showMessageDialog(null, "Se ha actualizado el libro exitosamente");
+                    }
+
                     
                 //Usuarios
                 case 1:
-                    int ide =Integer.parseInt( jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
                     
-                    user.update(ide, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
+                    if(jTxtNombre.getText()== null || jTxtNombre.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un nombre correcto");
+                        flag= false;
+                    }
+                    if(jTxtDireccion.getText() == null  || jTxtDireccion.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar una dirreccion correcta");
+                        flag = false;
+                    }
                     
-                    user.leerLectores("usuario", jTable_lectores);
-                    JOptionPane.showMessageDialog(null, "Se ha actualizado el usuario exitosamente");
+                    if (jTxtCiudad.getText() == null || jTxtCiudad.getText().equals("")) {
+                        
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar una ciudad correctamente");
+                        flag = false;
+                    }
+                    if (jTxtCorreo.getText() == null || jTxtCorreo.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un correo correcto");
+                        flag = false;
+                    }
+                    if ( Integer.parseInt(jTxtTelefono.getText()) == 0){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar telefono");
+                        flag= false;
+                        
+                    }
+                    if (flag) {
+                        int ide = Integer.parseInt(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
+
+                        user.update(ide, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
+
+                        user.leerLectores("usuario", jTable_lectores);
+                        JOptionPane.showMessageDialog(null, "Se ha actualizado el usuario exitosamente");
+                    }
+
             }
 
             jTxtTitulo.setText("");
@@ -805,25 +896,70 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             int indexSelect = jTabbedPane.getSelectedIndex();
+            boolean flag = true;
             switch (indexSelect) {
                 //Libros
                 case 0:
-                    int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
+                    if (jTxtTitulo.getText() == null || jTxtTitulo.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un titulo correcto");
+                        flag= false;
+                    }
+                    if (jTxtEditorial.getText() == null || jTxtEditorial.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar editorial");
+                        flag= false;
+                    }
+                    if ( Integer.parseInt(jTxtAnio.getText()) == 0){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar año");
+                        flag= false;
+                        
+                    }
+                    if (flag){
+                        int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
 
-                    lib.delete(id);
-                    lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+                        lib.delete(id);
+                        lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+
+                        JOptionPane.showMessageDialog(null, "Se ha eliminado el libro exitosamente");
+                    }
+
                     
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado el libro exitosamente");
                     
                 //Usuarios
                 case 1:
                     
-                    int ide = Integer.parseInt(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
- 
-                    user.delete(ide);
-                    user.leerLectores("usaurio", jTable_lectores);
+                    if(jTxtNombre.getText()== null || jTxtNombre.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un nombre correcto");
+                        flag= false;
+                    }
+                    if(jTxtDireccion.getText() == null  || jTxtDireccion.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar una dirreccion correcta");
+                        flag = false;
+                    }
                     
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado el usuario exitosamente");
+                    if (jTxtCiudad.getText() == null || jTxtCiudad.getText().equals("")) {
+                        
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar una ciudad correctamente");
+                        flag = false;
+                    }
+                    if (jTxtCorreo.getText() == null || jTxtCorreo.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar un correo correcto");
+                        flag = false;
+                    }
+                    if ( Integer.parseInt(jTxtTelefono.getText()) == 0){
+                        JOptionPane.showMessageDialog(null, "Porfavor agregar telefono");
+                        flag= false;
+                        
+                    }
+                    if (flag) {
+
+                        int ide = Integer.parseInt(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
+
+                        user.delete(ide);
+                        user.leerLectores("usuario", jTable_lectores);
+
+                        JOptionPane.showMessageDialog(null, "Se ha eliminado el usuario exitosamente");
+                    }
+
                     
             }
         } catch (Exception e) {

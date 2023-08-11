@@ -26,8 +26,8 @@ public class UsuarioService extends Connector implements Crud<UsuariosTO>{
         ps.setString(2, usuario.getNombre());
         ps.setString(3, usuario.getDireccion());
         ps.setInt(4, usuario.getTelefono());
-        ps.setString(4, usuario.getCiudad());
-        ps.setString(4, usuario.getCorreo());
+        ps.setString(5, usuario.getCiudad());
+        ps.setString(6, usuario.getCorreo());
 
         ps.executeUpdate();
         close(ps);
