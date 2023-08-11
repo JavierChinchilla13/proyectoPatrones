@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -20,11 +21,13 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
     @Override
     public void insert(FeedbackTO feedback) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.FEEDBACK VALUES(?,?,?,?,?,?,?))");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.FEEDBACK VALUES(?,?,?,?,?,?,?)");
+        
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         ps.setInt(1, 0);
         ps.setString(2, feedback.getName());
         ps.setString(3, feedback.getDescription());
-        ps.setDate(4, feedback.getDateOfFeedback());
+        ps.setDate(4, date);
         ps.setInt(5, feedback.getIdStatus());
         ps.setInt(6, feedback.getIdType());
         ps.setInt(7, feedback.getIdCreator());
@@ -36,11 +39,13 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
 
     public void insert(String name, String description, Date dateOfFeedback, int idStatus, int idType, int idCreator) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.FEEDBACK VALUES(?,?,?,?,?,?,?))");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO HTH.FEEDBACK VALUES(?,?,?,?,?,?,?)");
+        
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         ps.setInt(1, 0);
         ps.setString(2, name);
         ps.setString(3, description);
-        ps.setDate(4, dateOfFeedback);
+        ps.setDate(4, date);
         ps.setInt(5, idStatus);
         ps.setInt(6, idType);
         ps.setInt(7, idCreator);
@@ -82,10 +87,11 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
     public void update(FeedbackTO feedback, String name, String description, Date dateOfFeedback, int idStatus, int idType, int idCreator) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE HTH.FEEDBACK SET name=?, description = ?, date_of_feedback = ?, id_status = ?, id_Type=?, id_creator=? WHERE id = ?");
-
+        
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         ps.setString(1, name);
         ps.setString(2, description);
-        ps.setDate(3, dateOfFeedback);
+        ps.setDate(3, date);
         ps.setInt(4, idStatus);
         ps.setInt(5, idType);
         ps.setInt(6, idCreator);
@@ -96,12 +102,12 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
         close(conn);
     }
 
-    public void insertAct(int idEmployee, int idActivity, int idFeedback) throws Exception {
+    public void insertAct(int idEmployee, int idProject, int idFeedback) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_activity VALUES(?,?,?,?))");
         ps.setInt(1, 0);
         ps.setInt(2, idEmployee);
-        ps.setInt(3, idActivity);
+        ps.setInt(3, idProject);
         ps.setInt(4, idFeedback);
 
         ps.executeUpdate();
@@ -136,9 +142,11 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
     public void update(FeedbackTO feedbackTO) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE HTH.FEEDBACK SET name=?, description = ?, date_of_feedback = ?, id_status = ?, id_Type=?, id_creator=? WHERE id = ?");
+        
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         ps.setString(1, feedbackTO.getName());
         ps.setString(2, feedbackTO.getDescription());
-        ps.setDate(3, feedbackTO.getDateOfFeedback());
+        ps.setDate(3, date);
         ps.setInt(4, feedbackTO.getIdStatus());
         ps.setInt(5, feedbackTO.getIdType());
         ps.setInt(6, feedbackTO.getIdCreator());
