@@ -1,4 +1,4 @@
-package PrimerParcial;
+package Forms;
 
 import Clases.LibroService;
 import Clases.LibroTO;
@@ -8,6 +8,7 @@ import Clases.consultas;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class ProyectoBiblioteca extends javax.swing.JFrame {
@@ -685,9 +686,15 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     LibroTO l = new LibroTO(0, jTxtTitulo.getText(), jTxtEditorial.getText(), Integer.parseInt(jTxtAnio.getText()));
                     lib.insert(l);
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+                    JOptionPane.showMessageDialog(null, evt,"Se a guardado el libro exitosamente", HEIGHT);
                 case 1:
-                    //con.InsertarUsuario(jTxtNombre, jTxtDireccion, jTxtTelefono, jTxtCiudad, jTxtCorreo);
-                    con.leerLectores("usuario", jTable_lectores);
+                    
+                    UsuariosTO usr = new UsuariosTO(0, jTxtNombre.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
+                             //jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
+                    
+                    user.insert(usr);
+                    user.RellenaLaTablaConDatosMySQL("usuario", jTable_lectores);
+                    JOptionPane.showMessageDialog(null, evt,"Se a guardado el usuario exitosamente", HEIGHT);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -704,19 +711,21 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                 case 0:
                     int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
                     
-                    //LibroTO l = new LibroTO(0, jTxtTitulo.getText(), Integer.parseInt(jTxtEditorial.getText()), jTxtAnio.getText());
-
+                    
                     lib.update(id, jTxtTitulo.getText(), Integer.parseInt(jTxtAnio.getText()), jTxtEditorial.getText());
-                    //con.ActualizarLibro(jTxtTitulo, jTxtEditorial, jTxtAnio, id);
+                    
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+                    
+                    JOptionPane.showMessageDialog(null, evt,"Se a actualizado exitosamente", HEIGHT);
                 
                 //Usuarios
                 case 1:
                     int ide =Integer.parseInt( jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
                     
                     user.update(ide, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
-                    //con.ActualizarUsuario(jTxtNombre, jTxtDireccion, jTxtTelefono, jTxtCiudad, jTxtCorreo, idUsuario);
+                    
                     user.RellenaLaTablaConDatosMySQL("usuario", jTable_lectores);
+                    JOptionPane.showMessageDialog(null, evt,"Se a actualizado exitosamente", HEIGHT);
             }
 
             jTxtTitulo.setText("");
@@ -740,16 +749,21 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         try {
             int indexSelect = jTabbedPane.getSelectedIndex();
             switch (indexSelect) {
+                //Libros
                 case 0:
                     int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
 
                     lib.delete(id);
-                    // con.EliminaRegistro("id_libro", "libro", id);
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+                    JOptionPane.showMessageDialog(null, evt,"Se a eliminado el libro exitosamente", HEIGHT);
+                    
+                //Usuarios
                 case 1:
-                    String idUsuario = jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString();
-                    con.EliminaRegistro("id_usuario", "usuario", idUsuario);
-                    con.leerLectores("usuario", jTable_lectores);
+                    int ide = Integer.parseInt(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
+ 
+                    user.delete(ide);
+                    user.RellenaLaTablaConDatosMySQL("usaurio", jTable_lectores);
+                    JOptionPane.showMessageDialog(null, evt,"Se a eliminado el usuario exitosamente", HEIGHT);
             }
         } catch (Exception e) {
 
