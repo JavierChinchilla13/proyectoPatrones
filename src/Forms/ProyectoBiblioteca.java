@@ -2,6 +2,8 @@ package PrimerParcial;
 
 import Clases.LibroService;
 import Clases.LibroTO;
+import Clases.UsuarioService;
+import Clases.UsuariosTO;
 import Clases.consultas;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -9,8 +11,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 
 public class ProyectoBiblioteca extends javax.swing.JFrame {
+    //LIBROS
     LibroService lib = new LibroService();
     LibroTO selectedLibro = new LibroTO();
+    //USUARIOS
+    UsuarioService user = new UsuarioService();
+    UsuariosTO selectedUsuario = new UsuariosTO();
     
     //Variable global
     consultas con = new consultas();
@@ -358,27 +364,21 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         jPanelDatosUsuario.setBackground(new java.awt.Color(153, 204, 255));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Datos para usuario");
 
         jLblNombre.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLblNombre.setForeground(new java.awt.Color(0, 0, 0));
         jLblNombre.setText("Nombre");
 
         jLblTelefono.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLblTelefono.setForeground(new java.awt.Color(0, 0, 0));
         jLblTelefono.setText("Telefono");
 
         jLblDireccion.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLblDireccion.setForeground(new java.awt.Color(0, 0, 0));
         jLblDireccion.setText("Dirección");
 
         jLblCiudad.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLblCiudad.setForeground(new java.awt.Color(0, 0, 0));
         jLblCiudad.setText("Ciudad");
 
         jLblCorreo.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLblCorreo.setForeground(new java.awt.Color(0, 0, 0));
         jLblCorreo.setText("Correo");
 
         jTxtDireccion.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -700,6 +700,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         try {
             int indexSelect = jTabbedPane.getSelectedIndex();
             switch (indexSelect) {
+                //Libros
                 case 0:
                     int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
                     
@@ -708,11 +709,14 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     lib.update(id, jTxtTitulo.getText(), Integer.parseInt(jTxtAnio.getText()), jTxtEditorial.getText());
                     //con.ActualizarLibro(jTxtTitulo, jTxtEditorial, jTxtAnio, id);
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-
+                
+                //Usuarios
                 case 1:
-                    String idUsuario = jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString();
-                    con.ActualizarUsuario(jTxtNombre, jTxtDireccion, jTxtTelefono, jTxtCiudad, jTxtCorreo, idUsuario);
-                    con.leerLectores("usuario", jTable_lectores);
+                    int ide =Integer.parseInt( jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
+                    
+                    user.update(ide, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
+                    //con.ActualizarUsuario(jTxtNombre, jTxtDireccion, jTxtTelefono, jTxtCiudad, jTxtCorreo, idUsuario);
+                    user.RellenaLaTablaConDatosMySQL("usuario", jTable_lectores);
             }
 
             jTxtTitulo.setText("");
