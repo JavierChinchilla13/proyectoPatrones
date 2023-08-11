@@ -147,6 +147,43 @@ public class UsuarioService extends Connector implements Crud<UsuariosTO>{
         }
 
     }
+    
+    public void leerLectores(String tabla, JTable visor) {
+        try {
+            String sql = "Select * from " + tabla;
+            Statement st;
+            Connection conn = getConnection();
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("ID Lector");
+            model.addColumn("Nombre");
+            model.addColumn("Direccion");
+            model.addColumn("Telefono");
+            model.addColumn("Ciudad");
+            model.addColumn("Correo");
+            visor.setModel(model);
+            String[] dato = new String[6];
+            try {
+                st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                while (rs.next()) {
+                    dato[0] = rs.getString(1);
+                    dato[1] = rs.getString(2);
+                    dato[2] = rs.getString(3);
+                    dato[3] = rs.getString(4);
+                    dato[4] = rs.getString(5);
+                    dato[5] = rs.getString(6);
+                    model.addRow(dato);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        
+    }
 
    
 }

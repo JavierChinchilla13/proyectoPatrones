@@ -152,7 +152,81 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
 
     }
 
-    
+    public void leerSalidas(String tabla, JTable visor) {
+
+        try {
+
+            String sql = "Select * from " + tabla;
+            Statement st;
+            Connection conn = getConnection();
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("ID Salida");
+            model.addColumn("Fecha préstamo");
+            model.addColumn("Fecha regreso");
+            model.addColumn("Observación");
+            model.addColumn("FK_Libro");
+            model.addColumn("FK_Usuario");
+            visor.setModel(model);
+            String[] dato = new String[6];
+            try {
+                st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                while (rs.next()) {
+                    dato[0] = rs.getString(1);
+                    dato[1] = rs.getString(2);
+                    dato[2] = rs.getString(3);
+                    dato[3] = rs.getString(4);
+                    dato[4] = rs.getString(5);
+                    dato[5] = rs.getString(6);
+                    model.addRow(dato);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void leerPrestamos(JTable visor) {
+
+        try {
+
+            String sql = "select nombre as 'Prestador', titulo as 'Nombre del libro',"
+                    + "fecha_salida as 'Fecha de préstamo', fecha_regreso as 'Fecha devolución', observarcion as 'Observaciones'"
+                    + "from libro inner join usuario on libro.id_libro = usuario.id_usuario left join salida on salida.id_salida = usuario.id_usuario";
+            Statement st;
+            Connection conn = getConnection();
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("Prestador");
+            model.addColumn("Nombre del libro");
+            model.addColumn("Fecha de préstamo");
+            model.addColumn("Fecha devolución");
+            model.addColumn("Observaciones");
+            visor.setModel(model);
+            String[] dato = new String[6];
+            try {
+                st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                while (rs.next()) {
+                    dato[0] = rs.getString(1);
+                    dato[1] = rs.getString(2);
+                    dato[2] = rs.getString(3);
+                    dato[3] = rs.getString(4);
+                    dato[4] = rs.getString(5);
+                    model.addRow(dato);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     

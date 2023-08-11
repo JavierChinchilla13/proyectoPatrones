@@ -2,9 +2,10 @@ package Forms;
 
 import Clases.LibroService;
 import Clases.LibroTO;
+import Clases.SalidaService;
+import Clases.SalidaTO;
 import Clases.UsuarioService;
 import Clases.UsuariosTO;
-import Clases.consultas;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,16 +19,70 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
     //USUARIOS
     UsuarioService user = new UsuarioService();
     UsuariosTO selectedUsuario = new UsuariosTO();
+    //Salida
+    SalidaService salida = new SalidaService();
+    SalidaTO selectedSalida = new SalidaTO();
+    
+    
+    //Getters y setters
+    public LibroService getLib() {
+        return lib;
+    }
+
+    public void setLib(LibroService lib) {
+        this.lib = lib;
+    }
+
+    public LibroTO getSelectedLibro() {
+        return selectedLibro;
+    }
+
+    public void setSelectedLibro(LibroTO selectedLibro) {
+        this.selectedLibro = selectedLibro;
+    }
+
+    public UsuarioService getUser() {
+        return user;
+    }
+
+    public void setUser(UsuarioService user) {
+        this.user = user;
+    }
+
+    public UsuariosTO getSelectedUsuario() {
+        return selectedUsuario;
+    }
+
+    public void setSelectedUsuario(UsuariosTO selectedUsuario) {
+        this.selectedUsuario = selectedUsuario;
+    }
+
+    public SalidaService getSalida() {
+        return salida;
+    }
+
+    public void setSalida(SalidaService salida) {
+        this.salida = salida;
+    }
+
+    public SalidaTO getSelectedSalida() {
+        return selectedSalida;
+    }
+
+    public void setSelectedSalida(SalidaTO selectedSalida) {
+        this.selectedSalida = selectedSalida;
+    }
+    
+    
     
     //Variable global
-    consultas con = new consultas();
     public ProyectoBiblioteca() {
         initComponents();
         this.setLocationRelativeTo(this);
-        con.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-        con.leerLectores("usuario", jTable_lectores);
-        con.leerPrestamos(jTable_prestamos);
-        con.leerSalidas("salida", jTable_pres);
+        lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
+        user.leerLectores("usuario", jTable_lectores);
+        salida.leerPrestamos(jTable_prestamos);
+        salida.leerSalidas("salida", jTable_pres);
 
         jTable_libros.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent Mouse_evt) {
@@ -689,7 +744,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, evt,"Se a guardado el libro exitosamente", HEIGHT);
                 case 1:
                     
-                    UsuariosTO usr = new UsuariosTO(0, jTxtNombre.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
+                    UsuariosTO usr = new UsuariosTO(0, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
                              //jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
                     
                     user.insert(usr);
