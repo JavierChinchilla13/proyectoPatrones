@@ -748,7 +748,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                              //jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
                     
                     user.insert(usr);
-                    user.RellenaLaTablaConDatosMySQL("usuario", jTable_lectores);
+                    user.leerLectores("usuario", jTable_lectores);
                     JOptionPane.showMessageDialog(null, evt,"Se a guardado el usuario exitosamente", HEIGHT);
             }
         } catch (Exception e) {
@@ -779,7 +779,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     
                     user.update(ide, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
                     
-                    user.RellenaLaTablaConDatosMySQL("usuario", jTable_lectores);
+                    user.leerLectores("usuario", jTable_lectores);
                     JOptionPane.showMessageDialog(null, evt,"Se a actualizado exitosamente", HEIGHT);
             }
 
@@ -810,15 +810,16 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
 
                     lib.delete(id);
                     lib.RellenaLaTablaConDatosMySQL("libro", jTable_libros);
-                    JOptionPane.showMessageDialog(null, evt,"Se a eliminado el libro exitosamente", HEIGHT);
+                    //JOptionPane.showMessageDialog(null, evt,"Se a eliminado el libro exitosamente", HEIGHT);
                     
                 //Usuarios
                 case 1:
+                    
                     int ide = Integer.parseInt(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
  
                     user.delete(ide);
-                    user.RellenaLaTablaConDatosMySQL("usaurio", jTable_lectores);
-                    JOptionPane.showMessageDialog(null, evt,"Se a eliminado el usuario exitosamente", HEIGHT);
+                    user.leerLectores("usaurio", jTable_lectores);
+                    //JOptionPane.showMessageDialog(null, evt,"Se a eliminado el usuario exitosamente", HEIGHT);
             }
         } catch (Exception e) {
 
