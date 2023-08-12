@@ -25,6 +25,8 @@ public class Tester {
             
             fed.insert("trabajo 1", "hola", date, 18, 21, 1);
             
+            fed.delete(0);
+            
             for(FeedbackTO u : fed.getFeedback(1, 1)){
                 System.out.println("id: " + u.getId() );
 

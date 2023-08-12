@@ -102,13 +102,13 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
         close(conn);
     }
 
-    public void insertAct(int idEmployee, int idProject, int idFeedback) throws Exception {
+    public void insertAct(int idEmployee, int idProject) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_activity VALUES(?,?,?,?))");
-        ps.setInt(1, 0);
-        ps.setInt(2, idEmployee);
-        ps.setInt(3, idProject);
-        ps.setInt(4, idFeedback);
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_project_x_employee (id_employee, id_project, id_feedback)VALUES(?,?,(SELECT MAX(id) \n"
+                + "FROM hth.feedback where id_type = '23' ))");
+
+        ps.setInt(1, idEmployee);
+        ps.setInt(2, idProject);
 
         ps.executeUpdate();
         close(ps);
@@ -117,7 +117,7 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
 
     public void insertEmp(int idEmployee, int idFeedback) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_employee VALUES(?,?,?))");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_employee VALUES(?,?,?)");
         ps.setInt(1, 0);
         ps.setInt(2, idEmployee);
         ps.setInt(3, idFeedback);
@@ -129,7 +129,7 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
 
     public void insertPj(int idProject, int idFeedback) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_project VALUES(?,?,?))");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO hth.feedback_x_project VALUES(?,?,?)");
         ps.setInt(1, 0);
         ps.setInt(2, idProject);
         ps.setInt(3, idFeedback);
@@ -230,9 +230,9 @@ public class FeedbackService extends Service implements ICrud<FeedbackTO> {
     public List<FeedbackTO> getFeedback(int employee, int project) throws Exception {
         Connection conn = getConnection();
         List<FeedbackTO> feedbackList = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM hth.feedback \n"
-                + "where id =(select feedback_x_project_x_employee.id_feedback from hth.feedback_x_project_x_employee\n"
-                + "where id_employee= ? and id_project =?)");
+        PreparedStatement ps = conn.prepareStatement("SELECT hth.feedback.id, hth.feedback.name, hth.feedback.description, hth.feedback.date_of_feedback, hth.feedback.id_status, hth.feedback.id_type, id_creator  \n"
+                + "FROM hth.feedback, hth.feedback_x_project_x_employee \n"
+                + "where id_employee= ? and id_project = ? and hth.feedback.id = id_feedback");
         ps.setInt(1, employee);
         ps.setInt(2, project);
         
