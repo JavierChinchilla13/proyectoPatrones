@@ -18,12 +18,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author javi
+/*
+ * Esta clase es exclusiva para agregar, eliminar y actualizar las tablas de
+ * SQL con los datos de los libros, además que trabaja de la mano con la clase "LibroTO"
  */
-public class LibroService extends Connector implements Crud<LibroTO> {
 
+public class LibroService extends Connector implements Crud<LibroTO> {
+    
+    // Este Insert, permite agregar a la base de datos los libros que se desean
+    // Con su respectívo codigo ID, titulo, editorial y año.
     public void insert(LibroTO libro) throws Exception {
 
         Connection conn = getConnection();
@@ -39,7 +42,7 @@ public class LibroService extends Connector implements Crud<LibroTO> {
         close(conn);
     }
 
-
+    // Este Delete, elimina los librós por medio del codigo ID
     public void delete(int id) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = null;
@@ -70,6 +73,7 @@ public class LibroService extends Connector implements Crud<LibroTO> {
         
     }
 
+    // Este Update, actualiza el los libros en el sistema.
     public void update(int id, String titulo, int anio, String editorial) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.LIBRO SET TITULO = ?, EDITORIAL = ?, ANIO = ? WHERE ID_LIBRO = ?");
@@ -84,7 +88,9 @@ public class LibroService extends Connector implements Crud<LibroTO> {
     }
 
     
-
+    // Este getLibros Busca en la base de datos los libros y los muestra en la
+    // tabla respectiva.
+    
     public List<LibroTO> getLibros() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -115,6 +121,8 @@ public class LibroService extends Connector implements Crud<LibroTO> {
         return retorno;
     }
 
+       // Este RellenarTabla, ingresa los datos de los libros buscados anterior_
+       // mente en la base de datos y los coloca en la tabla del programa
     public void RellenaLaTablaConDatosMySQL(String tabla, JTable visor) {
         try {
             String sql = "Select * from " + tabla;

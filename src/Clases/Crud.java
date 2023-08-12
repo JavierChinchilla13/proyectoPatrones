@@ -10,6 +10,7 @@ package Clases;
  */
 public interface Crud <T>{
     
+    
     public void insert(T obj)throws Exception;
     public void delete(T obj)throws Exception;
     

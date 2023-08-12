@@ -10,10 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- *
- * @author javi
- */
+
+/* 
+    Esta clase hace que el programa pueda conectar a la BD
+*/
 public class Connector {
     protected Connection conn = null;
 
@@ -26,14 +26,19 @@ public class Connector {
     }
     
     protected Connection getConnection() throws Exception {
-        //Paso 1
+        //Aquí se hace uso del driver para que la conexión de MySQL pueda conectar a Java
         Class.forName("com.mysql.jdbc.Driver");
-        //Paso 2
+        //Este es el Url de la base de datos
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblioteca?serverTimezone=UTC", "root", "root");
         System.out.println("CONEXION: " + conn);
         return conn;
     }
 
+    /*
+        Las siguientes líneas de código permiten que cuando se cierre el
+        programa, también se desconecte de la base de datos.
+    
+    */
     protected void close(Connection conn) throws SQLException {
 
         if (conn != null && !conn.isClosed()) {
@@ -42,7 +47,7 @@ public class Connector {
             conn = null;
         }
     }
-
+    
     protected void close(ResultSet rs) throws SQLException {
         if (rs != null && !rs.isClosed()) {
             rs.close();

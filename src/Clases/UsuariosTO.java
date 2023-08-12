@@ -5,9 +5,10 @@
 package Clases;
 
 /**
- *
- * @author lizan
+ * Esta clase es exclusiva para los Getters, Setters y constructores
+ * de los usuarios que se ingresan.
  */
+
 public class UsuariosTO {
     
     private int id;

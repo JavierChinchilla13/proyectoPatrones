@@ -8,9 +8,10 @@ import java.io.Serializable;
 import java.sql.Date;
 
 /**
- *
- * @author julio
+ * Esta clase es exclusiva para los Getters, Setters y constructores
+ * de la salida de los libros prestados a los usuarios que se ingresan.
  */
+
 public class SalidaTO implements Serializable{
     
     private int id;

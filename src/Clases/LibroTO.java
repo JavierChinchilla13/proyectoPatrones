@@ -7,9 +7,10 @@ package Clases;
 import java.io.Serializable;
 
 /**
- *
- * @author javi
+ * Esta clase es exclusiva para los Getters, Setters y constructores
+ * de los libros que se ingresan.
  */
+
 public class LibroTO implements Serializable{
     
     private int id;

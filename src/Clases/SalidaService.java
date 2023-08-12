@@ -18,12 +18,16 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author javi
+/*
+ * Esta clase es exclusiva para agregar, eliminar y actualizar las tablas
+ * de SQL con los datos de los prestamos del los libros a los usuarios,
+ * además que trabaja de la mano con la clase "SalidaTO" 
  */
-public class SalidaService extends Connector implements Crud<SalidaTO> {
 
+public class SalidaService extends Connector implements Crud<SalidaTO> {
+    
+    // Este Insert, permite agregar a la base de datos los libros que se prestaron a los usuarios
+    // Con su respectíva fecha de salida y regreso, observaciones, el id del libro y el id del usuario
     public void insert(SalidaTO salida) throws Exception {
 
         Connection conn = getConnection();
@@ -40,7 +44,7 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
         close(conn);
     }
 
-
+    // Este Delete, elimina los libros prestados por medio del codigo ID
     public void delete(int id) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = null;
@@ -81,10 +85,12 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
         close(ps);
         close(conn);
         close(conn);
-    }
+    } 
 
     
-
+    // Este getLibros Busca en la base de datos los libros prestados y los muestra en la
+    // tabla respectiva.
+    
     public List<SalidaTO> getSalidas() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -114,7 +120,9 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
 
         return retorno;
     }
-
+    
+    // Este RellenarTabla, ingresa los datos de los libros prestados, buscados anterior_
+       // mente en la base de datos y los coloca en la tabla del programa.
     public void RellenaLaTablaConDatosMySQL(String tabla, JTable visor) {
         try {
             String sql = "Select * from " + tabla;
@@ -151,7 +159,8 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
         }
 
     }
-
+    
+    // Busca la salida del libro y al usuario que se le prestó
     public void leerSalidas(String tabla, JTable visor) {
 
         try {
@@ -189,7 +198,8 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
         }
 
     }
-
+    
+    // Este se muestra busca a los usuarios y a los libros prestados y muestra la información
     public void leerPrestamos(JTable visor) {
 
         try {
