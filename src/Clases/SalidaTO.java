@@ -15,8 +15,8 @@ import java.sql.Date;
 public class SalidaTO implements Serializable{
     
     private int id;
-    private Date fechaSalida;
-    private Date fechaRegreso;
+    private String fechaSalida;
+    private String fechaRegreso;
     private String observacion;
     private int idLibro;
     private int idUsuario;
@@ -24,7 +24,7 @@ public class SalidaTO implements Serializable{
     public SalidaTO() {
     }
 
-    public SalidaTO(int id, Date fechaSalida, Date fechaRegreso, String observacion, int idLibro, int idUsuario) {
+    public SalidaTO(int id, String fechaSalida, String fechaRegreso, String observacion, int idLibro, int idUsuario) {
         this.id = id;
         this.fechaSalida = fechaSalida;
         this.fechaRegreso = fechaRegreso;
@@ -37,53 +37,51 @@ public class SalidaTO implements Serializable{
         return id;
     }
 
-    public Date getFechaSalida() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFechaSalida() {
         return fechaSalida;
     }
 
-    public Date getFechaRegreso() {
+    public void setFechaSalida(String fechaSalida) {
+        this.fechaSalida = fechaSalida;
+    }
+
+    public String getFechaRegreso() {
         return fechaRegreso;
+    }
+
+    public void setFechaRegreso(String fechaRegreso) {
+        this.fechaRegreso = fechaRegreso;
     }
 
     public String getObservacion() {
         return observacion;
     }
 
-    public int getIdLibro() {
-        return idLibro;
-    }
-
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setFechaSalida(Date fechaSalida) {
-        this.fechaSalida = fechaSalida;
-    }
-
-    public void setFechaRegreso(Date fechaRegreso) {
-        this.fechaRegreso = fechaRegreso;
-    }
-
     public void setObservacion(String observacion) {
         this.observacion = observacion;
+    }
+
+    public int getIdLibro() {
+        return idLibro;
     }
 
     public void setIdLibro(int idLibro) {
         this.idLibro = idLibro;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-    
-    
-    
-    
+
+   
     
 }
 

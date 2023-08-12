@@ -33,8 +33,8 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("INSERT INTO BIBLIOTECA.SALIDA VALUES(?,?,?,?,?,?)");
         ps.setInt(1, 0);
-        ps.setDate(2, salida.getFechaSalida());
-        ps.setDate(3, salida.getFechaRegreso());
+        ps.setString(2, salida.getFechaSalida());
+        ps.setString(3, salida.getFechaRegreso());
         ps.setString(4, salida.getObservacion());
         ps.setInt(5, salida.getIdLibro());
         ps.setInt(6, salida.getIdUsuario());
@@ -74,13 +74,15 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
         super.close(conn);
     }
 
-    public void update(int id, Date fechaSal,Date fechaEnt, String observacion) throws Exception {
+    public void update(int id, String fechaSal, String fechaEnt, String observacion, int idLibro, int idUsuario) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.SALIDA SET fecha_salida = ?, fecha_regreso = ?, observarcion = ? WHERE ID_LIBRO = ?");
-        ps.setDate(1, fechaSal);
-        ps.setDate(2, fechaEnt);
+        PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.SALIDA SET fecha_salida = ?, fecha_regreso = ?, observarcion = ?, id_libro = ?, id_usuario=? WHERE ID_LIBRO = ?");
+        ps.setString(1, fechaSal);
+        ps.setString(2, fechaEnt);
         ps.setString(3, observacion);
-        ps.setInt(4, id);
+        ps.setInt(4, idLibro);
+        ps.setInt(5, idUsuario);
+        ps.setInt(6, id);
         ps.executeUpdate();
         close(ps);
         close(conn);
@@ -102,11 +104,11 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
         while (rs.next()) {
             SalidaTO salidaTO;
             int id = rs.getInt("id_salida");
-            Date fechaSalida = rs.getDate("fecha_salida");
-            Date fechaRegreso = rs.getDate("fecha_regreso");
+            String fechaSalida = rs.getString("fecha_salida");
+            String fechaRegreso = rs.getString("fecha_regreso");
             String observacion = rs.getString("observarcion");
-            int libroID = rs.getInt("fk_libro");
-            int usuarioID = rs.getInt("fk_usuario");
+            int libroID = rs.getInt("id_libro");
+            int usuarioID = rs.getInt("id_usuario");
 
             salidaTO = new SalidaTO(id, fechaSalida, fechaRegreso, observacion, libroID,usuarioID);
 
@@ -173,8 +175,8 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
             model.addColumn("Fecha préstamo");
             model.addColumn("Fecha regreso");
             model.addColumn("Observación");
-            model.addColumn("FK_Libro");
-            model.addColumn("FK_Usuario");
+            model.addColumn("ID LIBRO");
+            model.addColumn("ID USUARIO");
             visor.setModel(model);
             String[] dato = new String[6];
             try {
@@ -204,10 +206,11 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
 
         try {
 
-            String sql = "select nombre as 'Prestador', titulo as 'Nombre del libro',"
-                    + "fecha_salida as 'Fecha de préstamo', fecha_regreso as 'Fecha devolución', observarcion as 'Observaciones'"
-                    + "from libro inner join usuario on libro.id_libro = usuario.id_usuario left join salida on salida.id_salida = usuario.id_usuario";
+            String sql = "select nombre as 'Prestador', titulo as 'Nombre del libro',\n"
+                    + "fecha_salida as 'Fecha de préstamo', fecha_regreso as 'Fecha devolución', observarcion as 'Observaciones'\n"
+                    + "from biblioteca.libro, biblioteca.usuario, biblioteca.salida where salida.id_libro = libro.id_libro and salida.id_usuario= usuario.id_usuario";
             Statement st;
+            
             Connection conn = getConnection();
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Prestador");

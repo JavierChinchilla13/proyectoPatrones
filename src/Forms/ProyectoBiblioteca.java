@@ -113,6 +113,21 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                 }
             }
         });
+        
+        jTable_pres.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent Mouse_evt) {
+                JTable table = (JTable) Mouse_evt.getSource();
+                Point point = Mouse_evt.getPoint();
+                int row = table.rowAtPoint(point);
+                if (Mouse_evt.getClickCount() == 1) {
+                    jTxtUsuario.setText(jTable_pres.getValueAt(jTable_pres.getSelectedRow(), 5).toString());
+                    jTxtLibro.setText(jTable_pres.getValueAt(jTable_pres.getSelectedRow(), 4).toString());
+                    jTxtFechaSalida.setText(jTable_pres.getValueAt(jTable_pres.getSelectedRow(), 1).toString());
+                    jTxtFechaRegreso.setText(jTable_pres.getValueAt(jTable_pres.getSelectedRow(), 2).toString());
+                    jTxtObservacion.setText(jTable_pres.getValueAt(jTable_pres.getSelectedRow(), 3).toString());
+                }
+            }
+        });
     }
 
     /**
@@ -172,7 +187,6 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable_prestamos = new javax.swing.JTable();
-        jPanel6 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable_pres = new javax.swing.JTable();
@@ -550,32 +564,15 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jTable_prestamos);
 
-        jPanel6.setBackground(new java.awt.Color(153, 204, 255));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 269, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jTabbedPane.addTab("Leyendo", jPanel4);
@@ -666,7 +663,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     .addComponent(jLblNombre1)
                     .addComponent(jTxtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLblNombre2)
                     .addComponent(jTxtLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -911,28 +908,18 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         flag = false;
                     }
                     
-                    if (jTxtFechaRegreso.getText() == null || jTxtFechaRegreso.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Porfavor agregar una fecha de manera correcta");
-                        flag = false;
-                    }
+                    
                     
                     if (jTxtObservacion.getText() == null || jTxtObservacion.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar una observacion");
                         flag = false;
                     }
                     if (flag) {
-
-                        int idus = Integer.parseInt(jTxtUsuario.getText());
-                        int idlib = Integer.parseInt(jTxtLibro.getText());
-                            
-                        Date fechaSalida=(Date) new SimpleDateFormat("dd/MM/yyyy").parse(jTxtFechaSalida.getText());  
-                        Date fechaRegreso=(Date) new SimpleDateFormat("dd/MM/yyyy").parse(jTxtFechaRegreso.getText());
-                        
-                        SalidaTO sali = new SalidaTO(0,fechaSalida,fechaRegreso, jTxtObservacion.getText(),idus , idlib);
-                        
-                        
+                        SalidaTO sali = new SalidaTO(0,jTxtFechaSalida.getText(), jTxtFechaRegreso.getText(), jTxtObservacion.getText(),Integer.parseInt(jTxtLibro.getText()) , Integer.parseInt(jTxtUsuario.getText()));
+                                               
                         salida.insert(sali);
-                        salida.leerSalidas("Préstamos", jTable_prestamos);
+                        salida.leerSalidas("salida", jTable_pres);
+                        salida.leerPrestamos(jTable_prestamos);
                         JOptionPane.showMessageDialog(null, "Se ha guardado el prestamo exitosamente");
                     }
                     
@@ -1034,10 +1021,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         flag = false;
                     }
                     
-                    if (jTxtFechaRegreso.getText() == null || jTxtFechaRegreso.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Porfavor agregar una fecha de manera correcta");
-                        flag = false;
-                    }
+                    
                     
                     if (jTxtObservacion.getText() == null || jTxtObservacion.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar una observacion");
@@ -1047,15 +1031,15 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         
                         int idus = Integer.parseInt(jTxtUsuario.getText());
                         int idlib = Integer.parseInt(jTxtLibro.getText());
-                            
-                        Date fechaSalida=(Date) new SimpleDateFormat("dd/MM/yyyy").parse(jTxtFechaSalida.getText());  
-                        Date fechaRegreso=(Date) new SimpleDateFormat("dd/MM/yyyy").parse(jTxtFechaRegreso.getText());
+                        String fechaSalida = jTxtFechaSalida.getText();
+                        String fechaRegreso = jTxtFechaRegreso.getText();
                         
-                        int ide = Integer.parseInt(jTable_prestamos.getValueAt(jTable_prestamos.getSelectedRow(), 0).toString());
+                        int ide = Integer.parseInt(jTable_pres.getValueAt(jTable_pres.getSelectedRow(), 0).toString());
                         
-                        salida.update(ide,fechaSalida,fechaRegreso, jTxtObservacion.getText());
+                        salida.update(ide,jTxtFechaSalida.getText(), jTxtFechaRegreso.getText(), jTxtObservacion.getText(),Integer.parseInt(jTxtLibro.getText()) , Integer.parseInt(jTxtUsuario.getText()));
 
-                        salida.leerSalidas("Préstamos", jTable_prestamos);
+                        salida.leerSalidas("salida", jTable_pres);
+                        salida.leerPrestamos(jTable_prestamos);
                         JOptionPane.showMessageDialog(null, "Se ha actualizado la inforamcion del prestamo exitosamente");
                     }
                     
@@ -1168,10 +1152,7 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         flag = false;
                     }
                     
-                    if (jTxtFechaRegreso.getText() == null || jTxtFechaRegreso.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Porfavor agregar una fecha de manera correcta");
-                        flag = false;
-                    }
+                    
                     
                     if (jTxtObservacion.getText() == null || jTxtObservacion.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar una observacion");
@@ -1179,11 +1160,11 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     }
                     if (flag) {
                         
-                        int id = Integer.parseInt(jTable_prestamos.getValueAt(jTable_prestamos.getSelectedRow(), 0).toString());
+                        int id = Integer.parseInt(jTable_pres.getValueAt(jTable_pres.getSelectedRow(), 0).toString());
                         
                         salida.delete(id);
-                        salida.RellenaLaTablaConDatosMySQL("Préstamos", jTable_prestamos);
-
+                        salida.leerSalidas("salida", jTable_pres);
+                        salida.leerPrestamos(jTable_prestamos);
                         JOptionPane.showMessageDialog(null, "Se ha eliminado el prestamo exitosamente");
   
                     }
@@ -1208,6 +1189,12 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
         jTxtTelefono.setText("");
         jTxtCiudad.setText("");
         jTxtCorreo.setText("");
+        jTxtUsuario.setText("");
+        jTxtLibro.setText("");
+        jTxtFechaSalida.setText("");
+        jTxtFechaRegreso.setText("");
+        jTxtObservacion.setText("");
+        
     }//GEN-LAST:event_Jbtn_nuevoActionPerformed
 
     /**
@@ -1282,7 +1269,6 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelDatosUsuario;
     private javax.swing.JPanel jPanel_buttons;
