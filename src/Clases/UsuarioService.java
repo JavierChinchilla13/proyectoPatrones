@@ -12,12 +12,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author javi
+/*
+ * Esta clase es exclusiva para agregar, eliminar y actualizar las tablas de
+ * SQL con los datos de los usuarios, además que trabaja de la mano con la clase "UsuariosTO"
  */
 public class UsuarioService extends Connector implements Crud<UsuariosTO>{
-
+    
+    // Este Insert, permite agregar a la base de datos los usuarios que se desean
+    // Con su respectívo codigo ID, nombre, dirección, telefono, ciudad y correo
     public void insert(UsuariosTO usuario) throws Exception {
 
         Connection conn = getConnection();
@@ -34,7 +36,7 @@ public class UsuarioService extends Connector implements Crud<UsuariosTO>{
         close(conn);
     }
 
-
+    // Este Delete, elimina los usuarios por medio del codigo ID
     public void delete(int id) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = null;
@@ -62,7 +64,8 @@ public class UsuarioService extends Connector implements Crud<UsuariosTO>{
         super.close(ps);
         super.close(conn);
     }
-
+    
+    // Este Update, actualiza el los usuarios en el sistema.
     public void update(int id, String nombre, String direccion, int telefono, String ciudad, String correo) throws Exception {
         Connection conn = getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.USUARIO SET NOMBRE = ?, DIRECCION = ?, TELEFONO = ?, CIUDAD = ?, CORREO = ? WHERE ID_USUARIO = ?");
@@ -77,9 +80,9 @@ public class UsuarioService extends Connector implements Crud<UsuariosTO>{
         close(conn);
         close(conn);
     }
-
     
-
+    // Este getUsuario Busca en la base de datos los usuarios y los muestra en la
+    // tabla respectiva.
     public List<UsuariosTO> getUsuario() throws Exception {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -110,7 +113,9 @@ public class UsuarioService extends Connector implements Crud<UsuariosTO>{
 
         return retorno;
     }
-
+    
+       // Este RellenarTabla, ingresa los datos de los usuarios buscados anterior_
+       // mente en la base de datos y los coloca en la tabla del programa
     public void RellenaLaTablaConDatosMySQL(String tabla, JTable visor) {
         try {
             String sql = "Select * from " + tabla;
@@ -148,6 +153,7 @@ public class UsuarioService extends Connector implements Crud<UsuariosTO>{
 
     }
     
+    // Esto muestra a los usuarios que actualmente están leyendo un libro en la biblioteca.
     public void leerLectores(String tabla, JTable visor) {
         try {
             String sql = "Select * from " + tabla;
