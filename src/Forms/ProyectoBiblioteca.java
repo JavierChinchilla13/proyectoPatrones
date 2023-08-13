@@ -821,12 +821,19 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_jFrtLiteralAActionPerformed
 
     private void Jbtn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_guardarActionPerformed
+        // Este es el botón de guardar, al presionarlo ejecutará los siguientes comandos.
+        
+        
         try {
+            
             int indexSelect = jTabbedPane.getSelectedIndex();
             boolean flag = true;
             switch (indexSelect) {
+                // Libros
                 case 0:
-
+                    // Estos 3 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if (jTxtTitulo.getText() == null || jTxtTitulo.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un titulo correcto");
                         flag= false;
@@ -837,10 +844,11 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     }
                     if ( Integer.parseInt(jTxtAnio.getText()) == 0){
                         JOptionPane.showMessageDialog(null, "Porfavor agregar año");
-                        flag= false;
-                        
+                        flag= false;   
                     }
+                    //---------------------------------------
                     
+                    // Aqui lee la información y lo guarda en la tabla libros.
                     if (flag){
                         LibroTO l = new LibroTO(0, jTxtTitulo.getText(), jTxtEditorial.getText(), Integer.parseInt(jTxtAnio.getText()));
                         lib.insert(l);
@@ -850,11 +858,11 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     }
                        
 
-                    
+                    // Usuarios
                 case 1:
-                    
-                    
-                    
+                    // Estos 5 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if(jTxtNombre.getText()== null || jTxtNombre.getText().equals("")){
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un nombre correcto");
                         flag= false;
@@ -873,12 +881,15 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un correo correcto");
                         flag = false;
                     }
-                    if ( Integer.parseInt(jTxtTelefono.getText()) == 0){
+                    if (Integer.parseInt(jTxtTelefono.getText()) == 0){
                         JOptionPane.showMessageDialog(null, "Porfavor agregar telefono");
                         flag= false;
-                        
+                    //---------------------------------------
+                    
+                    // Aqui lee la información y lo guarda en la tabla usuarios.
                     }
                     if (flag) {
+                        
                         UsuariosTO usr = new UsuariosTO(0, jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
                         //jTxtNombre.getText(), jTxtDireccion.getText(), Integer.parseInt(jTxtTelefono.getText()), jTxtCiudad.getText(), jTxtCorreo.getText());
 
@@ -887,12 +898,12 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Se ha guardado el usuario exitosamente");
                     }
                     
-                case 2:
-                    
-                    break;
-                    
+                    // Salida
                 case 3:
                     
+                    // Estos 4 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if(jTxtUsuario.getText()== null || jTxtUsuario.getText().equals("")){
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un usuario correcto");
                         flag= false;
@@ -914,6 +925,10 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar una observacion");
                         flag = false;
                     }
+                    //---------------------------------------
+                    
+                    // Aqui lee la información y lo guarda en la tabla salida.
+                    
                     if (flag) {
                         SalidaTO sali = new SalidaTO(0,jTxtFechaSalida.getText(), jTxtFechaRegreso.getText(), jTxtObservacion.getText(),Integer.parseInt(jTxtLibro.getText()) , Integer.parseInt(jTxtUsuario.getText()));
                                                
@@ -936,14 +951,17 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_Jbtn_guardarActionPerformed
 
     private void Jbtn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_actualizarActionPerformed
-        // TODO add your handling code here:
+        // Este botón permite actualizar la información en la base de datos.
+        
         try {
             int indexSelect = jTabbedPane.getSelectedIndex();
             boolean flag = true;
             switch (indexSelect) {
                 //Libros
                 case 0:
-                    
+                    // Estos 3 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if (jTxtTitulo.getText() == null || jTxtTitulo.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un titulo correcto");
                         flag= false;
@@ -957,6 +975,9 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         flag= false;
                         
                     }
+                    //---------------------------------------
+                    
+                    // Aqui lee la información y lo guarda en la tabla libros.
                     if (flag){
                         int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
 
@@ -970,7 +991,9 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     
                 //Usuarios
                 case 1:
-                    
+                    // Estos 5 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if(jTxtNombre.getText()== null || jTxtNombre.getText().equals("")){
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un nombre correcto");
                         flag= false;
@@ -994,6 +1017,9 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         flag= false;
                         
                     }
+                    //---------------------------------------
+                    
+                    // Aqui lee la información y lo guarda en la tabla usuarios.
                     if (flag) {
                         int ide = Integer.parseInt(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
 
@@ -1005,7 +1031,9 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
 
                 //codigo caso de prestamos
                 case 3:
-                    
+                    // Estos 4 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if(jTxtUsuario.getText()== null || jTxtUsuario.getText().equals("")){
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un usuario correcto");
                         flag= false;
@@ -1020,14 +1048,14 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar una fecha de manera correcta");
                         flag = false;
                     }
-                    
-                    
-                    
                     if (jTxtObservacion.getText() == null || jTxtObservacion.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar una observacion");
                         flag = false;
                     }
-                    if (flag) {
+                    //---------------------------------------
+                    
+                    // Aqui lee la información y lo guarda en la tabla salida.
+                    if (flag){
                         
                         int idus = Integer.parseInt(jTxtUsuario.getText());
                         int idlib = Integer.parseInt(jTxtLibro.getText());
@@ -1048,7 +1076,8 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     
                     
             }
-
+            
+            //Este apartado es para luego dejar las textbox en blanco
             jTxtTitulo.setText("");
             jTxtEditorial.setText("");
             jTxtAnio.setText("");
@@ -1066,13 +1095,16 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_Jbtn_actualizarActionPerformed
 
     private void Jbtn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_eliminarActionPerformed
-        // TODO add your handling code here:
+        // Este botón permite eliminar de la base de dato, lo digitado en los espacios correspondientes.
         try {
             int indexSelect = jTabbedPane.getSelectedIndex();
             boolean flag = true;
             switch (indexSelect) {
                 //Libros
                 case 0:
+                    // Estos 3 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if (jTxtTitulo.getText() == null || jTxtTitulo.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un titulo correcto");
                         flag= false;
@@ -1086,6 +1118,9 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         flag= false;
                         
                     }
+                     //---------------------------------------
+                    
+                    // Aqui lee la información y lo guarda en la tabla libros.
                     if (flag){
                         int id = Integer.parseInt(jTable_libros.getValueAt(jTable_libros.getSelectedRow(), 0).toString());
 
@@ -1099,7 +1134,9 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     
                 //Usuarios
                 case 1:
-                    
+                    // Estos 5 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if(jTxtNombre.getText()== null || jTxtNombre.getText().equals("")){
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un nombre correcto");
                         flag= false;
@@ -1122,7 +1159,10 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar telefono");
                         flag= false;
                         
-                    }
+                    } //---------------------------------------
+                    
+                    // Aqui lee la información y lo guarda en la tabla usuarios.
+                    
                     if (flag) {
 
                         int ide = Integer.parseInt(jTable_lectores.getValueAt(jTable_lectores.getSelectedRow(), 0).toString());
@@ -1136,7 +1176,9 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                     
                 //codigo caso de prestamos
                 case 3:
-                    
+                    // Estos 4 primeros if, son condicionales
+                    // Como no se debe dejar nada en blanco, esto permite a que
+                    // Los espacios no queden en blanco.
                     if(jTxtUsuario.getText()== null || jTxtUsuario.getText().equals("")){
                         JOptionPane.showMessageDialog(null, "Porfavor agregar un usuario correcto");
                         flag= false;
@@ -1152,12 +1194,13 @@ public class ProyectoBiblioteca extends javax.swing.JFrame {
                         flag = false;
                     }
                     
-                    
-                    
                     if (jTxtObservacion.getText() == null || jTxtObservacion.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Porfavor agregar una observacion");
                         flag = false;
                     }
+                     //---------------------------------------
+                    
+                    // Aqui lee la información y lo guarda en la tabla salida.
                     if (flag) {
                         
                         int id = Integer.parseInt(jTable_pres.getValueAt(jTable_pres.getSelectedRow(), 0).toString());
