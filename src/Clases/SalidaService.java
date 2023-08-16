@@ -76,7 +76,7 @@ public class SalidaService extends Connector implements Crud<SalidaTO> {
 
     public void update(int id, String fechaSal, String fechaEnt, String observacion, int idLibro, int idUsuario) throws Exception {
         Connection conn = getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.SALIDA SET fecha_salida = ?, fecha_regreso = ?, observarcion = ?, id_libro = ?, id_usuario=? WHERE ID_LIBRO = ?");
+        PreparedStatement ps = conn.prepareStatement("UPDATE BIBLIOTECA.SALIDA SET fecha_salida = ?, fecha_regreso = ?, observarcion = ?, id_libro = ?, id_usuario=? WHERE ID_Salida = ?");
         ps.setString(1, fechaSal);
         ps.setString(2, fechaEnt);
         ps.setString(3, observacion);
